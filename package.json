@@ -17,7 +17,8 @@
     "dev": "yarn commonjs && yarn parcel watch",
     "build": "NODE_OPTIONS=--no-experimental-fetch yarn parcel build",
     "start": "node --enable-source-maps dist/backend/server.js",
-    "dev-start": "supervisor --watch dist/backend/ -- --enable-source-maps dist/backend/server.js"
+    "dev-start": "supervisor --watch dist/backend/ -- --enable-source-maps dist/backend/server.js",
+    "add-build": "git add dist"
   },
   "dependencies": {
     "@kiltprotocol/sdk-js": "^0.33.1",
@@ -56,8 +57,10 @@
     "events": "^3.3.0",
     "parcel": "^2.7.0",
     "postcss": "^8.4.24",
+    "pre-commit": "^1.2.2",
     "prettier": "^2.8.8",
     "process": "^0.11.10",
+    "rimraf": "^5.0.1",
     "stylelint": "^15.7.0",
     "stylelint-config-standard": "^33.0.0",
     "supervisor": "^0.12.0",
@@ -92,5 +95,9 @@
       "distDir": "dist/backend",
       "outputFormat": "esmodule"
     }
-  }
+  },
+  "pre-commit": [
+    "build",
+    "add-build"
+  ]
 }
