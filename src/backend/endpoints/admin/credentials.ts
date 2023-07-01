@@ -1,5 +1,5 @@
 import { Response, Router } from 'express';
-import { initializeApp } from "firebase/app";
+
 import { paths } from '../paths';
 import {
   NotFoundError,
@@ -88,23 +88,4 @@ credentials.post(paths.credentials.revoke, async (request, response) => {
   } catch (error) {
     sendErrorResponse(error, response);
   }
-});
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyAAwR5GvEUi3lLWy9bb1tz65jhvHI3vufc',
-  authDomain: 'peranto-test.firebaseapp.com',
-  projectId: 'peranto-test',
-  storageBucket: 'peranto-test.appspot.com',
-  messagingSenderId: '777447831295',
-  appId: '1:777447831295:web:6a987d7c8b307ecef43eca',
-};
-
-const app = initializeApp(firebaseConfig);
-
-credentials.get('/metamap', async (req, res) => {
-  console.log(app);
-
-  res.json({
-    true: true,
-  });
 });
