@@ -10,7 +10,7 @@ export const idCType: ICType = {
       type: 'string',
     },
   },
-  title: 'Drivers License(wanghui)',
+  title: 'INE ID',
   type: 'object',
   $id: 'kilt:ctype:0x3112e1e3fb387e5eb6c109aa45afc7ed9df01f1c90a976a8b00585abf817ca82',
 };

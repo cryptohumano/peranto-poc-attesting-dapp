@@ -31,6 +31,18 @@ import {
 import { paths as apiPaths } from '../../backend/endpoints/paths';
 import { sessionHeader } from '../../backend/endpoints/user/sessionHeader';
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace React.JSX {
+    interface IntrinsicElements {
+      'mati-button': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & any,
+        HTMLElement
+      >;
+    }
+  }
+}
+
 type FlowError = 'closed' | 'unauthorized' | 'unknown';
 
 const errors: Record<FlowError, JSX.Element> = {
@@ -109,6 +121,7 @@ function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
 
       {extensions.map((extension) => (
         <button
+          className="btn btn-active btn-primary"
           key={extension}
           type="button"
           onClick={() => handleConnect(extension)}
@@ -220,21 +233,54 @@ function Claim() {
   return (
     <section>
       <h2>{title}</h2>
-      <p>Price: {kiltCost[type]} KILT</p>
+      <p className="mb-4">Price: {kiltCost[type]} KILT</p>
 
-      {status === 'start' && (
+      {status === 'start' && type === 'id' && (
         // implement custom claim forms if you want to handle non-string properties
-        <form onSubmit={handleClaim}>
-          {Object.keys(properties).map((property) => (
-            <label key={property}>
-              {property}: <input name={property} disabled={!session} required />
-            </label>
-          ))}
+        <>
+          <mati-button
+            clientid="64811ce44d683b001b9013f0"
+            flowId="64811ce44d683b001b9013ef"
+          />
+          <form className="my-2" onSubmit={handleClaim}>
+            {Object.keys(properties).map((property) => (
+              <label className="hidden" key={property}>
+                {property}:
+                <input name={property} disabled={!session} required />
+              </label>
+            ))}
 
-          {!session && <Connect onConnect={handleConnect} />}
+            {!session && <Connect onConnect={handleConnect} />}
 
-          {session && <button type="submit">Submit</button>}
-        </form>
+            {session && (
+              <button className="btn btn-active btn-primary" type="submit">
+                Submit
+              </button>
+            )}
+          </form>
+        </>
+      )}
+
+      {status === 'start' && type !== 'id' && (
+        // implement custom claim forms if you want to handle non-string properties
+        <>
+          <form onSubmit={handleClaim}>
+            {Object.keys(properties).map((property) => (
+              <label key={property}>
+                {property}:
+                <input name={property} disabled={!session} required />
+              </label>
+            ))}
+
+            {!session && <Connect onConnect={handleConnect} />}
+
+            {session && (
+              <button className="btn btn-active btn-primary" type="submit">
+                Submit
+              </button>
+            )}
+          </form>
+        </>
       )}
 
       {status === 'requested' && (
@@ -261,7 +307,7 @@ function Claim() {
 function Home() {
   return (
     <section>
-      <h1>CertifiedProof</h1>
+      <h1 className="my-4">CertifiedProof</h1>
 
       <p>
         This KILT Attester Example demonstrates how to issue credentials for a
@@ -272,10 +318,13 @@ function Home() {
 
       <h2>Choose your claim type:</h2>
 
-      <ul>
+      <ul className="flex flex-col gap-2 my-4">
         {supportedCTypeKeys.map((type) => (
           <li key={type}>
-            <Link to={generatePath(paths.claim, { type })}>
+            <Link
+              className="link link-primary"
+              to={generatePath(paths.claim, { type })}
+            >
               {supportedCTypes[type].title}
             </Link>
           </li>

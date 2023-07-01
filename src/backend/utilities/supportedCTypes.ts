@@ -15,7 +15,7 @@ export const supportedCTypes: Record<SupportedCType, ICType> = {
 };
 
 export const kiltCost: Record<SupportedCType, number> = {
-  id: 1,
+  id: 2,
   email: 2,
   twitter: 3,
 };
