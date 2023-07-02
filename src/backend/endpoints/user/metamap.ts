@@ -3,7 +3,7 @@ import { Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { initializeApp, getApps } from 'firebase/app';
 
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 
 import { logger } from '../../utilities/logger';
 
@@ -26,9 +26,11 @@ export const firestore = getFirestore(firebase);
 // WH SECRET oEI07pv3tHbQ1069H61r35C0K
 async function handler(req: Request, res: Response): Promise<void> {
   try {
-    const { flowId } = req.body;
+    const { flowId, eventName } = req.body;
 
-    const docRef = await setDoc(doc(firestore, 'metamap', flowId), req.body);
+    const docRef = await updateDoc(doc(firestore, 'metamap', flowId), {
+      [eventName]: req.body,
+    });
 
     res.json({
       docRef,
