@@ -140,6 +140,7 @@ function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
 function Claim() {
   const { type } = useParams();
 
+  const [flowId, setFlowId] = useState();
   const [session, setSession] = useState<Session>();
 
   const [status, setStatus] = useState<'start' | 'requested' | 'paid'>('start');
@@ -147,10 +148,10 @@ function Claim() {
   const [error, setError] = useState<FlowError>();
 
   useEffect(() => {
-    const button = document.getElementById('metamap-button');
+    const button: any = document.querySelector('mati-button');
 
-    button?.addEventListener('mati:userStartedSdk', ({ detail }: any) => {
-      console.log('started payload', detail);
+    button?.addEventListener('mati:userStartedSdk', () => {
+      setFlowId(button.__flowId);
     });
   }, []);
 
@@ -238,6 +239,7 @@ function Claim() {
   const cType = supportedCTypes[type];
   const { title, properties } = cType;
 
+  console.log('ASD', flowId);
   return (
     <section>
       <h2>{title}</h2>
