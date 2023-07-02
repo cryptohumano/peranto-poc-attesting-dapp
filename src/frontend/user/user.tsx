@@ -146,6 +146,14 @@ function Claim() {
 
   const [error, setError] = useState<FlowError>();
 
+  useEffect(() => {
+    const button = document.getElementById('metamap-button');
+
+    button?.addEventListener('mati:userStartedSdk', ({ detail }: any) => {
+      console.log('started payload', detail);
+    });
+  }, []);
+
   const handleConnect = useCallback((session: Session) => {
     setSession(session);
   }, []);
