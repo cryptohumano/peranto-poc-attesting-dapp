@@ -154,7 +154,7 @@ function Claim() {
       button?.addEventListener('mati:userStartedSdk', () => {
         setFlowId(button.__flowId);
       });
-    }, 1000 * 3);
+    }, 1000 * 5);
   }, []);
 
   const handleConnect = useCallback((session: Session) => {
