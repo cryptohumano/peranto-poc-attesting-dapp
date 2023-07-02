@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { createRoot } from 'react-dom/client';
 
 import { FormEvent, useCallback, useEffect, useState } from 'react';
@@ -9,6 +10,8 @@ import {
   Routes,
   useParams,
 } from 'react-router-dom';
+import { onSnapshot, getFirestore, doc } from 'firebase/firestore';
+import { initializeApp, getApps } from 'firebase/app';
 
 import ky from 'ky';
 import { IClaimContents, IEncryptedMessage } from '@kiltprotocol/sdk-js';
@@ -30,6 +33,22 @@ import {
 } from '../../backend/utilities/supportedCTypes';
 import { paths as apiPaths } from '../../backend/endpoints/paths';
 import { sessionHeader } from '../../backend/endpoints/user/sessionHeader';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyAAwR5GvEUi3lLWy9bb1tz65jhvHI3vufc',
+  authDomain: 'peranto-test.firebaseapp.com',
+  projectId: 'peranto-test',
+  storageBucket: 'peranto-test.appspot.com',
+  messagingSenderId: '777447831295',
+  appId: '1:777447831295:web:6a987d7c8b307ecef43eca',
+};
+
+const apps = getApps();
+
+export const firebase =
+  apps.length > 0 ? apps[0] : initializeApp(firebaseConfig);
+
+export const firestore = getFirestore(firebase);
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -140,23 +159,31 @@ function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
 function Claim() {
   const { type } = useParams();
 
-  const [flowId, setFlowId] = useState();
+  const [verificationId, setVerificationId] = useState('');
   const [session, setSession] = useState<Session>();
-
   const [status, setStatus] = useState<'start' | 'requested' | 'paid'>('start');
-
   const [error, setError] = useState<FlowError>();
 
-  console.log('ASD');
   useEffect(() => {
-    setTimeout(() => {
-      const button: any = document.querySelector('mati-button');
+    if (verificationId)
+      onSnapshot(
+        // doc(firestore, 'metamap', 'testId_verification_completed'),
+        doc(firestore, 'metamap', 'testId_verification_started'),
+        (doc: any) => {
+          const data = doc.data();
 
-      button?.addEventListener('mati:userStartedSdk', () => {
-        setFlowId(button.__flowId);
-      });
-    }, 1000 * 5);
-  }, []);
+          console.log('META::', data);
+        },
+      );
+  }, [verificationId]);
+
+  const triggerListener = () => {
+    const button: any = document.querySelector('mati-button');
+
+    button?.addEventListener('mati:userStartedSdk', ({ detail }: any) => {
+      setVerificationId(detail.verificationId);
+    });
+  };
 
   const handleConnect = useCallback((session: Session) => {
     setSession(session);
@@ -242,7 +269,6 @@ function Claim() {
   const cType = supportedCTypes[type];
   const { title, properties } = cType;
 
-  console.log('ASD', flowId);
   return (
     <section>
       <h2>{title}</h2>
@@ -251,10 +277,12 @@ function Claim() {
       {status === 'start' && type === 'id' && (
         // implement custom claim forms if you want to handle non-string properties
         <>
-          <mati-button
-            clientid="64811ce44d683b001b9013f0"
-            flowId="64811ce44d683b001b9013ef"
-          />
+          <div onMouseEnter={triggerListener}>
+            <mati-button
+              clientid="64811ce44d683b001b9013f0"
+              flowId="64811ce44d683b001b9013ef"
+            />
+          </div>
           <form className="my-2" onSubmit={handleClaim}>
             {Object.keys(properties).map((property) => (
               <label className="hidden" key={property}>
