@@ -42,4 +42,4 @@ async function handler(req: Request, res: Response): Promise<void> {
 
 export const metamap = Router();
 
-metamap.get('/api/metamap', handler);
+metamap.post('/api/metamap', handler);
