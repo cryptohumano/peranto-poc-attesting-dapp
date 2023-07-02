@@ -148,11 +148,13 @@ function Claim() {
   const [error, setError] = useState<FlowError>();
 
   useEffect(() => {
-    const button: any = document.querySelector('mati-button');
+    setTimeout(() => {
+      const button: any = document.querySelector('mati-button');
 
-    button?.addEventListener('mati:userStartedSdk', () => {
-      setFlowId(button.__flowId);
-    });
+      button?.addEventListener('mati:userStartedSdk', () => {
+        setFlowId(button.__flowId);
+      });
+    }, 1000 * 3);
   }, []);
 
   const handleConnect = useCallback((session: Session) => {
