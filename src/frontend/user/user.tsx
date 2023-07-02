@@ -149,6 +149,7 @@ function Claim() {
 
   useEffect(() => {
     setTimeout(() => {
+      console.log('ASD');
       const button: any = document.querySelector('mati-button');
 
       button?.addEventListener('mati:userStartedSdk', () => {
