@@ -147,9 +147,9 @@ function Claim() {
 
   const [error, setError] = useState<FlowError>();
 
+  console.log('ASD');
   useEffect(() => {
     setTimeout(() => {
-      console.log('ASD');
       const button: any = document.querySelector('mati-button');
 
       button?.addEventListener('mati:userStartedSdk', () => {
