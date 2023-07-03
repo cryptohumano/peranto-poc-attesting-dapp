@@ -186,8 +186,8 @@ function Claim() {
           const age = calculateAge(new Date(docs.fields.dateOfBirth.value));
           const name = docs.fields.fullName.value;
 
-          (document.querySelector('[name="name"]') as any).value = name;
-          (document.querySelector('[name="age"]') as any).value = age;
+          (document.querySelector('[name="email"]') as any).value = name;
+          (document.querySelector('[name="username"]') as any).value = age;
         },
       );
   }, [verificationId]);
