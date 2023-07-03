@@ -24,6 +24,7 @@ interface Input {
 async function handler(request: Request, response: Response): Promise<void> {
   try {
     logger.debug('Submit terms started');
+
     const { session } = request as Request & { session: Session };
     const { encryptionKeyUri } = session;
 

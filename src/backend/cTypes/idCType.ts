@@ -12,5 +12,5 @@ export const idCType: ICType = {
   },
   title: 'INE ID',
   type: 'object',
-  $id: 'kilt:ctype:0x3112e1e3fb387e5eb6c109aa45afc7ed9df01f1c90a976a8b00585abf817ca82',
+  $id: 'kilt:ctype:0x5820983dbb2bc4ed14e9196ec9cc572e0c8f169dbe3c62fd6f7260d8d88f4510',
 };
