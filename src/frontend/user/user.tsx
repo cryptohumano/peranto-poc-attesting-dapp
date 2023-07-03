@@ -172,7 +172,9 @@ function Claim() {
         (doc: any) => {
           const data = doc.data();
 
-          console.log('META::', JSON.parse(data.payload));
+          const parsed = JSON.parse(data.payload);
+
+          console.log('INE::', parsed.documents[0]);
         },
       );
   }, [verificationId]);
