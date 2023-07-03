@@ -21,7 +21,7 @@ export interface Credential {
 }
 
 // Maps are used for example purposes. A real database should be used in production.
-const credentials: Map<string, Credential> = new Map();
+// const credentials: Map<string, Credential> = new Map();
 
 export function addClaim(claim: ICredential) {
   const id = randomUUID();
