@@ -30,6 +30,7 @@ async function handler(request: Request, response: Response): Promise<void> {
 
     const { type, claimContents } = request.body as Input;
 
+    logger.info('ctype: ' + JSON.stringify(supportedCTypes[type]));
     const claim = Claim.fromCTypeAndClaimContents(
       supportedCTypes[type],
       claimContents,
