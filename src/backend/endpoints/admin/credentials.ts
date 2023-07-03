@@ -23,6 +23,7 @@ function sendErrorResponse(error: unknown, response: Response) {
 }
 
 export const credentials = Router();
+// Trigger deploy
 
 credentials.get(paths.credentials.list, async (request, response) => {
   logger.debug('Getting list of credentials');
