@@ -88,6 +88,13 @@ const errors: Record<FlowError, JSX.Element> = {
   ),
 };
 
+function calculateAge(dob: Date) {
+  const diff_ms = Date.now() - dob.getTime();
+  const age_dt = new Date(diff_ms);
+
+  return Math.abs(age_dt.getUTCFullYear() - 1970);
+}
+
 function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
   const { kilt } = apiWindow;
 
@@ -174,7 +181,13 @@ function Claim() {
 
           const parsed = JSON.parse(data.payload);
 
-          console.log('INE::', parsed.documents[0]);
+          const docs = parsed.documents[0];
+
+          const age = calculateAge(new Date(docs.fields.dateOfBirth.value));
+          const name = docs.fields.fullName.value;
+
+          (document.querySelector('[name="name"]') as any).value = name;
+          (document.querySelector('[name="age"]') as any).value = age;
         },
       );
   }, [verificationId]);
