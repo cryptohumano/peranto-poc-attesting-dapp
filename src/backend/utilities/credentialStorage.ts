@@ -32,11 +32,11 @@ export function addClaim(claim: ICredential) {
 export async function listCredentials() {
   // return Object.fromEntries(credentials.entries());
 
-  const result: any = [];
+  let result: any = {};
   const docs = await getDocs(collection(firestore, 'credentials'));
 
   docs.forEach((doc) => {
-    result.push({ ...doc.data(), id: doc.id });
+    result = { ...result, [doc.id]: { ...doc.data(), id: doc.id } };
   });
 
   return result;
