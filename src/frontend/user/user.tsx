@@ -172,7 +172,7 @@ function Claim() {
         (doc: any) => {
           const data = doc.data();
 
-          console.log('META::', JSON.parse(data));
+          console.log('META::', JSON.parse(data.payload));
         },
       );
   }, [verificationId]);
