@@ -4,7 +4,7 @@ export const idCType: ICType = {
   $schema: 'http://kilt-protocol.org/draft-01/ctype#',
   properties: {
     age: {
-      type: 'integer',
+      type: 'string',
     },
     name: {
       type: 'string',
@@ -12,5 +12,5 @@ export const idCType: ICType = {
   },
   title: 'INE ID',
   type: 'object',
-  $id: 'kilt:ctype:0xa742f2eb8ba8d939c9ccd1332511fa284c528a57b36bd33c3168b11da31a3366',
+  $id: 'kilt:ctype:0x1cb3b0074246693da6107dfd91d831f10896ae5027538cb6fc8d46e76b676756',
 };
