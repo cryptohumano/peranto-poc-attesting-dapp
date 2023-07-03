@@ -47,7 +47,7 @@ credentials.delete(paths.credentials.item, async (request, response) => {
     const { id } = request.params;
     logger.debug('Deleting credential');
 
-    deleteCredential(id);
+    await deleteCredential(id);
 
     response.sendStatus(StatusCodes.OK);
   } catch (error) {

@@ -9,6 +9,7 @@ import {
   getDoc,
   collection,
   updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import { firestore } from '../endpoints/user/metamap';
 
@@ -54,12 +55,13 @@ export async function getCredential(id: string) {
   return credential;
 }
 
-export function deleteCredential(id: string) {
-  const deleted = credentials.delete(id);
+export async function deleteCredential(id: string) {
+  await deleteDoc(doc(firestore, 'credentials', id));
 
-  if (!deleted) {
-    throw new NotFoundError('Credential not found');
-  }
+  // const deleted = credentials.delete(id);
+  // if (!deleted) {
+  //   throw new NotFoundError('Credential not found');
+  // }
 }
 
 export async function addAttestation(id: string, attestation: IAttestation) {
