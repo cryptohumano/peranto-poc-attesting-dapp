@@ -26,14 +26,16 @@ export const credentials = Router();
 
 credentials.get(paths.credentials.list, async (request, response) => {
   logger.debug('Getting list of credentials');
-  response.send(listCredentials());
+  response.send(await listCredentials());
 });
 
 credentials.get(paths.credentials.item, async (request, response) => {
   try {
     const { id } = request.params;
+
     logger.debug(`Getting credential`);
-    response.send(getCredential(id));
+
+    response.send(await getCredential(id));
   } catch (error) {
     sendErrorResponse(error, response);
   }
@@ -57,13 +59,13 @@ credentials.post(paths.credentials.attest, async (request, response) => {
     const { id } = request.params;
 
     logger.debug(`Getting credential`);
-    const { claim } = getCredential(id);
+    const { claim } = (await getCredential(id)) as any;
 
     logger.debug('Attesting credential');
     const attestation = await attest(claim);
 
     logger.debug('Credential attested, updating database');
-    const attestedCredential = addAttestation(id, attestation);
+    const attestedCredential = await addAttestation(id, attestation);
 
     response.send(attestedCredential);
   } catch (error) {
@@ -76,13 +78,13 @@ credentials.post(paths.credentials.revoke, async (request, response) => {
     const { id } = request.params;
 
     logger.debug('Getting credential');
-    const { claim } = getCredential(id);
+    const { claim } = (await getCredential(id)) as any;
 
     logger.debug('Revoking credential');
     const attestation = await revoke(claim);
 
     logger.debug('Credential revoked, updating database');
-    const revokedCredential = addAttestation(id, attestation);
+    const revokedCredential = await addAttestation(id, attestation);
 
     response.send(revokedCredential);
   } catch (error) {
