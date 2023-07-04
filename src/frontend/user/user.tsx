@@ -13,6 +13,8 @@ import {
 import { onSnapshot, getFirestore, doc } from 'firebase/firestore';
 import { initializeApp, getApps } from 'firebase/app';
 
+import { ChevronLeftIcon } from '@heroicons/react/20/solid';
+
 import ky from 'ky';
 import { IClaimContents, IEncryptedMessage } from '@kiltprotocol/sdk-js';
 
@@ -174,10 +176,12 @@ function Claim() {
   useEffect(() => {
     if (verificationId)
       onSnapshot(
-        // doc(firestore, 'metamap', 'testId_verification_completed'),
-        doc(firestore, 'metamap', 'testId_verification_started'),
+        doc(firestore, 'metamap', 'testId_verification_completed'),
+        // doc(firestore, 'metamap', 'testId_verification_started'),
         (doc: any) => {
           const data = doc.data();
+
+          if (!data) return;
 
           const parsed = JSON.parse(data.payload);
 
@@ -285,77 +289,101 @@ function Claim() {
   const { title, properties } = cType;
 
   return (
-    <section>
-      <h2>{title}</h2>
-      <p className="mb-4">Price: {kiltCost[type]} KILT</p>
-
-      {status === 'start' && type === 'id' && (
-        // implement custom claim forms if you want to handle non-string properties
-        <>
-          <div onMouseEnter={triggerListener}>
-            <mati-button
-              clientid="64811ce44d683b001b9013f0"
-              flowId="64811ce44d683b001b9013ef"
-            />
+    <section className="bg-base-200 min-h-screen flex flex-col justify-center kilt-bg">
+      <div className="container mx-auto max-w-5xl card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <div className="card-body flex flex-col gap-4">
+          <div className="relative">
+            <Link
+              to={paths.home}
+              className="absolute -top-5 -left-2 text-xs flex items-center"
+            >
+              <ChevronLeftIcon className="w-6" />
+              Back
+            </Link>
           </div>
-          <form className="my-2" onSubmit={handleClaim}>
-            {Object.keys(properties).map((property) => (
-              <label className="hidden" key={property}>
-                {property}:
-                <input name={property} disabled={!session} required />
-              </label>
-            ))}
 
-            {!session && <Connect onConnect={handleConnect} />}
+          <div className="flex justify-between items-end">
+            <h2 className="text-xl">
+              {title === 'Authorization' ? 'INE' : title}
+            </h2>
+            <span>Price: {kiltCost[type]} KILT</span>
+          </div>
 
-            {session && (
-              <button className="btn btn-active btn-primary" type="submit">
-                Submit
-              </button>
+          <div className="flex flex-col items-center">
+            {status === 'start' && type === 'id' && (
+              <>
+                <div className="my-8" onMouseEnter={triggerListener}>
+                  <mati-button
+                    clientid="64811ce44d683b001b9013f0"
+                    flowId="64811ce44d683b001b9013ef"
+                  />
+                </div>
+                <form className="my-2" onSubmit={handleClaim}>
+                  {Object.keys(properties).map((property) => (
+                    <label className="hidden" key={property}>
+                      {property}:
+                      <input name={property} disabled={!session} required />
+                    </label>
+                  ))}
+
+                  {!session && <Connect onConnect={handleConnect} />}
+
+                  {session && (
+                    <button
+                      className="btn btn-active btn-primary"
+                      type="submit"
+                    >
+                      Submit
+                    </button>
+                  )}
+                </form>
+              </>
             )}
-          </form>
-        </>
-      )}
 
-      {status === 'start' && type !== 'id' && (
-        // implement custom claim forms if you want to handle non-string properties
-        <>
-          <form onSubmit={handleClaim}>
-            {Object.keys(properties).map((property) => (
-              <label key={property}>
-                {property}:
-                <input name={property} disabled={!session} required />
-              </label>
-            ))}
+            {status === 'start' && type !== 'id' && (
+              // implement custom claim forms if you want to handle non-string properties
+              <>
+                <form onSubmit={handleClaim}>
+                  {Object.keys(properties).map((property) => (
+                    <label key={property}>
+                      {property}:
+                      <input name={property} disabled={!session} required />
+                    </label>
+                  ))}
 
-            {!session && <Connect onConnect={handleConnect} />}
+                  {!session && <Connect onConnect={handleConnect} />}
 
-            {session && (
-              <button className="btn btn-active btn-primary" type="submit">
-                Submit
-              </button>
+                  {session && (
+                    <button
+                      className="btn btn-active btn-primary"
+                      type="submit"
+                    >
+                      Submit
+                    </button>
+                  )}
+                </form>
+              </>
             )}
-          </form>
-        </>
-      )}
 
-      {status === 'requested' && (
-        <form onSubmit={handlePayment}>
-          <p>Thanks for your request. Please pay</p>
-          <button>Pay</button>
-        </form>
-      )}
+            {status === 'requested' && (
+              <form onSubmit={handlePayment}>
+                <p>Thanks for your request. Please pay</p>
+                <button>Pay</button>
+              </form>
+            )}
 
-      {status === 'paid' && (
-        <p>
-          Thanks for your payment! Your request has been sent to the attester
-          for processing. You can check the attestation status in your wallet.
-        </p>
-      )}
+            {status === 'paid' && (
+              <p>
+                Thanks for your payment! Your request has been sent to the
+                attester for processing. You can check the attestation status in
+                your wallet.
+              </p>
+            )}
 
-      {error && errors[error]}
-
-      <Link to={paths.home}>Back</Link>
+            {error && errors[error]}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
@@ -366,8 +394,10 @@ function Home() {
       <div className="hero min-h-screen container mx-auto max-w-5xl">
         <div className="hero-content flex-col lg:flex-row">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Peranto Attest App</h1>
-            <p className="py-6">
+            <h1 className="text-5xl font-bold text-[#1b2a51]">
+              Peranto Attest App
+            </h1>
+            <p className="py-6 text-[#1b2a51]">
               This KILT Attester Example demonstrates how to issue credentials
               for a couple basic claim types which already exist on the KILT
               blockchain. The user chooses a claim type, enters the claim data,
@@ -377,13 +407,13 @@ function Home() {
           </div>
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div className="card-body">
-              <p>Start selecting a claim type:</p>
+              <p className="text-[#1b2a51]">Start selecting a claim type:</p>
 
               <ul className="menu w-56 rounded-box">
                 {supportedCTypeKeys.map((type, k) => (
                   <li key={type}>
                     <Link
-                      className="link link-primary"
+                      className="link text-[#1b2a51]"
                       to={generatePath(paths.claim, { type })}
                     >
                       {k === 0 && (

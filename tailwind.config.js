@@ -7,6 +7,6 @@ export default {
   // eslint-disable-next-line import/no-extraneous-dependencies
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['light', 'dark', 'cupcake'],
+    themes: ['light', 'dark', 'cupcake', 'aqua'],
   },
 };
