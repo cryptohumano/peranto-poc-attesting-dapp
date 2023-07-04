@@ -307,7 +307,7 @@ function Claim() {
 function Home() {
   return (
     <section>
-      <h1 className="my-4">CertifiedProof</h1>
+      <h1 className="my-4">Peranto Attest App</h1>
 
       <p>
         This KILT Attester Example demonstrates how to issue credentials for a
