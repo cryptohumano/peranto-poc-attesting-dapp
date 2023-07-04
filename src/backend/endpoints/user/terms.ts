@@ -24,11 +24,13 @@ interface Input {
 async function handler(request: Request, response: Response): Promise<void> {
   try {
     logger.debug('Submit terms started');
+
     const { session } = request as Request & { session: Session };
     const { encryptionKeyUri } = session;
 
     const { type, claimContents } = request.body as Input;
 
+    logger.info('ctype: ' + JSON.stringify(supportedCTypes[type]));
     const claim = Claim.fromCTypeAndClaimContents(
       supportedCTypes[type],
       claimContents,

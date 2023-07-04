@@ -9,7 +9,7 @@ import { auth } from './utilities/auth';
 import { adminRouter } from './routers/admin';
 import { userRouter } from './routers/user';
 
-(async () => {
+const initApp = async () => {
   await didDocumentPromise;
   logger.info('Blockchain connection initialized');
 
@@ -34,4 +34,8 @@ import { userRouter } from './routers/user';
 
   process.on('unhandledRejection', stop);
   process.on('uncaughtException', stop);
-})();
+
+  return app;
+};
+
+export default initApp();

@@ -3,14 +3,14 @@ import type { ICType } from '@kiltprotocol/sdk-js';
 export const idCType: ICType = {
   $schema: 'http://kilt-protocol.org/draft-01/ctype#',
   properties: {
-    age: {
-      type: 'integer',
+    email: {
+      type: 'string',
     },
-    name: {
+    username: {
       type: 'string',
     },
   },
-  title: 'INE ID',
+  title: 'Authorization',
   type: 'object',
-  $id: 'kilt:ctype:0x3112e1e3fb387e5eb6c109aa45afc7ed9df01f1c90a976a8b00585abf817ca82',
+  $id: 'kilt:ctype:0xdf952230c87e7fbdc8503a394540c8e99029180611e7107c4eee33f67f57aa57',
 };
