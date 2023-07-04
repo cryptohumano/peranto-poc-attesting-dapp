@@ -430,6 +430,40 @@ html {
   --tw-backdrop-sepia: ;
 }
 
+.container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
 @media (hover: hover) {
   .label a:hover {
     --tw-text-opacity: 1;
@@ -439,6 +473,13 @@ html {
   .link-primary:hover {
     --tw-text-opacity: 1;
     color: hsl(var(--pf) / var(--tw-text-opacity));
+  }
+
+  .menu li > :not(ul):not(details):active, .menu li > :not(ul):not(details).active, .menu li > details > summary:active {
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--n) / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: hsl(var(--nc) / var(--tw-text-opacity));
   }
 }
 
@@ -496,6 +537,67 @@ html {
 .btn:is(input[type="checkbox"]):after, .btn:is(input[type="radio"]):after {
   --tw-content: attr(aria-label);
   content: var(--tw-content);
+}
+
+.card {
+  border-radius: var(--rounded-box, 1rem);
+  flex-direction: column;
+  display: flex;
+  position: relative;
+}
+
+.card:focus {
+  outline-offset: 2px;
+  outline: 2px solid #0000;
+}
+
+.card-body {
+  padding: var(--padding-card, 2rem);
+  flex-direction: column;
+  flex: auto;
+  gap: .5rem;
+  display: flex;
+}
+
+.card-body :where(p) {
+  flex-grow: 1;
+}
+
+.card figure {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.card.image-full {
+  display: grid;
+}
+
+.card.image-full:before {
+  content: "";
+  z-index: 10;
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--n) / var(--tw-bg-opacity));
+  opacity: .75;
+  border-radius: var(--rounded-box, 1rem);
+  position: relative;
+}
+
+.card.image-full:before, .card.image-full > * {
+  grid-row-start: 1;
+  grid-column-start: 1;
+}
+
+.card.image-full > figure img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.card.image-full > .card-body {
+  z-index: 20;
+  --tw-text-opacity: 1;
+  color: hsl(var(--nc) / var(--tw-text-opacity));
+  position: relative;
 }
 
 @media (hover: hover) {
@@ -569,6 +671,29 @@ html {
   display: flex;
 }
 
+.hero {
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  place-items: center;
+  display: grid;
+}
+
+.hero > * {
+  grid-row-start: 1;
+  grid-column-start: 1;
+}
+
+.hero-content {
+  z-index: 0;
+  max-width: 80rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  display: flex;
+}
+
 .input {
   height: 3rem;
   border-width: 1px;
@@ -635,10 +760,51 @@ html {
   text-decoration-line: underline;
 }
 
+.menu {
+  flex-flow: column wrap;
+  padding: .5rem;
+  font-size: .875rem;
+  line-height: 1.25rem;
+  display: flex;
+}
+
+.menu :where(li ul) {
+  white-space: nowrap;
+  margin-left: 1rem;
+  padding-left: .5rem;
+  position: relative;
+}
+
+.menu :where(li:not(.menu-title) > :not(ul):not(details):not(.menu-title)), .menu :where(li:not(.menu-title) > details > summary:not(.menu-title)) {
+  user-select: none;
+  grid-auto-columns: max-content auto max-content;
+  grid-auto-flow: column;
+  align-content: flex-start;
+  align-items: center;
+  gap: .5rem;
+  display: grid;
+}
+
 .menu li.disabled {
   cursor: not-allowed;
   user-select: none;
   color: hsl(var(--bc) / .3);
+}
+
+.menu :where(li > .menu-dropdown:not(.menu-dropdown-show)) {
+  display: none;
+}
+
+:where(.menu li) {
+  flex-flow: column wrap;
+  flex-shrink: 0;
+  align-items: stretch;
+  display: flex;
+  position: relative;
+}
+
+:where(.menu li) .badge {
+  justify-self: end;
 }
 
 .steps {
@@ -907,6 +1073,44 @@ html {
   }
 }
 
+.card :where(figure:first-child) {
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+  border-end-start-radius: unset;
+  border-end-end-radius: unset;
+  overflow: hidden;
+}
+
+.card :where(figure:last-child) {
+  border-start-start-radius: unset;
+  border-start-end-radius: unset;
+  border-end-start-radius: inherit;
+  border-end-end-radius: inherit;
+  overflow: hidden;
+}
+
+.card:focus-visible {
+  outline-offset: 2px;
+  outline: 2px solid;
+}
+
+.card.bordered {
+  --tw-border-opacity: 1;
+  border-width: 1px;
+  border-color: hsl(var(--b2) / var(--tw-border-opacity));
+}
+
+.card.compact .card-body {
+  padding: 1rem;
+  font-size: .875rem;
+  line-height: 1.25rem;
+}
+
+.card.image-full :where(figure) {
+  border-radius: inherit;
+  overflow: hidden;
+}
+
 @keyframes checkmark {
   0% {
     background-position-y: 5px;
@@ -965,6 +1169,72 @@ html {
 .link:focus-visible {
   outline-offset: 2px;
   outline: 2px solid;
+}
+
+:where(.menu li:empty) {
+  background-color: hsl(var(--bc) / .1);
+  height: 1px;
+  margin: .5rem 1rem;
+}
+
+.menu :where(li ul):before {
+  width: 1px;
+  background-color: hsl(var(--bc) / .1);
+  content: "";
+  position: absolute;
+  top: .75rem;
+  bottom: .75rem;
+  left: 0;
+}
+
+.menu :where(li:not(.menu-title) > :not(ul):not(details):not(.menu-title)), .menu :where(li:not(.menu-title) > details > summary:not(.menu-title)) {
+  text-align: left;
+  border-radius: var(--rounded-btn, .5rem);
+  padding: .5rem 1rem;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-duration: .2s;
+  transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+}
+
+:where(.menu li:not(.menu-title):not(.disabled) > :not(ul):not(details):not(.menu-title)):not(summary):not(.active).focus, :where(.menu li:not(.menu-title):not(.disabled) > :not(ul):not(details):not(.menu-title)):not(summary):not(.active):focus, :where(.menu li:not(.menu-title):not(.disabled) > :not(ul):not(details):not(.menu-title)):is(summary):not(.active):focus-visible, :where(.menu li:not(.menu-title):not(.disabled) > details > summary:not(.menu-title)):not(summary):not(.active).focus, :where(.menu li:not(.menu-title):not(.disabled) > details > summary:not(.menu-title)):not(summary):not(.active):focus, :where(.menu li:not(.menu-title):not(.disabled) > details > summary:not(.menu-title)):is(summary):not(.active):focus-visible {
+  cursor: pointer;
+  background-color: hsl(var(--bc) / .1);
+  --tw-text-opacity: 1;
+  color: hsl(var(--bc) / var(--tw-text-opacity));
+  outline-offset: 2px;
+  outline: 2px solid #0000;
+}
+
+.menu li > :not(ul):not(details):active, .menu li > :not(ul):not(details).active, .menu li > details > summary:active {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--n) / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: hsl(var(--nc) / var(--tw-text-opacity));
+}
+
+.menu :where(li > details > summary)::-webkit-details-marker {
+  display: none;
+}
+
+.menu :where(li > details > summary):after, .menu :where(li > .menu-dropdown-toggle):after {
+  height: .5rem;
+  width: .5rem;
+  content: "";
+  transform-origin: 75% 75%;
+  pointer-events: none;
+  justify-self: end;
+  margin-top: -.5rem;
+  transition-property: transform, margin-top;
+  transition-duration: .3s;
+  transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+  display: block;
+  transform: rotate(45deg);
+  box-shadow: 2px 2px;
+}
+
+.menu :where(li > details[open] > summary):after, .menu :where(li > .menu-dropdown-toggle.menu-dropdown-show):after {
+  margin-top: 0;
+  transform: rotate(225deg);
 }
 
 @keyframes modal-pop {
@@ -1137,6 +1407,10 @@ html {
   }
 }
 
+.rounded-box {
+  border-radius: var(--rounded-box, 1rem);
+}
+
 .glass, .glass.btn-active {
   backdrop-filter: blur(var(--glass-blur, 40px));
   background-color: #0000;
@@ -1249,6 +1523,18 @@ html {
   border-bottom-right-radius: var(--rounded-btn, .5rem);
 }
 
+.card-compact .card-body {
+  padding: 1rem;
+  font-size: .875rem;
+  line-height: 1.25rem;
+}
+
+.card-normal .card-body {
+  padding: var(--padding-card, 2rem);
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .join.join-vertical > :where(:not(:first-child)) {
   margin-top: -1px;
   margin-left: 0;
@@ -1265,22 +1551,18 @@ html {
   position: static;
 }
 
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .my-2 {
   margin-top: .5rem;
   margin-bottom: .5rem;
 }
 
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .mb-4 {
   margin-bottom: 1rem;
-}
-
-.flex {
-  display: flex;
 }
 
 .contents {
@@ -1291,36 +1573,92 @@ html {
   display: none;
 }
 
+.h-5 {
+  height: 1.25rem;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.w-5 {
+  width: 1.25rem;
+}
+
+.w-56 {
+  width: 14rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-5xl {
+  max-width: 64rem;
+}
+
+.max-w-sm {
+  max-width: 24rem;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
 .flex-col {
   flex-direction: column;
 }
 
-.gap-2 {
-  gap: .5rem;
+.bg-base-100 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+}
+
+.bg-base-200 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b2) / var(--tw-bg-opacity));
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px #00000040;
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-html {
-  height: 100%;
+.kilt-bg {
   background: url("logo.974825c5.svg") right 1rem top 1rem no-repeat;
-  font-family: sans-serif;
-  line-height: 1.5rem;
 }
 
-body {
-  max-width: 36rem;
-  margin: 20vh auto auto;
-}
+@media (min-width: 1024px) {
+  .lg\:flex-row {
+    flex-direction: row;
+  }
 
-button {
-  cursor: pointer;
-  margin: 1rem 0;
-  padding: .5rem 1rem;
-  font-size: 1rem;
-  display: block;
+  .lg\:text-left {
+    text-align: left;
+  }
 }
 
 /*# sourceMappingURL=index.b3ec3e8e.css.map */

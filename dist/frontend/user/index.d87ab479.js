@@ -3330,55 +3330,161 @@ _s1(Claim, "CqK8TAuQ+uFP25Mu5sWdM/9dwto=", false, function() {
 _c1 = Claim;
 function Home() {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("section", {
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                className: "my-4",
-                children: "CertifiedProof"
-            }, void 0, false, {
-                fileName: "src/frontend/user/user.tsx",
-                lineNumber: 366,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: "This KILT Attester Example demonstrates how to issue credentials for a couple basic claim types which already exist on the KILT blockchain. The user chooses a claim type, enters the claim data, makes a (mock) payment, and the claim is sent to the attester to be reviewed."
-            }, void 0, false, {
-                fileName: "src/frontend/user/user.tsx",
-                lineNumber: 368,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                children: "Choose your claim type:"
-            }, void 0, false, {
-                fileName: "src/frontend/user/user.tsx",
-                lineNumber: 375,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
-                className: "flex flex-col gap-2 my-4",
-                children: (0, _supportedCTypes.supportedCTypeKeys).map((type)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
-                            className: "link link-primary",
-                            to: (0, _reactRouterDom.generatePath)((0, _paths.paths).claim, {
-                                type
-                            }),
-                            children: (0, _supportedCTypes.supportedCTypes)[type].title
-                        }, void 0, false, {
+        className: "bg-base-200 kilt-bg",
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            className: "hero min-h-screen container mx-auto max-w-5xl",
+            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "hero-content flex-col lg:flex-row",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "text-center lg:text-left",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                className: "text-5xl font-bold",
+                                children: "Peranto Attest App"
+                            }, void 0, false, {
+                                fileName: "src/frontend/user/user.tsx",
+                                lineNumber: 369,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                className: "py-6",
+                                children: "This KILT Attester Example demonstrates how to issue credentials for a couple basic claim types which already exist on the KILT blockchain. The user chooses a claim type, enters the claim data, makes a (mock) payment, and the claim is sent to the attester to be reviewed."
+                            }, void 0, false, {
+                                fileName: "src/frontend/user/user.tsx",
+                                lineNumber: 370,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/frontend/user/user.tsx",
+                        lineNumber: 368,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100",
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                            className: "card-body",
+                            children: [
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                    children: "Start selecting a claim type:"
+                                }, void 0, false, {
+                                    fileName: "src/frontend/user/user.tsx",
+                                    lineNumber: 380,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
+                                    className: "menu w-56 rounded-box",
+                                    children: (0, _supportedCTypes.supportedCTypeKeys).map((type, k)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
+                                                className: "link link-primary",
+                                                to: (0, _reactRouterDom.generatePath)((0, _paths.paths).claim, {
+                                                    type
+                                                }),
+                                                children: [
+                                                    k === 0 && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("svg", {
+                                                        xmlns: "http://www.w3.org/2000/svg",
+                                                        className: "h-5 w-5",
+                                                        fill: "none",
+                                                        viewBox: "0 0 24 24",
+                                                        stroke: "currentColor",
+                                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("path", {
+                                                            strokeLinecap: "round",
+                                                            strokeLinejoin: "round",
+                                                            strokeWidth: "2",
+                                                            d: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                                        }, void 0, false, {
+                                                            fileName: "src/frontend/user/user.tsx",
+                                                            lineNumber: 397,
+                                                            columnNumber: 27
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "src/frontend/user/user.tsx",
+                                                        lineNumber: 390,
+                                                        columnNumber: 25
+                                                    }, this),
+                                                    k === 1 && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("svg", {
+                                                        xmlns: "http://www.w3.org/2000/svg",
+                                                        className: "h-5 w-5",
+                                                        fill: "none",
+                                                        viewBox: "0 0 24 24",
+                                                        stroke: "currentColor",
+                                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("path", {
+                                                            strokeLinecap: "round",
+                                                            strokeLinejoin: "round",
+                                                            strokeWidth: "2",
+                                                            d: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                        }, void 0, false, {
+                                                            fileName: "src/frontend/user/user.tsx",
+                                                            lineNumber: 413,
+                                                            columnNumber: 27
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "src/frontend/user/user.tsx",
+                                                        lineNumber: 406,
+                                                        columnNumber: 25
+                                                    }, this),
+                                                    k === 2 && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("svg", {
+                                                        xmlns: "http://www.w3.org/2000/svg",
+                                                        className: "h-5 w-5",
+                                                        fill: "none",
+                                                        viewBox: "0 0 24 24",
+                                                        stroke: "currentColor",
+                                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("path", {
+                                                            strokeLinecap: "round",
+                                                            strokeLinejoin: "round",
+                                                            strokeWidth: "2",
+                                                            d: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                                                        }, void 0, false, {
+                                                            fileName: "src/frontend/user/user.tsx",
+                                                            lineNumber: 429,
+                                                            columnNumber: 27
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "src/frontend/user/user.tsx",
+                                                        lineNumber: 422,
+                                                        columnNumber: 25
+                                                    }, this),
+                                                    (0, _supportedCTypes.supportedCTypes)[type].title === "Authorization" ? "INE" : (0, _supportedCTypes.supportedCTypes)[type].title
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "src/frontend/user/user.tsx",
+                                                lineNumber: 385,
+                                                columnNumber: 21
+                                            }, this)
+                                        }, type, false, {
+                                            fileName: "src/frontend/user/user.tsx",
+                                            lineNumber: 384,
+                                            columnNumber: 19
+                                        }, this))
+                                }, void 0, false, {
+                                    fileName: "src/frontend/user/user.tsx",
+                                    lineNumber: 382,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true, {
                             fileName: "src/frontend/user/user.tsx",
-                            lineNumber: 380,
+                            lineNumber: 379,
                             columnNumber: 13
                         }, this)
-                    }, type, false, {
+                    }, void 0, false, {
                         fileName: "src/frontend/user/user.tsx",
-                        lineNumber: 379,
+                        lineNumber: 378,
                         columnNumber: 11
-                    }, this))
-            }, void 0, false, {
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 377,
-                columnNumber: 7
+                lineNumber: 367,
+                columnNumber: 9
             }, this)
-        ]
-    }, void 0, true, {
+        }, void 0, false, {
+            fileName: "src/frontend/user/user.tsx",
+            lineNumber: 366,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
         fileName: "src/frontend/user/user.tsx",
         lineNumber: 365,
         columnNumber: 5
@@ -3394,7 +3500,7 @@ root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Browser
                 element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Home, {}, void 0, false, void 0, void 0)
             }, void 0, false, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 397,
+                lineNumber: 456,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -3402,7 +3508,7 @@ root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Browser
                 element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Claim, {}, void 0, false, void 0, void 0)
             }, void 0, false, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 398,
+                lineNumber: 457,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -3412,18 +3518,18 @@ root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Browser
                 }, void 0, false, void 0, void 0)
             }, void 0, false, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 400,
+                lineNumber: 459,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 396,
+        lineNumber: 455,
         columnNumber: 5
     }, undefined)
 }, void 0, false, {
     fileName: "src/frontend/user/user.tsx",
-    lineNumber: 395,
+    lineNumber: 454,
     columnNumber: 3
 }, undefined));
 var _c, _c1, _c2;
@@ -3436,7 +3542,7 @@ $RefreshReg$(_c2, "Home");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"hEt4l","react-dom/client":"4pZWP","react":"e9zAD","react-router-dom":"cfDu6","ky":"8yu3h","../utilities/session":"34xbu","../utilities/exceptionToError":"32v4a","../utilities/paths":"5w95x","../../backend/utilities/supportedCTypes":"45zNN","../../backend/endpoints/paths":"jzUd7","../../backend/endpoints/user/sessionHeader":"3uiN7","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"gXTgn","firebase/firestore":"6P8of","firebase/app":"X7gGt"}],"hEt4l":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"hEt4l","react-dom/client":"4pZWP","react":"e9zAD","react-router-dom":"cfDu6","firebase/firestore":"6P8of","firebase/app":"X7gGt","ky":"8yu3h","../utilities/session":"34xbu","../utilities/exceptionToError":"32v4a","../utilities/paths":"5w95x","../../backend/utilities/supportedCTypes":"45zNN","../../backend/endpoints/paths":"jzUd7","../../backend/endpoints/user/sessionHeader":"3uiN7","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"gXTgn"}],"hEt4l":[function(require,module,exports) {
 "use strict";
 module.exports = require("./cjs/react-jsx-dev-runtime.development.js");
 
@@ -33122,873 +33228,7 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"8yu3h":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "HTTPError", ()=>(0, _httperrorJs.HTTPError));
-parcelHelpers.export(exports, "TimeoutError", ()=>(0, _timeoutErrorJs.TimeoutError));
-/*! MIT License © Sindre Sorhus */ var _kyJs = require("./core/Ky.js");
-var _constantsJs = require("./core/constants.js");
-var _mergeJs = require("./utils/merge.js");
-var _httperrorJs = require("./errors/HTTPError.js");
-var _timeoutErrorJs = require("./errors/TimeoutError.js");
-const createInstance = (defaults)=>{
-    // eslint-disable-next-line @typescript-eslint/promise-function-async
-    const ky = (input, options)=>(0, _kyJs.Ky).create(input, (0, _mergeJs.validateAndMerge)(defaults, options));
-    for (const method of (0, _constantsJs.requestMethods))// eslint-disable-next-line @typescript-eslint/promise-function-async
-    ky[method] = (input, options)=>(0, _kyJs.Ky).create(input, (0, _mergeJs.validateAndMerge)(defaults, options, {
-            method
-        }));
-    ky.create = (newDefaults)=>createInstance((0, _mergeJs.validateAndMerge)(newDefaults));
-    ky.extend = (newDefaults)=>createInstance((0, _mergeJs.validateAndMerge)(defaults, newDefaults));
-    ky.stop = (0, _constantsJs.stop);
-    return ky;
-};
-const ky = createInstance();
-exports.default = ky;
-
-},{"./core/Ky.js":"btf7t","./core/constants.js":"7qcO1","./utils/merge.js":"24hLa","./errors/HTTPError.js":"dPdBN","./errors/TimeoutError.js":"aw8Aj","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"btf7t":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Ky", ()=>Ky);
-var _httperrorJs = require("../errors/HTTPError.js");
-var _timeoutErrorJs = require("../errors/TimeoutError.js");
-var _mergeJs = require("../utils/merge.js");
-var _normalizeJs = require("../utils/normalize.js");
-var _timeoutJs = require("../utils/timeout.js");
-var _timeoutJsDefault = parcelHelpers.interopDefault(_timeoutJs);
-var _delayJs = require("../utils/delay.js");
-var _delayJsDefault = parcelHelpers.interopDefault(_delayJs);
-var _constantsJs = require("./constants.js");
-class Ky {
-    // eslint-disable-next-line @typescript-eslint/promise-function-async
-    static create(input, options) {
-        const ky = new Ky(input, options);
-        const fn = async ()=>{
-            if (ky._options.timeout > (0, _constantsJs.maxSafeTimeout)) throw new RangeError(`The \`timeout\` option cannot be greater than ${(0, _constantsJs.maxSafeTimeout)}`);
-            // Delay the fetch so that body method shortcuts can set the Accept header
-            await Promise.resolve();
-            let response = await ky._fetch();
-            for (const hook of ky._options.hooks.afterResponse){
-                // eslint-disable-next-line no-await-in-loop
-                const modifiedResponse = await hook(ky.request, ky._options, ky._decorateResponse(response.clone()));
-                if (modifiedResponse instanceof globalThis.Response) response = modifiedResponse;
-            }
-            ky._decorateResponse(response);
-            if (!response.ok && ky._options.throwHttpErrors) {
-                let error = new (0, _httperrorJs.HTTPError)(response, ky.request, ky._options);
-                for (const hook1 of ky._options.hooks.beforeError)// eslint-disable-next-line no-await-in-loop
-                error = await hook1(error);
-                throw error;
-            }
-            // If `onDownloadProgress` is passed, it uses the stream API internally
-            /* istanbul ignore next */ if (ky._options.onDownloadProgress) {
-                if (typeof ky._options.onDownloadProgress !== "function") throw new TypeError("The `onDownloadProgress` option must be a function");
-                if (!(0, _constantsJs.supportsResponseStreams)) throw new Error("Streams are not supported in your environment. `ReadableStream` is missing.");
-                return ky._stream(response.clone(), ky._options.onDownloadProgress);
-            }
-            return response;
-        };
-        const isRetriableMethod = ky._options.retry.methods.includes(ky.request.method.toLowerCase());
-        const result = isRetriableMethod ? ky._retry(fn) : fn();
-        for (const [type, mimeType] of Object.entries((0, _constantsJs.responseTypes)))result[type] = async ()=>{
-            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-            ky.request.headers.set("accept", ky.request.headers.get("accept") || mimeType);
-            const awaitedResult = await result;
-            const response = awaitedResult.clone();
-            if (type === "json") {
-                if (response.status === 204) return "";
-                const arrayBuffer = await response.clone().arrayBuffer();
-                const responseSize = arrayBuffer.byteLength;
-                if (responseSize === 0) return "";
-                if (options.parseJson) return options.parseJson(await response.text());
-            }
-            return response[type]();
-        };
-        return result;
-    }
-    // eslint-disable-next-line complexity
-    constructor(input, options = {}){
-        Object.defineProperty(this, "request", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "abortController", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "_retryCount", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: 0
-        });
-        Object.defineProperty(this, "_input", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "_options", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        this._input = input;
-        this._options = {
-            // TODO: credentials can be removed when the spec change is implemented in all browsers. Context: https://www.chromestatus.com/feature/4539473312350208
-            credentials: this._input.credentials || "same-origin",
-            ...options,
-            headers: (0, _mergeJs.mergeHeaders)(this._input.headers, options.headers),
-            hooks: (0, _mergeJs.deepMerge)({
-                beforeRequest: [],
-                beforeRetry: [],
-                beforeError: [],
-                afterResponse: []
-            }, options.hooks),
-            method: (0, _normalizeJs.normalizeRequestMethod)(options.method ?? this._input.method),
-            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-            prefixUrl: String(options.prefixUrl || ""),
-            retry: (0, _normalizeJs.normalizeRetryOptions)(options.retry),
-            throwHttpErrors: options.throwHttpErrors !== false,
-            timeout: typeof options.timeout === "undefined" ? 10000 : options.timeout,
-            fetch: options.fetch ?? globalThis.fetch.bind(globalThis)
-        };
-        if (typeof this._input !== "string" && !(this._input instanceof URL || this._input instanceof globalThis.Request)) throw new TypeError("`input` must be a string, URL, or Request");
-        if (this._options.prefixUrl && typeof this._input === "string") {
-            if (this._input.startsWith("/")) throw new Error("`input` must not begin with a slash when using `prefixUrl`");
-            if (!this._options.prefixUrl.endsWith("/")) this._options.prefixUrl += "/";
-            this._input = this._options.prefixUrl + this._input;
-        }
-        if (0, _constantsJs.supportsAbortController) {
-            this.abortController = new globalThis.AbortController();
-            if (this._options.signal) {
-                const originalSignal = this._options.signal;
-                this._options.signal.addEventListener("abort", ()=>{
-                    this.abortController.abort(originalSignal.reason);
-                });
-            }
-            this._options.signal = this.abortController.signal;
-        }
-        if (0, _constantsJs.supportsRequestStreams) // @ts-expect-error - Types are outdated.
-        this._options.duplex = "half";
-        this.request = new globalThis.Request(this._input, this._options);
-        if (this._options.searchParams) {
-            // eslint-disable-next-line unicorn/prevent-abbreviations
-            const textSearchParams = typeof this._options.searchParams === "string" ? this._options.searchParams.replace(/^\?/, "") : new URLSearchParams(this._options.searchParams).toString();
-            // eslint-disable-next-line unicorn/prevent-abbreviations
-            const searchParams = "?" + textSearchParams;
-            const url = this.request.url.replace(/(?:\?.*?)?(?=#|$)/, searchParams);
-            // To provide correct form boundary, Content-Type header should be deleted each time when new Request instantiated from another one
-            if (((0, _constantsJs.supportsFormData) && this._options.body instanceof globalThis.FormData || this._options.body instanceof URLSearchParams) && !(this._options.headers && this._options.headers["content-type"])) this.request.headers.delete("content-type");
-            // The spread of `this.request` is required as otherwise it misses the `duplex` option for some reason and throws.
-            this.request = new globalThis.Request(new globalThis.Request(url, {
-                ...this.request
-            }), this._options);
-        }
-        if (this._options.json !== undefined) {
-            this._options.body = JSON.stringify(this._options.json);
-            this.request.headers.set("content-type", this._options.headers.get("content-type") ?? "application/json");
-            this.request = new globalThis.Request(this.request, {
-                body: this._options.body
-            });
-        }
-    }
-    _calculateRetryDelay(error) {
-        this._retryCount++;
-        if (this._retryCount < this._options.retry.limit && !(error instanceof (0, _timeoutErrorJs.TimeoutError))) {
-            if (error instanceof (0, _httperrorJs.HTTPError)) {
-                if (!this._options.retry.statusCodes.includes(error.response.status)) return 0;
-                const retryAfter = error.response.headers.get("Retry-After");
-                if (retryAfter && this._options.retry.afterStatusCodes.includes(error.response.status)) {
-                    let after = Number(retryAfter);
-                    if (Number.isNaN(after)) after = Date.parse(retryAfter) - Date.now();
-                    else after *= 1000;
-                    if (typeof this._options.retry.maxRetryAfter !== "undefined" && after > this._options.retry.maxRetryAfter) return 0;
-                    return after;
-                }
-                if (error.response.status === 413) return 0;
-            }
-            const BACKOFF_FACTOR = 0.3;
-            return Math.min(this._options.retry.backoffLimit, BACKOFF_FACTOR * 2 ** (this._retryCount - 1) * 1000);
-        }
-        return 0;
-    }
-    _decorateResponse(response) {
-        if (this._options.parseJson) response.json = async ()=>this._options.parseJson(await response.text());
-        return response;
-    }
-    async _retry(fn) {
-        try {
-            return await fn();
-        // eslint-disable-next-line @typescript-eslint/no-implicit-any-catch
-        } catch (error) {
-            const ms = Math.min(this._calculateRetryDelay(error), (0, _constantsJs.maxSafeTimeout));
-            if (ms !== 0 && this._retryCount > 0) {
-                await (0, _delayJsDefault.default)(ms, {
-                    signal: this._options.signal
-                });
-                for (const hook of this._options.hooks.beforeRetry){
-                    // eslint-disable-next-line no-await-in-loop
-                    const hookResult = await hook({
-                        request: this.request,
-                        options: this._options,
-                        error: error,
-                        retryCount: this._retryCount
-                    });
-                    // If `stop` is returned from the hook, the retry process is stopped
-                    if (hookResult === (0, _constantsJs.stop)) return;
-                }
-                return this._retry(fn);
-            }
-            throw error;
-        }
-    }
-    async _fetch() {
-        for (const hook of this._options.hooks.beforeRequest){
-            // eslint-disable-next-line no-await-in-loop
-            const result = await hook(this.request, this._options);
-            if (result instanceof Request) {
-                this.request = result;
-                break;
-            }
-            if (result instanceof Response) return result;
-        }
-        if (this._options.timeout === false) return this._options.fetch(this.request.clone());
-        return (0, _timeoutJsDefault.default)(this.request.clone(), this.abortController, this._options);
-    }
-    /* istanbul ignore next */ _stream(response, onDownloadProgress) {
-        const totalBytes = Number(response.headers.get("content-length")) || 0;
-        let transferredBytes = 0;
-        if (response.status === 204) {
-            if (onDownloadProgress) onDownloadProgress({
-                percent: 1,
-                totalBytes,
-                transferredBytes
-            }, new Uint8Array());
-            return new globalThis.Response(null, {
-                status: response.status,
-                statusText: response.statusText,
-                headers: response.headers
-            });
-        }
-        return new globalThis.Response(new globalThis.ReadableStream({
-            async start (controller) {
-                const reader = response.body.getReader();
-                if (onDownloadProgress) onDownloadProgress({
-                    percent: 0,
-                    transferredBytes: 0,
-                    totalBytes
-                }, new Uint8Array());
-                async function read() {
-                    const { done , value  } = await reader.read();
-                    if (done) {
-                        controller.close();
-                        return;
-                    }
-                    if (onDownloadProgress) {
-                        transferredBytes += value.byteLength;
-                        const percent = totalBytes === 0 ? 0 : transferredBytes / totalBytes;
-                        onDownloadProgress({
-                            percent,
-                            transferredBytes,
-                            totalBytes
-                        }, value);
-                    }
-                    controller.enqueue(value);
-                    await read();
-                }
-                await read();
-            }
-        }), {
-            status: response.status,
-            statusText: response.statusText,
-            headers: response.headers
-        });
-    }
-}
-
-},{"../errors/HTTPError.js":"dPdBN","../errors/TimeoutError.js":"aw8Aj","../utils/merge.js":"24hLa","../utils/normalize.js":"dpIXV","../utils/timeout.js":"gIokF","../utils/delay.js":"5qMir","./constants.js":"7qcO1","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"dPdBN":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-// eslint-lint-disable-next-line @typescript-eslint/naming-convention
-parcelHelpers.export(exports, "HTTPError", ()=>HTTPError);
-class HTTPError extends Error {
-    constructor(response, request, options){
-        const code = response.status || response.status === 0 ? response.status : "";
-        const title = response.statusText || "";
-        const status = `${code} ${title}`.trim();
-        const reason = status ? `status code ${status}` : "an unknown error";
-        super(`Request failed with ${reason}`);
-        Object.defineProperty(this, "response", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "request", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "options", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        this.name = "HTTPError";
-        this.response = response;
-        this.request = request;
-        this.options = options;
-    }
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"aw8Aj":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "TimeoutError", ()=>TimeoutError);
-class TimeoutError extends Error {
-    constructor(request){
-        super("Request timed out");
-        Object.defineProperty(this, "request", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        this.name = "TimeoutError";
-        this.request = request;
-    }
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"24hLa":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "validateAndMerge", ()=>validateAndMerge);
-parcelHelpers.export(exports, "mergeHeaders", ()=>mergeHeaders);
-parcelHelpers.export(exports, "deepMerge", ()=>deepMerge);
-var _isJs = require("./is.js");
-const validateAndMerge = (...sources)=>{
-    for (const source of sources){
-        if ((!(0, _isJs.isObject)(source) || Array.isArray(source)) && typeof source !== "undefined") throw new TypeError("The `options` argument must be an object");
-    }
-    return deepMerge({}, ...sources);
-};
-const mergeHeaders = (source1 = {}, source2 = {})=>{
-    const result = new globalThis.Headers(source1);
-    const isHeadersInstance = source2 instanceof globalThis.Headers;
-    const source = new globalThis.Headers(source2);
-    for (const [key, value] of source.entries())if (isHeadersInstance && value === "undefined" || value === undefined) result.delete(key);
-    else result.set(key, value);
-    return result;
-};
-const deepMerge = (...sources)=>{
-    let returnValue = {};
-    let headers = {};
-    for (const source of sources){
-        if (Array.isArray(source)) {
-            if (!Array.isArray(returnValue)) returnValue = [];
-            returnValue = [
-                ...returnValue,
-                ...source
-            ];
-        } else if ((0, _isJs.isObject)(source)) {
-            for (let [key, value] of Object.entries(source)){
-                if ((0, _isJs.isObject)(value) && key in returnValue) value = deepMerge(returnValue[key], value);
-                returnValue = {
-                    ...returnValue,
-                    [key]: value
-                };
-            }
-            if ((0, _isJs.isObject)(source.headers)) {
-                headers = mergeHeaders(headers, source.headers);
-                returnValue.headers = headers;
-            }
-        }
-    }
-    return returnValue;
-};
-
-},{"./is.js":"b5Mep","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"b5Mep":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "isObject", ()=>isObject);
-const isObject = (value)=>value !== null && typeof value === "object";
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"dpIXV":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "normalizeRequestMethod", ()=>normalizeRequestMethod);
-parcelHelpers.export(exports, "normalizeRetryOptions", ()=>normalizeRetryOptions);
-var _constantsJs = require("../core/constants.js");
-const normalizeRequestMethod = (input)=>(0, _constantsJs.requestMethods).includes(input) ? input.toUpperCase() : input;
-const retryMethods = [
-    "get",
-    "put",
-    "head",
-    "delete",
-    "options",
-    "trace"
-];
-const retryStatusCodes = [
-    408,
-    413,
-    429,
-    500,
-    502,
-    503,
-    504
-];
-const retryAfterStatusCodes = [
-    413,
-    429,
-    503
-];
-const defaultRetryOptions = {
-    limit: 2,
-    methods: retryMethods,
-    statusCodes: retryStatusCodes,
-    afterStatusCodes: retryAfterStatusCodes,
-    maxRetryAfter: Number.POSITIVE_INFINITY,
-    backoffLimit: Number.POSITIVE_INFINITY
-};
-const normalizeRetryOptions = (retry = {})=>{
-    if (typeof retry === "number") return {
-        ...defaultRetryOptions,
-        limit: retry
-    };
-    if (retry.methods && !Array.isArray(retry.methods)) throw new Error("retry.methods must be an array");
-    if (retry.statusCodes && !Array.isArray(retry.statusCodes)) throw new Error("retry.statusCodes must be an array");
-    return {
-        ...defaultRetryOptions,
-        ...retry,
-        afterStatusCodes: retryAfterStatusCodes
-    };
-};
-
-},{"../core/constants.js":"7qcO1","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"7qcO1":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "supportsRequestStreams", ()=>supportsRequestStreams);
-parcelHelpers.export(exports, "supportsAbortController", ()=>supportsAbortController);
-parcelHelpers.export(exports, "supportsResponseStreams", ()=>supportsResponseStreams);
-parcelHelpers.export(exports, "supportsFormData", ()=>supportsFormData);
-parcelHelpers.export(exports, "requestMethods", ()=>requestMethods);
-parcelHelpers.export(exports, "responseTypes", ()=>responseTypes);
-parcelHelpers.export(exports, "maxSafeTimeout", ()=>maxSafeTimeout);
-parcelHelpers.export(exports, "stop", ()=>stop);
-const supportsRequestStreams = (()=>{
-    let duplexAccessed = false;
-    let hasContentType = false;
-    const supportsReadableStream = typeof globalThis.ReadableStream === "function";
-    const supportsRequest = typeof globalThis.Request === "function";
-    if (supportsReadableStream && supportsRequest) hasContentType = new globalThis.Request("https://a.com", {
-        body: new globalThis.ReadableStream(),
-        method: "POST",
-        // @ts-expect-error - Types are outdated.
-        get duplex () {
-            duplexAccessed = true;
-            return "half";
-        }
-    }).headers.has("Content-Type");
-    return duplexAccessed && !hasContentType;
-})();
-const supportsAbortController = typeof globalThis.AbortController === "function";
-const supportsResponseStreams = typeof globalThis.ReadableStream === "function";
-const supportsFormData = typeof globalThis.FormData === "function";
-const requestMethods = [
-    "get",
-    "post",
-    "put",
-    "patch",
-    "head",
-    "delete"
-];
-const validate = ()=>undefined;
-validate();
-const responseTypes = {
-    json: "application/json",
-    text: "text/*",
-    formData: "multipart/form-data",
-    arrayBuffer: "*/*",
-    blob: "*/*"
-};
-const maxSafeTimeout = 2147483647;
-const stop = Symbol("stop");
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"gIokF":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _timeoutErrorJs = require("../errors/TimeoutError.js");
-async function timeout(request, abortController, options) {
-    return new Promise((resolve, reject)=>{
-        const timeoutId = setTimeout(()=>{
-            if (abortController) abortController.abort();
-            reject(new (0, _timeoutErrorJs.TimeoutError)(request));
-        }, options.timeout);
-        options.fetch(request).then(resolve).catch(reject).then(()=>{
-            clearTimeout(timeoutId);
-        });
-    });
-}
-exports.default = timeout;
-
-},{"../errors/TimeoutError.js":"aw8Aj","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"5qMir":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-// https://github.com/sindresorhus/delay/tree/ab98ae8dfcb38e1593286c94d934e70d14a4e111
-var _domexceptionJs = require("../errors/DOMException.js");
-async function delay(ms, { signal  }) {
-    return new Promise((resolve, reject)=>{
-        if (signal) {
-            if (signal.aborted) {
-                reject((0, _domexceptionJs.composeAbortError)(signal));
-                return;
-            }
-            signal.addEventListener("abort", handleAbort, {
-                once: true
-            });
-        }
-        function handleAbort() {
-            reject((0, _domexceptionJs.composeAbortError)(signal));
-            clearTimeout(timeoutId);
-        }
-        const timeoutId = setTimeout(()=>{
-            signal?.removeEventListener("abort", handleAbort);
-            resolve();
-        }, ms);
-    });
-}
-exports.default = delay;
-
-},{"../errors/DOMException.js":"bYyIR","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"bYyIR":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-// TODO: When targeting Node.js 18, use `signal.throwIfAborted()` (https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/throwIfAborted)
-parcelHelpers.export(exports, "composeAbortError", ()=>composeAbortError);
-// DOMException is supported on most modern browsers and Node.js 18+.
-// @see https://developer.mozilla.org/en-US/docs/Web/API/DOMException#browser_compatibility
-const isDomExceptionSupported = Boolean(globalThis.DOMException);
-function composeAbortError(signal) {
-    /*
-    NOTE: Use DomException with AbortError name as specified in MDN docs (https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort)
-    > When abort() is called, the fetch() promise rejects with an Error of type DOMException, with name AbortError.
-    */ if (isDomExceptionSupported) return new DOMException(signal?.reason ?? "The operation was aborted.", "AbortError");
-    // DOMException not supported. Fall back to use of error and override name.
-    const error = new Error(signal?.reason ?? "The operation was aborted.");
-    error.name = "AbortError";
-    return error;
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"34xbu":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "apiWindow", ()=>apiWindow);
-parcelHelpers.export(exports, "getCompatibleExtensions", ()=>getCompatibleExtensions);
-parcelHelpers.export(exports, "getSession", ()=>getSession);
-var _sessionApi = require("../../backend/endpoints/user/sessionApi");
-const apiWindow = window;
-function getCompatibleExtensions() {
-    return Object.entries(apiWindow.kilt).filter(([, provider])=>provider.specVersion.startsWith("3.")).map(([name])=>name);
-}
-async function getSession(provider) {
-    if (!provider) throw new Error("No provider");
-    const { dAppEncryptionKeyUri , challenge , sessionId  } = await (0, _sessionApi.getSessionValues)();
-    const dAppName = "CertifiedProof";
-    const session = await provider.startSession(dAppName, dAppEncryptionKeyUri, challenge);
-    const { encryptionKeyUri , encryptedChallenge , nonce  } = session;
-    await (0, _sessionApi.checkSession)({
-        encryptionKeyUri,
-        encryptedChallenge,
-        nonce
-    }, sessionId);
-    const { name  } = provider;
-    return {
-        ...session,
-        sessionId,
-        name
-    };
-}
-
-},{"../../backend/endpoints/user/sessionApi":"h37Ts","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"h37Ts":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "getSessionValues", ()=>getSessionValues);
-parcelHelpers.export(exports, "checkSession", ()=>checkSession);
-var _ky = require("ky");
-var _kyDefault = parcelHelpers.interopDefault(_ky);
-var _paths = require("../paths");
-var _sessionHeader = require("./sessionHeader");
-async function getSessionValues() {
-    return (0, _kyDefault.default).get((0, _paths.paths).session).json();
-}
-async function checkSession(json, sessionId) {
-    const headers = {
-        [(0, _sessionHeader.sessionHeader)]: sessionId
-    };
-    await (0, _kyDefault.default).post((0, _paths.paths).session, {
-        json,
-        headers
-    });
-}
-
-},{"ky":"8yu3h","../paths":"jzUd7","./sessionHeader":"3uiN7","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"jzUd7":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "paths", ()=>paths);
-const paths = {
-    session: "/api/session",
-    terms: "/api/terms",
-    requestAttestation: "/api/request-attestation",
-    pay: "/api/pay",
-    // admin
-    credentials: {
-        list: "/api/credentials",
-        item: "/api/credentials/:id",
-        attest: "/api/credentials/:id/attest",
-        revoke: "/api/credentials/:id/revoke"
-    }
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"3uiN7":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "sessionHeader", ()=>sessionHeader);
-const sessionHeader = "x-session-id";
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"32v4a":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-/**
- * Convert caught exception to an instance of Error.
- * Typescript makes it very explicit that in the catch clause the caught exception can be of any type:
- * https://devblogs.microsoft.com/typescript/announcing-typescript-4-4/#use-unknown-catch-variables
- * */ parcelHelpers.export(exports, "exceptionToError", ()=>exceptionToError);
-function exceptionToError(exception) {
-    return exception instanceof Error ? exception : new Error(String(exception));
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"5w95x":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "paths", ()=>paths);
-const paths = {
-    home: "/",
-    claim: "/claim/:type",
-    admin: {
-        home: "/admin",
-        credential: "/admin/credential/:id"
-    }
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"45zNN":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "supportedCTypeKeys", ()=>supportedCTypeKeys);
-parcelHelpers.export(exports, "supportedCTypes", ()=>supportedCTypes);
-parcelHelpers.export(exports, "kiltCost", ()=>kiltCost);
-parcelHelpers.export(exports, "isSupportedCType", ()=>isSupportedCType);
-var _emailCType = require("../cTypes/emailCType");
-var _twitterCType = require("../cTypes/twitterCType");
-var _idCType = require("../cTypes/idCType");
-const supportedCTypeKeys = [
-    "email",
-    "twitter",
-    "id"
-];
-const supportedCTypes = {
-    email: (0, _emailCType.emailCType),
-    twitter: (0, _twitterCType.twitterCType),
-    id: (0, _idCType.idCType)
-};
-const kiltCost = {
-    id: 2,
-    email: 2,
-    twitter: 3
-};
-function isSupportedCType(cType) {
-    return supportedCTypeKeys.includes(cType);
-}
-
-},{"../cTypes/emailCType":"lanVx","../cTypes/twitterCType":"bYkWR","../cTypes/idCType":"8jlhK","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"lanVx":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "emailCType", ()=>emailCType);
-const emailCType = {
-    $schema: "http://kilt-protocol.org/draft-01/ctype#",
-    title: "Email",
-    properties: {
-        Email: {
-            type: "string"
-        }
-    },
-    type: "object",
-    $id: "kilt:ctype:0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac"
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"bYkWR":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "twitterCType", ()=>twitterCType);
-const twitterCType = {
-    $schema: "http://kilt-protocol.org/draft-01/ctype#",
-    title: "Twitter",
-    properties: {
-        Twitter: {
-            type: "string"
-        }
-    },
-    type: "object",
-    $id: "kilt:ctype:0x47d04c42bdf7fdd3fc5a194bcaa367b2f4766a6b16ae3df628927656d818f420"
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"8jlhK":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "idCType", ()=>idCType);
-const idCType = {
-    $schema: "http://kilt-protocol.org/draft-01/ctype#",
-    properties: {
-        email: {
-            type: "string"
-        },
-        username: {
-            type: "string"
-        }
-    },
-    title: "INE ID",
-    type: "object",
-    $id: "kilt:ctype:0xdf952230c87e7fbdc8503a394540c8e99029180611e7107c4eee33f67f57aa57"
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"gXTgn":[function(require,module,exports) {
-"use strict";
-var Refresh = require("react-refresh/runtime");
-function debounce(func, delay) {
-    var args;
-    var timeout = undefined;
-    return function(args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(function() {
-            timeout = undefined;
-            func.call(null, args);
-        }, delay);
-    };
-}
-var enqueueUpdate = debounce(function() {
-    Refresh.performReactRefresh();
-}, 30); // Everthing below is either adapted or copied from
-// https://github.com/facebook/metro/blob/61de16bd1edd7e738dd0311c89555a644023ab2d/packages/metro/src/lib/polyfills/require.js
-// MIT License - Copyright (c) Facebook, Inc. and its affiliates.
-module.exports.prelude = function(module1) {
-    window.$RefreshReg$ = function(type, id) {
-        Refresh.register(type, module1.id + " " + id);
-    };
-    window.$RefreshSig$ = Refresh.createSignatureFunctionForTransform;
-};
-module.exports.postlude = function(module1) {
-    if (isReactRefreshBoundary(module1.exports)) {
-        registerExportsForReactRefresh(module1);
-        if (module1.hot) {
-            module1.hot.dispose(function(data) {
-                if (Refresh.hasUnrecoverableErrors()) window.location.reload();
-                data.prevExports = module1.exports;
-            });
-            module1.hot.accept(function(getParents) {
-                var prevExports = module1.hot.data.prevExports;
-                var nextExports = module1.exports; // Since we just executed the code for it, it's possible
-                // that the new exports make it ineligible for being a boundary.
-                var isNoLongerABoundary = !isReactRefreshBoundary(nextExports); // It can also become ineligible if its exports are incompatible
-                // with the previous exports.
-                // For example, if you add/remove/change exports, we'll want
-                // to re-execute the importing modules, and force those components
-                // to re-render. Similarly, if you convert a class component
-                // to a function, we want to invalidate the boundary.
-                var didInvalidate = shouldInvalidateReactRefreshBoundary(prevExports, nextExports);
-                if (isNoLongerABoundary || didInvalidate) {
-                    // We'll be conservative. The only case in which we won't do a full
-                    // reload is if all parent modules are also refresh boundaries.
-                    // In that case we'll add them to the current queue.
-                    var parents = getParents();
-                    if (parents.length === 0) {
-                        // Looks like we bubbled to the root. Can't recover from that.
-                        window.location.reload();
-                        return;
-                    }
-                    return parents;
-                }
-                enqueueUpdate();
-            });
-        }
-    }
-};
-function isReactRefreshBoundary(exports) {
-    if (Refresh.isLikelyComponentType(exports)) return true;
-    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
-    return false;
-    var hasExports = false;
-    var areAllExportsComponents = true;
-    let isESM = "__esModule" in exports;
-    for(var key in exports){
-        hasExports = true;
-        if (key === "__esModule") continue;
-        var desc = Object.getOwnPropertyDescriptor(exports, key);
-        if (desc && desc.get && !isESM) // Don't invoke getters for CJS as they may have side effects.
-        return false;
-        var exportValue = exports[key];
-        if (!Refresh.isLikelyComponentType(exportValue)) areAllExportsComponents = false;
-    }
-    return hasExports && areAllExportsComponents;
-}
-function shouldInvalidateReactRefreshBoundary(prevExports, nextExports) {
-    var prevSignature = getRefreshBoundarySignature(prevExports);
-    var nextSignature = getRefreshBoundarySignature(nextExports);
-    if (prevSignature.length !== nextSignature.length) return true;
-    for(var i = 0; i < nextSignature.length; i++){
-        if (prevSignature[i] !== nextSignature[i]) return true;
-    }
-    return false;
-} // When this signature changes, it's unsafe to stop at this refresh boundary.
-function getRefreshBoundarySignature(exports) {
-    var signature = [];
-    signature.push(Refresh.getFamilyByType(exports));
-    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
-    // (This is important for legacy environments.)
-    return signature;
-    let isESM = "__esModule" in exports;
-    for(var key in exports){
-        if (key === "__esModule") continue;
-        var desc = Object.getOwnPropertyDescriptor(exports, key);
-        if (desc && desc.get && !isESM) continue;
-        var exportValue = exports[key];
-        signature.push(key);
-        signature.push(Refresh.getFamilyByType(exportValue));
-    }
-    return signature;
-}
-function registerExportsForReactRefresh(module1) {
-    var exports = module1.exports, id = module1.id;
-    Refresh.register(exports, id + " %exports%");
-    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
-    // (This is important for legacy environments.)
-    return;
-    let isESM = "__esModule" in exports;
-    for(var key in exports){
-        var desc = Object.getOwnPropertyDescriptor(exports, key);
-        if (desc && desc.get && !isESM) continue;
-        var exportValue = exports[key];
-        Refresh.register(exportValue, id + " %exports% " + key);
-    }
-}
-
-},{"react-refresh/runtime":"RU52H"}],"6P8of":[function(require,module,exports) {
+},{}],"6P8of":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _firestore = require("@firebase/firestore");
@@ -59455,6 +58695,872 @@ var version = "9.23.0";
  * limitations under the License.
  */ (0, _app.registerVersion)(name, version, "app");
 
-},{"@firebase/app":"6p2ua","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}]},["77Yv0","drM8P","7ccFj"], "7ccFj", "parcelRequire94c2")
+},{"@firebase/app":"6p2ua","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"8yu3h":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "HTTPError", ()=>(0, _httperrorJs.HTTPError));
+parcelHelpers.export(exports, "TimeoutError", ()=>(0, _timeoutErrorJs.TimeoutError));
+/*! MIT License © Sindre Sorhus */ var _kyJs = require("./core/Ky.js");
+var _constantsJs = require("./core/constants.js");
+var _mergeJs = require("./utils/merge.js");
+var _httperrorJs = require("./errors/HTTPError.js");
+var _timeoutErrorJs = require("./errors/TimeoutError.js");
+const createInstance = (defaults)=>{
+    // eslint-disable-next-line @typescript-eslint/promise-function-async
+    const ky = (input, options)=>(0, _kyJs.Ky).create(input, (0, _mergeJs.validateAndMerge)(defaults, options));
+    for (const method of (0, _constantsJs.requestMethods))// eslint-disable-next-line @typescript-eslint/promise-function-async
+    ky[method] = (input, options)=>(0, _kyJs.Ky).create(input, (0, _mergeJs.validateAndMerge)(defaults, options, {
+            method
+        }));
+    ky.create = (newDefaults)=>createInstance((0, _mergeJs.validateAndMerge)(newDefaults));
+    ky.extend = (newDefaults)=>createInstance((0, _mergeJs.validateAndMerge)(defaults, newDefaults));
+    ky.stop = (0, _constantsJs.stop);
+    return ky;
+};
+const ky = createInstance();
+exports.default = ky;
+
+},{"./core/Ky.js":"btf7t","./core/constants.js":"7qcO1","./utils/merge.js":"24hLa","./errors/HTTPError.js":"dPdBN","./errors/TimeoutError.js":"aw8Aj","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"btf7t":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Ky", ()=>Ky);
+var _httperrorJs = require("../errors/HTTPError.js");
+var _timeoutErrorJs = require("../errors/TimeoutError.js");
+var _mergeJs = require("../utils/merge.js");
+var _normalizeJs = require("../utils/normalize.js");
+var _timeoutJs = require("../utils/timeout.js");
+var _timeoutJsDefault = parcelHelpers.interopDefault(_timeoutJs);
+var _delayJs = require("../utils/delay.js");
+var _delayJsDefault = parcelHelpers.interopDefault(_delayJs);
+var _constantsJs = require("./constants.js");
+class Ky {
+    // eslint-disable-next-line @typescript-eslint/promise-function-async
+    static create(input, options) {
+        const ky = new Ky(input, options);
+        const fn = async ()=>{
+            if (ky._options.timeout > (0, _constantsJs.maxSafeTimeout)) throw new RangeError(`The \`timeout\` option cannot be greater than ${(0, _constantsJs.maxSafeTimeout)}`);
+            // Delay the fetch so that body method shortcuts can set the Accept header
+            await Promise.resolve();
+            let response = await ky._fetch();
+            for (const hook of ky._options.hooks.afterResponse){
+                // eslint-disable-next-line no-await-in-loop
+                const modifiedResponse = await hook(ky.request, ky._options, ky._decorateResponse(response.clone()));
+                if (modifiedResponse instanceof globalThis.Response) response = modifiedResponse;
+            }
+            ky._decorateResponse(response);
+            if (!response.ok && ky._options.throwHttpErrors) {
+                let error = new (0, _httperrorJs.HTTPError)(response, ky.request, ky._options);
+                for (const hook1 of ky._options.hooks.beforeError)// eslint-disable-next-line no-await-in-loop
+                error = await hook1(error);
+                throw error;
+            }
+            // If `onDownloadProgress` is passed, it uses the stream API internally
+            /* istanbul ignore next */ if (ky._options.onDownloadProgress) {
+                if (typeof ky._options.onDownloadProgress !== "function") throw new TypeError("The `onDownloadProgress` option must be a function");
+                if (!(0, _constantsJs.supportsResponseStreams)) throw new Error("Streams are not supported in your environment. `ReadableStream` is missing.");
+                return ky._stream(response.clone(), ky._options.onDownloadProgress);
+            }
+            return response;
+        };
+        const isRetriableMethod = ky._options.retry.methods.includes(ky.request.method.toLowerCase());
+        const result = isRetriableMethod ? ky._retry(fn) : fn();
+        for (const [type, mimeType] of Object.entries((0, _constantsJs.responseTypes)))result[type] = async ()=>{
+            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+            ky.request.headers.set("accept", ky.request.headers.get("accept") || mimeType);
+            const awaitedResult = await result;
+            const response = awaitedResult.clone();
+            if (type === "json") {
+                if (response.status === 204) return "";
+                const arrayBuffer = await response.clone().arrayBuffer();
+                const responseSize = arrayBuffer.byteLength;
+                if (responseSize === 0) return "";
+                if (options.parseJson) return options.parseJson(await response.text());
+            }
+            return response[type]();
+        };
+        return result;
+    }
+    // eslint-disable-next-line complexity
+    constructor(input, options = {}){
+        Object.defineProperty(this, "request", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "abortController", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "_retryCount", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: 0
+        });
+        Object.defineProperty(this, "_input", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "_options", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        this._input = input;
+        this._options = {
+            // TODO: credentials can be removed when the spec change is implemented in all browsers. Context: https://www.chromestatus.com/feature/4539473312350208
+            credentials: this._input.credentials || "same-origin",
+            ...options,
+            headers: (0, _mergeJs.mergeHeaders)(this._input.headers, options.headers),
+            hooks: (0, _mergeJs.deepMerge)({
+                beforeRequest: [],
+                beforeRetry: [],
+                beforeError: [],
+                afterResponse: []
+            }, options.hooks),
+            method: (0, _normalizeJs.normalizeRequestMethod)(options.method ?? this._input.method),
+            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+            prefixUrl: String(options.prefixUrl || ""),
+            retry: (0, _normalizeJs.normalizeRetryOptions)(options.retry),
+            throwHttpErrors: options.throwHttpErrors !== false,
+            timeout: typeof options.timeout === "undefined" ? 10000 : options.timeout,
+            fetch: options.fetch ?? globalThis.fetch.bind(globalThis)
+        };
+        if (typeof this._input !== "string" && !(this._input instanceof URL || this._input instanceof globalThis.Request)) throw new TypeError("`input` must be a string, URL, or Request");
+        if (this._options.prefixUrl && typeof this._input === "string") {
+            if (this._input.startsWith("/")) throw new Error("`input` must not begin with a slash when using `prefixUrl`");
+            if (!this._options.prefixUrl.endsWith("/")) this._options.prefixUrl += "/";
+            this._input = this._options.prefixUrl + this._input;
+        }
+        if (0, _constantsJs.supportsAbortController) {
+            this.abortController = new globalThis.AbortController();
+            if (this._options.signal) {
+                const originalSignal = this._options.signal;
+                this._options.signal.addEventListener("abort", ()=>{
+                    this.abortController.abort(originalSignal.reason);
+                });
+            }
+            this._options.signal = this.abortController.signal;
+        }
+        if (0, _constantsJs.supportsRequestStreams) // @ts-expect-error - Types are outdated.
+        this._options.duplex = "half";
+        this.request = new globalThis.Request(this._input, this._options);
+        if (this._options.searchParams) {
+            // eslint-disable-next-line unicorn/prevent-abbreviations
+            const textSearchParams = typeof this._options.searchParams === "string" ? this._options.searchParams.replace(/^\?/, "") : new URLSearchParams(this._options.searchParams).toString();
+            // eslint-disable-next-line unicorn/prevent-abbreviations
+            const searchParams = "?" + textSearchParams;
+            const url = this.request.url.replace(/(?:\?.*?)?(?=#|$)/, searchParams);
+            // To provide correct form boundary, Content-Type header should be deleted each time when new Request instantiated from another one
+            if (((0, _constantsJs.supportsFormData) && this._options.body instanceof globalThis.FormData || this._options.body instanceof URLSearchParams) && !(this._options.headers && this._options.headers["content-type"])) this.request.headers.delete("content-type");
+            // The spread of `this.request` is required as otherwise it misses the `duplex` option for some reason and throws.
+            this.request = new globalThis.Request(new globalThis.Request(url, {
+                ...this.request
+            }), this._options);
+        }
+        if (this._options.json !== undefined) {
+            this._options.body = JSON.stringify(this._options.json);
+            this.request.headers.set("content-type", this._options.headers.get("content-type") ?? "application/json");
+            this.request = new globalThis.Request(this.request, {
+                body: this._options.body
+            });
+        }
+    }
+    _calculateRetryDelay(error) {
+        this._retryCount++;
+        if (this._retryCount < this._options.retry.limit && !(error instanceof (0, _timeoutErrorJs.TimeoutError))) {
+            if (error instanceof (0, _httperrorJs.HTTPError)) {
+                if (!this._options.retry.statusCodes.includes(error.response.status)) return 0;
+                const retryAfter = error.response.headers.get("Retry-After");
+                if (retryAfter && this._options.retry.afterStatusCodes.includes(error.response.status)) {
+                    let after = Number(retryAfter);
+                    if (Number.isNaN(after)) after = Date.parse(retryAfter) - Date.now();
+                    else after *= 1000;
+                    if (typeof this._options.retry.maxRetryAfter !== "undefined" && after > this._options.retry.maxRetryAfter) return 0;
+                    return after;
+                }
+                if (error.response.status === 413) return 0;
+            }
+            const BACKOFF_FACTOR = 0.3;
+            return Math.min(this._options.retry.backoffLimit, BACKOFF_FACTOR * 2 ** (this._retryCount - 1) * 1000);
+        }
+        return 0;
+    }
+    _decorateResponse(response) {
+        if (this._options.parseJson) response.json = async ()=>this._options.parseJson(await response.text());
+        return response;
+    }
+    async _retry(fn) {
+        try {
+            return await fn();
+        // eslint-disable-next-line @typescript-eslint/no-implicit-any-catch
+        } catch (error) {
+            const ms = Math.min(this._calculateRetryDelay(error), (0, _constantsJs.maxSafeTimeout));
+            if (ms !== 0 && this._retryCount > 0) {
+                await (0, _delayJsDefault.default)(ms, {
+                    signal: this._options.signal
+                });
+                for (const hook of this._options.hooks.beforeRetry){
+                    // eslint-disable-next-line no-await-in-loop
+                    const hookResult = await hook({
+                        request: this.request,
+                        options: this._options,
+                        error: error,
+                        retryCount: this._retryCount
+                    });
+                    // If `stop` is returned from the hook, the retry process is stopped
+                    if (hookResult === (0, _constantsJs.stop)) return;
+                }
+                return this._retry(fn);
+            }
+            throw error;
+        }
+    }
+    async _fetch() {
+        for (const hook of this._options.hooks.beforeRequest){
+            // eslint-disable-next-line no-await-in-loop
+            const result = await hook(this.request, this._options);
+            if (result instanceof Request) {
+                this.request = result;
+                break;
+            }
+            if (result instanceof Response) return result;
+        }
+        if (this._options.timeout === false) return this._options.fetch(this.request.clone());
+        return (0, _timeoutJsDefault.default)(this.request.clone(), this.abortController, this._options);
+    }
+    /* istanbul ignore next */ _stream(response, onDownloadProgress) {
+        const totalBytes = Number(response.headers.get("content-length")) || 0;
+        let transferredBytes = 0;
+        if (response.status === 204) {
+            if (onDownloadProgress) onDownloadProgress({
+                percent: 1,
+                totalBytes,
+                transferredBytes
+            }, new Uint8Array());
+            return new globalThis.Response(null, {
+                status: response.status,
+                statusText: response.statusText,
+                headers: response.headers
+            });
+        }
+        return new globalThis.Response(new globalThis.ReadableStream({
+            async start (controller) {
+                const reader = response.body.getReader();
+                if (onDownloadProgress) onDownloadProgress({
+                    percent: 0,
+                    transferredBytes: 0,
+                    totalBytes
+                }, new Uint8Array());
+                async function read() {
+                    const { done , value  } = await reader.read();
+                    if (done) {
+                        controller.close();
+                        return;
+                    }
+                    if (onDownloadProgress) {
+                        transferredBytes += value.byteLength;
+                        const percent = totalBytes === 0 ? 0 : transferredBytes / totalBytes;
+                        onDownloadProgress({
+                            percent,
+                            transferredBytes,
+                            totalBytes
+                        }, value);
+                    }
+                    controller.enqueue(value);
+                    await read();
+                }
+                await read();
+            }
+        }), {
+            status: response.status,
+            statusText: response.statusText,
+            headers: response.headers
+        });
+    }
+}
+
+},{"../errors/HTTPError.js":"dPdBN","../errors/TimeoutError.js":"aw8Aj","../utils/merge.js":"24hLa","../utils/normalize.js":"dpIXV","../utils/timeout.js":"gIokF","../utils/delay.js":"5qMir","./constants.js":"7qcO1","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"dPdBN":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+// eslint-lint-disable-next-line @typescript-eslint/naming-convention
+parcelHelpers.export(exports, "HTTPError", ()=>HTTPError);
+class HTTPError extends Error {
+    constructor(response, request, options){
+        const code = response.status || response.status === 0 ? response.status : "";
+        const title = response.statusText || "";
+        const status = `${code} ${title}`.trim();
+        const reason = status ? `status code ${status}` : "an unknown error";
+        super(`Request failed with ${reason}`);
+        Object.defineProperty(this, "response", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "request", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "options", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        this.name = "HTTPError";
+        this.response = response;
+        this.request = request;
+        this.options = options;
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"aw8Aj":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "TimeoutError", ()=>TimeoutError);
+class TimeoutError extends Error {
+    constructor(request){
+        super("Request timed out");
+        Object.defineProperty(this, "request", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        this.name = "TimeoutError";
+        this.request = request;
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"24hLa":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "validateAndMerge", ()=>validateAndMerge);
+parcelHelpers.export(exports, "mergeHeaders", ()=>mergeHeaders);
+parcelHelpers.export(exports, "deepMerge", ()=>deepMerge);
+var _isJs = require("./is.js");
+const validateAndMerge = (...sources)=>{
+    for (const source of sources){
+        if ((!(0, _isJs.isObject)(source) || Array.isArray(source)) && typeof source !== "undefined") throw new TypeError("The `options` argument must be an object");
+    }
+    return deepMerge({}, ...sources);
+};
+const mergeHeaders = (source1 = {}, source2 = {})=>{
+    const result = new globalThis.Headers(source1);
+    const isHeadersInstance = source2 instanceof globalThis.Headers;
+    const source = new globalThis.Headers(source2);
+    for (const [key, value] of source.entries())if (isHeadersInstance && value === "undefined" || value === undefined) result.delete(key);
+    else result.set(key, value);
+    return result;
+};
+const deepMerge = (...sources)=>{
+    let returnValue = {};
+    let headers = {};
+    for (const source of sources){
+        if (Array.isArray(source)) {
+            if (!Array.isArray(returnValue)) returnValue = [];
+            returnValue = [
+                ...returnValue,
+                ...source
+            ];
+        } else if ((0, _isJs.isObject)(source)) {
+            for (let [key, value] of Object.entries(source)){
+                if ((0, _isJs.isObject)(value) && key in returnValue) value = deepMerge(returnValue[key], value);
+                returnValue = {
+                    ...returnValue,
+                    [key]: value
+                };
+            }
+            if ((0, _isJs.isObject)(source.headers)) {
+                headers = mergeHeaders(headers, source.headers);
+                returnValue.headers = headers;
+            }
+        }
+    }
+    return returnValue;
+};
+
+},{"./is.js":"b5Mep","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"b5Mep":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "isObject", ()=>isObject);
+const isObject = (value)=>value !== null && typeof value === "object";
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"dpIXV":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "normalizeRequestMethod", ()=>normalizeRequestMethod);
+parcelHelpers.export(exports, "normalizeRetryOptions", ()=>normalizeRetryOptions);
+var _constantsJs = require("../core/constants.js");
+const normalizeRequestMethod = (input)=>(0, _constantsJs.requestMethods).includes(input) ? input.toUpperCase() : input;
+const retryMethods = [
+    "get",
+    "put",
+    "head",
+    "delete",
+    "options",
+    "trace"
+];
+const retryStatusCodes = [
+    408,
+    413,
+    429,
+    500,
+    502,
+    503,
+    504
+];
+const retryAfterStatusCodes = [
+    413,
+    429,
+    503
+];
+const defaultRetryOptions = {
+    limit: 2,
+    methods: retryMethods,
+    statusCodes: retryStatusCodes,
+    afterStatusCodes: retryAfterStatusCodes,
+    maxRetryAfter: Number.POSITIVE_INFINITY,
+    backoffLimit: Number.POSITIVE_INFINITY
+};
+const normalizeRetryOptions = (retry = {})=>{
+    if (typeof retry === "number") return {
+        ...defaultRetryOptions,
+        limit: retry
+    };
+    if (retry.methods && !Array.isArray(retry.methods)) throw new Error("retry.methods must be an array");
+    if (retry.statusCodes && !Array.isArray(retry.statusCodes)) throw new Error("retry.statusCodes must be an array");
+    return {
+        ...defaultRetryOptions,
+        ...retry,
+        afterStatusCodes: retryAfterStatusCodes
+    };
+};
+
+},{"../core/constants.js":"7qcO1","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"7qcO1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "supportsRequestStreams", ()=>supportsRequestStreams);
+parcelHelpers.export(exports, "supportsAbortController", ()=>supportsAbortController);
+parcelHelpers.export(exports, "supportsResponseStreams", ()=>supportsResponseStreams);
+parcelHelpers.export(exports, "supportsFormData", ()=>supportsFormData);
+parcelHelpers.export(exports, "requestMethods", ()=>requestMethods);
+parcelHelpers.export(exports, "responseTypes", ()=>responseTypes);
+parcelHelpers.export(exports, "maxSafeTimeout", ()=>maxSafeTimeout);
+parcelHelpers.export(exports, "stop", ()=>stop);
+const supportsRequestStreams = (()=>{
+    let duplexAccessed = false;
+    let hasContentType = false;
+    const supportsReadableStream = typeof globalThis.ReadableStream === "function";
+    const supportsRequest = typeof globalThis.Request === "function";
+    if (supportsReadableStream && supportsRequest) hasContentType = new globalThis.Request("https://a.com", {
+        body: new globalThis.ReadableStream(),
+        method: "POST",
+        // @ts-expect-error - Types are outdated.
+        get duplex () {
+            duplexAccessed = true;
+            return "half";
+        }
+    }).headers.has("Content-Type");
+    return duplexAccessed && !hasContentType;
+})();
+const supportsAbortController = typeof globalThis.AbortController === "function";
+const supportsResponseStreams = typeof globalThis.ReadableStream === "function";
+const supportsFormData = typeof globalThis.FormData === "function";
+const requestMethods = [
+    "get",
+    "post",
+    "put",
+    "patch",
+    "head",
+    "delete"
+];
+const validate = ()=>undefined;
+validate();
+const responseTypes = {
+    json: "application/json",
+    text: "text/*",
+    formData: "multipart/form-data",
+    arrayBuffer: "*/*",
+    blob: "*/*"
+};
+const maxSafeTimeout = 2147483647;
+const stop = Symbol("stop");
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"gIokF":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _timeoutErrorJs = require("../errors/TimeoutError.js");
+async function timeout(request, abortController, options) {
+    return new Promise((resolve, reject)=>{
+        const timeoutId = setTimeout(()=>{
+            if (abortController) abortController.abort();
+            reject(new (0, _timeoutErrorJs.TimeoutError)(request));
+        }, options.timeout);
+        options.fetch(request).then(resolve).catch(reject).then(()=>{
+            clearTimeout(timeoutId);
+        });
+    });
+}
+exports.default = timeout;
+
+},{"../errors/TimeoutError.js":"aw8Aj","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"5qMir":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+// https://github.com/sindresorhus/delay/tree/ab98ae8dfcb38e1593286c94d934e70d14a4e111
+var _domexceptionJs = require("../errors/DOMException.js");
+async function delay(ms, { signal  }) {
+    return new Promise((resolve, reject)=>{
+        if (signal) {
+            if (signal.aborted) {
+                reject((0, _domexceptionJs.composeAbortError)(signal));
+                return;
+            }
+            signal.addEventListener("abort", handleAbort, {
+                once: true
+            });
+        }
+        function handleAbort() {
+            reject((0, _domexceptionJs.composeAbortError)(signal));
+            clearTimeout(timeoutId);
+        }
+        const timeoutId = setTimeout(()=>{
+            signal?.removeEventListener("abort", handleAbort);
+            resolve();
+        }, ms);
+    });
+}
+exports.default = delay;
+
+},{"../errors/DOMException.js":"bYyIR","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"bYyIR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+// TODO: When targeting Node.js 18, use `signal.throwIfAborted()` (https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/throwIfAborted)
+parcelHelpers.export(exports, "composeAbortError", ()=>composeAbortError);
+// DOMException is supported on most modern browsers and Node.js 18+.
+// @see https://developer.mozilla.org/en-US/docs/Web/API/DOMException#browser_compatibility
+const isDomExceptionSupported = Boolean(globalThis.DOMException);
+function composeAbortError(signal) {
+    /*
+    NOTE: Use DomException with AbortError name as specified in MDN docs (https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort)
+    > When abort() is called, the fetch() promise rejects with an Error of type DOMException, with name AbortError.
+    */ if (isDomExceptionSupported) return new DOMException(signal?.reason ?? "The operation was aborted.", "AbortError");
+    // DOMException not supported. Fall back to use of error and override name.
+    const error = new Error(signal?.reason ?? "The operation was aborted.");
+    error.name = "AbortError";
+    return error;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"34xbu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "apiWindow", ()=>apiWindow);
+parcelHelpers.export(exports, "getCompatibleExtensions", ()=>getCompatibleExtensions);
+parcelHelpers.export(exports, "getSession", ()=>getSession);
+var _sessionApi = require("../../backend/endpoints/user/sessionApi");
+const apiWindow = window;
+function getCompatibleExtensions() {
+    return Object.entries(apiWindow.kilt).filter(([, provider])=>provider.specVersion.startsWith("3.")).map(([name])=>name);
+}
+async function getSession(provider) {
+    if (!provider) throw new Error("No provider");
+    const { dAppEncryptionKeyUri , challenge , sessionId  } = await (0, _sessionApi.getSessionValues)();
+    const dAppName = "Peranto Attest App";
+    const session = await provider.startSession(dAppName, dAppEncryptionKeyUri, challenge);
+    const { encryptionKeyUri , encryptedChallenge , nonce  } = session;
+    await (0, _sessionApi.checkSession)({
+        encryptionKeyUri,
+        encryptedChallenge,
+        nonce
+    }, sessionId);
+    const { name  } = provider;
+    return {
+        ...session,
+        sessionId,
+        name
+    };
+}
+
+},{"../../backend/endpoints/user/sessionApi":"h37Ts","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"h37Ts":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getSessionValues", ()=>getSessionValues);
+parcelHelpers.export(exports, "checkSession", ()=>checkSession);
+var _ky = require("ky");
+var _kyDefault = parcelHelpers.interopDefault(_ky);
+var _paths = require("../paths");
+var _sessionHeader = require("./sessionHeader");
+async function getSessionValues() {
+    return (0, _kyDefault.default).get((0, _paths.paths).session).json();
+}
+async function checkSession(json, sessionId) {
+    const headers = {
+        [(0, _sessionHeader.sessionHeader)]: sessionId
+    };
+    await (0, _kyDefault.default).post((0, _paths.paths).session, {
+        json,
+        headers
+    });
+}
+
+},{"ky":"8yu3h","../paths":"jzUd7","./sessionHeader":"3uiN7","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"jzUd7":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "paths", ()=>paths);
+const paths = {
+    session: "/api/session",
+    terms: "/api/terms",
+    requestAttestation: "/api/request-attestation",
+    pay: "/api/pay",
+    // admin
+    credentials: {
+        list: "/api/credentials",
+        item: "/api/credentials/:id",
+        attest: "/api/credentials/:id/attest",
+        revoke: "/api/credentials/:id/revoke"
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"3uiN7":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "sessionHeader", ()=>sessionHeader);
+const sessionHeader = "x-session-id";
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"32v4a":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Convert caught exception to an instance of Error.
+ * Typescript makes it very explicit that in the catch clause the caught exception can be of any type:
+ * https://devblogs.microsoft.com/typescript/announcing-typescript-4-4/#use-unknown-catch-variables
+ * */ parcelHelpers.export(exports, "exceptionToError", ()=>exceptionToError);
+function exceptionToError(exception) {
+    return exception instanceof Error ? exception : new Error(String(exception));
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"5w95x":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "paths", ()=>paths);
+const paths = {
+    home: "/",
+    claim: "/claim/:type",
+    admin: {
+        home: "/admin",
+        credential: "/admin/credential/:id"
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"45zNN":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "supportedCTypeKeys", ()=>supportedCTypeKeys);
+parcelHelpers.export(exports, "supportedCTypes", ()=>supportedCTypes);
+parcelHelpers.export(exports, "kiltCost", ()=>kiltCost);
+parcelHelpers.export(exports, "isSupportedCType", ()=>isSupportedCType);
+var _emailCType = require("../cTypes/emailCType");
+var _twitterCType = require("../cTypes/twitterCType");
+var _idCType = require("../cTypes/idCType");
+const supportedCTypeKeys = [
+    "email",
+    "twitter",
+    "id"
+];
+const supportedCTypes = {
+    email: (0, _emailCType.emailCType),
+    twitter: (0, _twitterCType.twitterCType),
+    id: (0, _idCType.idCType)
+};
+const kiltCost = {
+    id: 2,
+    email: 2,
+    twitter: 3
+};
+function isSupportedCType(cType) {
+    return supportedCTypeKeys.includes(cType);
+}
+
+},{"../cTypes/emailCType":"lanVx","../cTypes/twitterCType":"bYkWR","../cTypes/idCType":"8jlhK","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"lanVx":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "emailCType", ()=>emailCType);
+const emailCType = {
+    $schema: "http://kilt-protocol.org/draft-01/ctype#",
+    title: "Email",
+    properties: {
+        Email: {
+            type: "string"
+        }
+    },
+    type: "object",
+    $id: "kilt:ctype:0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac"
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"bYkWR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "twitterCType", ()=>twitterCType);
+const twitterCType = {
+    $schema: "http://kilt-protocol.org/draft-01/ctype#",
+    title: "Twitter",
+    properties: {
+        Twitter: {
+            type: "string"
+        }
+    },
+    type: "object",
+    $id: "kilt:ctype:0x47d04c42bdf7fdd3fc5a194bcaa367b2f4766a6b16ae3df628927656d818f420"
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"8jlhK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "idCType", ()=>idCType);
+const idCType = {
+    $schema: "http://kilt-protocol.org/draft-01/ctype#",
+    properties: {
+        email: {
+            type: "string"
+        },
+        username: {
+            type: "string"
+        }
+    },
+    title: "Authorization",
+    type: "object",
+    $id: "kilt:ctype:0xdf952230c87e7fbdc8503a394540c8e99029180611e7107c4eee33f67f57aa57"
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"gXTgn":[function(require,module,exports) {
+"use strict";
+var Refresh = require("react-refresh/runtime");
+function debounce(func, delay) {
+    var args;
+    var timeout = undefined;
+    return function(args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            timeout = undefined;
+            func.call(null, args);
+        }, delay);
+    };
+}
+var enqueueUpdate = debounce(function() {
+    Refresh.performReactRefresh();
+}, 30); // Everthing below is either adapted or copied from
+// https://github.com/facebook/metro/blob/61de16bd1edd7e738dd0311c89555a644023ab2d/packages/metro/src/lib/polyfills/require.js
+// MIT License - Copyright (c) Facebook, Inc. and its affiliates.
+module.exports.prelude = function(module1) {
+    window.$RefreshReg$ = function(type, id) {
+        Refresh.register(type, module1.id + " " + id);
+    };
+    window.$RefreshSig$ = Refresh.createSignatureFunctionForTransform;
+};
+module.exports.postlude = function(module1) {
+    if (isReactRefreshBoundary(module1.exports)) {
+        registerExportsForReactRefresh(module1);
+        if (module1.hot) {
+            module1.hot.dispose(function(data) {
+                if (Refresh.hasUnrecoverableErrors()) window.location.reload();
+                data.prevExports = module1.exports;
+            });
+            module1.hot.accept(function(getParents) {
+                var prevExports = module1.hot.data.prevExports;
+                var nextExports = module1.exports; // Since we just executed the code for it, it's possible
+                // that the new exports make it ineligible for being a boundary.
+                var isNoLongerABoundary = !isReactRefreshBoundary(nextExports); // It can also become ineligible if its exports are incompatible
+                // with the previous exports.
+                // For example, if you add/remove/change exports, we'll want
+                // to re-execute the importing modules, and force those components
+                // to re-render. Similarly, if you convert a class component
+                // to a function, we want to invalidate the boundary.
+                var didInvalidate = shouldInvalidateReactRefreshBoundary(prevExports, nextExports);
+                if (isNoLongerABoundary || didInvalidate) {
+                    // We'll be conservative. The only case in which we won't do a full
+                    // reload is if all parent modules are also refresh boundaries.
+                    // In that case we'll add them to the current queue.
+                    var parents = getParents();
+                    if (parents.length === 0) {
+                        // Looks like we bubbled to the root. Can't recover from that.
+                        window.location.reload();
+                        return;
+                    }
+                    return parents;
+                }
+                enqueueUpdate();
+            });
+        }
+    }
+};
+function isReactRefreshBoundary(exports) {
+    if (Refresh.isLikelyComponentType(exports)) return true;
+    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
+    return false;
+    var hasExports = false;
+    var areAllExportsComponents = true;
+    let isESM = "__esModule" in exports;
+    for(var key in exports){
+        hasExports = true;
+        if (key === "__esModule") continue;
+        var desc = Object.getOwnPropertyDescriptor(exports, key);
+        if (desc && desc.get && !isESM) // Don't invoke getters for CJS as they may have side effects.
+        return false;
+        var exportValue = exports[key];
+        if (!Refresh.isLikelyComponentType(exportValue)) areAllExportsComponents = false;
+    }
+    return hasExports && areAllExportsComponents;
+}
+function shouldInvalidateReactRefreshBoundary(prevExports, nextExports) {
+    var prevSignature = getRefreshBoundarySignature(prevExports);
+    var nextSignature = getRefreshBoundarySignature(nextExports);
+    if (prevSignature.length !== nextSignature.length) return true;
+    for(var i = 0; i < nextSignature.length; i++){
+        if (prevSignature[i] !== nextSignature[i]) return true;
+    }
+    return false;
+} // When this signature changes, it's unsafe to stop at this refresh boundary.
+function getRefreshBoundarySignature(exports) {
+    var signature = [];
+    signature.push(Refresh.getFamilyByType(exports));
+    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
+    // (This is important for legacy environments.)
+    return signature;
+    let isESM = "__esModule" in exports;
+    for(var key in exports){
+        if (key === "__esModule") continue;
+        var desc = Object.getOwnPropertyDescriptor(exports, key);
+        if (desc && desc.get && !isESM) continue;
+        var exportValue = exports[key];
+        signature.push(key);
+        signature.push(Refresh.getFamilyByType(exportValue));
+    }
+    return signature;
+}
+function registerExportsForReactRefresh(module1) {
+    var exports = module1.exports, id = module1.id;
+    Refresh.register(exports, id + " %exports%");
+    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
+    // (This is important for legacy environments.)
+    return;
+    let isESM = "__esModule" in exports;
+    for(var key in exports){
+        var desc = Object.getOwnPropertyDescriptor(exports, key);
+        if (desc && desc.get && !isESM) continue;
+        var exportValue = exports[key];
+        Refresh.register(exportValue, id + " %exports% " + key);
+    }
+}
+
+},{"react-refresh/runtime":"RU52H"}]},["77Yv0","drM8P","7ccFj"], "7ccFj", "parcelRequire94c2")
 
 //# sourceMappingURL=index.d87ab479.js.map

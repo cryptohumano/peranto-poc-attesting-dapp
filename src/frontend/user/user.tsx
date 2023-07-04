@@ -362,30 +362,89 @@ function Claim() {
 
 function Home() {
   return (
-    <section>
-      <h1 className="my-4">Peranto Attest App</h1>
+    <section className="bg-base-200 kilt-bg">
+      <div className="hero min-h-screen container mx-auto max-w-5xl">
+        <div className="hero-content flex-col lg:flex-row">
+          <div className="text-center lg:text-left">
+            <h1 className="text-5xl font-bold">Peranto Attest App</h1>
+            <p className="py-6">
+              This KILT Attester Example demonstrates how to issue credentials
+              for a couple basic claim types which already exist on the KILT
+              blockchain. The user chooses a claim type, enters the claim data,
+              makes a (mock) payment, and the claim is sent to the attester to
+              be reviewed.
+            </p>
+          </div>
+          <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div className="card-body">
+              <p>Start selecting a claim type:</p>
 
-      <p>
-        This KILT Attester Example demonstrates how to issue credentials for a
-        couple basic claim types which already exist on the KILT blockchain. The
-        user chooses a claim type, enters the claim data, makes a (mock)
-        payment, and the claim is sent to the attester to be reviewed.
-      </p>
-
-      <h2>Choose your claim type:</h2>
-
-      <ul className="flex flex-col gap-2 my-4">
-        {supportedCTypeKeys.map((type) => (
-          <li key={type}>
-            <Link
-              className="link link-primary"
-              to={generatePath(paths.claim, { type })}
-            >
-              {supportedCTypes[type].title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+              <ul className="menu w-56 rounded-box">
+                {supportedCTypeKeys.map((type, k) => (
+                  <li key={type}>
+                    <Link
+                      className="link link-primary"
+                      to={generatePath(paths.claim, { type })}
+                    >
+                      {k === 0 && (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                          />
+                        </svg>
+                      )}
+                      {k === 1 && (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      )}
+                      {k === 2 && (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                          />
+                        </svg>
+                      )}
+                      {supportedCTypes[type].title === 'Authorization'
+                        ? 'INE'
+                        : supportedCTypes[type].title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
