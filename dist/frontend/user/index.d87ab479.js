@@ -3004,16 +3004,17 @@ function Connect({ onConnect  }) {
         kilt
     ]);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("section", {
+        className: "flex flex-col items-center gap-4 text-justify",
         children: [
             extensions.length === 0 && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                 children: "Looking for a wallet… To make a claim you need to have e.g. Sporran wallet installed and have an identity configured in it."
             }, void 0, false, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 144,
+                lineNumber: 145,
                 columnNumber: 9
             }, this),
             extensions.map((extension)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                    className: "btn btn-active btn-primary",
+                    className: "btn btn-active btn-neutral max-w-[200px]",
                     type: "button",
                     onClick: ()=>handleConnect(extension),
                     children: [
@@ -3022,21 +3023,21 @@ function Connect({ onConnect  }) {
                     ]
                 }, extension, true, {
                     fileName: "src/frontend/user/user.tsx",
-                    lineNumber: 151,
+                    lineNumber: 152,
                     columnNumber: 9
                 }, this)),
             processing && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                 children: "Connecting…"
             }, void 0, false, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 161,
+                lineNumber: 162,
                 columnNumber: 22
             }, this),
             error && errors[error]
         ]
     }, void 0, true, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 142,
+        lineNumber: 143,
         columnNumber: 5
     }, this);
 }
@@ -3139,13 +3140,13 @@ function Claim() {
         children: "Error - Unsupported CType"
     }, void 0, false, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 285,
+        lineNumber: 286,
         columnNumber: 12
     }, this);
     const cType = (0, _supportedCTypes.supportedCTypes)[type];
     const { title , properties  } = cType;
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("section", {
-        className: "bg-base-200 min-h-screen flex flex-col justify-center kilt-bg",
+        className: "bg-base-200 min-h-screen flex flex-col justify-center",
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
             className: "container mx-auto max-w-5xl card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100",
             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -3155,29 +3156,26 @@ function Claim() {
                         className: "relative",
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
                             to: (0, _paths.paths).home,
-                            className: "absolute -top-5 -left-2 text-xs flex items-center",
-                            children: [
-                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _solid.ChevronLeftIcon), {
-                                    className: "w-6"
-                                }, void 0, false, {
-                                    fileName: "src/frontend/user/user.tsx",
-                                    lineNumber: 300,
-                                    columnNumber: 15
-                                }, this),
-                                "Back"
-                            ]
-                        }, void 0, true, {
+                            className: "absolute -top-7 -left-2 text-xs flex items-center btn btn-link p-0 m-0",
+                            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _solid.ChevronLeftIcon), {
+                                className: "w-6"
+                            }, void 0, false, {
+                                fileName: "src/frontend/user/user.tsx",
+                                lineNumber: 301,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
                             fileName: "src/frontend/user/user.tsx",
-                            lineNumber: 296,
+                            lineNumber: 297,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "src/frontend/user/user.tsx",
-                        lineNumber: 295,
+                        lineNumber: 296,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "flex justify-between items-end",
+                        className: "flex justify-between items-end mt-2",
                         children: [
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                                 className: "text-xl",
@@ -3360,17 +3358,17 @@ function Claim() {
                 ]
             }, void 0, true, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 294,
+                lineNumber: 295,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "src/frontend/user/user.tsx",
-            lineNumber: 293,
+            lineNumber: 294,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 292,
+        lineNumber: 293,
         columnNumber: 5
     }, this);
 }
@@ -3382,7 +3380,7 @@ _s1(Claim, "CqK8TAuQ+uFP25Mu5sWdM/9dwto=", false, function() {
 _c1 = Claim;
 function Home() {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("section", {
-        className: "bg-base-200 kilt-bg",
+        className: "bg-base-200",
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
             className: "hero min-h-screen container mx-auto max-w-5xl",
             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {

@@ -138,8 +138,9 @@ function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
     },
     [onConnect, kilt],
   );
+
   return (
-    <section>
+    <section className="flex flex-col items-center gap-4 text-justify">
       {extensions.length === 0 && (
         <p>
           Looking for a wallet… To make a claim you need to have e.g. Sporran
@@ -149,7 +150,7 @@ function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
 
       {extensions.map((extension) => (
         <button
-          className="btn btn-active btn-primary"
+          className="btn btn-active btn-neutral max-w-[200px]"
           key={extension}
           type="button"
           onClick={() => handleConnect(extension)}
@@ -289,20 +290,19 @@ function Claim() {
   const { title, properties } = cType;
 
   return (
-    <section className="bg-base-200 min-h-screen flex flex-col justify-center kilt-bg">
+    <section className="bg-base-200 min-h-screen flex flex-col justify-center">
       <div className="container mx-auto max-w-5xl card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
         <div className="card-body flex flex-col gap-4">
           <div className="relative">
             <Link
               to={paths.home}
-              className="absolute -top-5 -left-2 text-xs flex items-center"
+              className="absolute -top-7 -left-2 text-xs flex items-center btn btn-link p-0 m-0"
             >
               <ChevronLeftIcon className="w-6" />
-              Back
             </Link>
           </div>
 
-          <div className="flex justify-between items-end">
+          <div className="flex justify-between items-end mt-2">
             <h2 className="text-xl">
               {title === 'Authorization' ? 'INE' : title}
             </h2>
@@ -390,7 +390,7 @@ function Claim() {
 
 function Home() {
   return (
-    <section className="bg-base-200 kilt-bg">
+    <section className="bg-base-200">
       <div className="hero min-h-screen container mx-auto max-w-5xl">
         <div className="hero-content flex-col lg:flex-row">
           <div className="text-center lg:text-left">

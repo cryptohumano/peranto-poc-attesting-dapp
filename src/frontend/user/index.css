@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .kilt-bg {
-  background: url('./logo.svg') no-repeat top 1rem right 1rem;
+  background-image: url('./logo.svg') no-repeat top 1rem right 1rem;
 }
