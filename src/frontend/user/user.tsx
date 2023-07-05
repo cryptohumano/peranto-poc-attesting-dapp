@@ -427,7 +427,7 @@ function Claim() {
 function Home() {
   return (
     <section
-      className="bg-base-200"
+      className="bg-base-200 "
       style={{
         backgroundImage: `url(${perantoLogo})`,
         backgroundRepeat: 'no-repeat',
