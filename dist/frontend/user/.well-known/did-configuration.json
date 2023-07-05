@@ -1,1 +1,30 @@
-{"@context":"https://identity.foundation/.well-known/did-configuration/v1","linked_dids":[{"@context":["https://www.w3.org/2018/credentials/v1","https://identity.foundation/.well-known/did-configuration/v1"],"issuer":"did:kilt:4oftX1QYBPvwFALLKST5FG5AT2oqqRSXkfamTBLCB843RfUk","issuanceDate":"2023-07-05T03:12:12.993Z","expirationDate":"2028-07-03T03:12:12.993Z","type":["VerifiableCredential","DomainLinkageCredential","KiltCredential2020"],"credentialSubject":{"id":"did:kilt:4oftX1QYBPvwFALLKST5FG5AT2oqqRSXkfamTBLCB843RfUk","origin":"https://attesting-dapp.vercel.app","rootHash":"0xa72079d03d83b4cf17afa5cb4ea380ba582a9099bd9f1f1b27d3d720836ac0ce"},"proof":{"type":"KILTSelfSigned2020","proofPurpose":"assertionMethod","verificationMethod":"did:kilt:4oftX1QYBPvwFALLKST5FG5AT2oqqRSXkfamTBLCB843RfUk#0xf7bab762c5ae85f10210334ac2ee32110380d8b8dabe133f4d008abdd737f7a0","signature":"0x74e522af859fbbf1b13a4bbd7e7857f34132a5fd04be4c910a650b0debfe40347f80851b71267ac03f659e0e2d7dff1fc24746033ca01616fc2364db5dd7dd0a"}}]}
+{
+  "@context": "https://identity.foundation/.well-known/did-configuration/v1",
+  "linked_dids": [
+    {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://identity.foundation/.well-known/did-configuration/v1"
+      ],
+      "issuer": "did:kilt:4oftX1QYBPvwFALLKST5FG5AT2oqqRSXkfamTBLCB843RfUk",
+      "issuanceDate": "2023-07-05T03:27:25.097Z",
+      "expirationDate": "2028-07-03T03:27:25.097Z",
+      "type": [
+        "VerifiableCredential",
+        "DomainLinkageCredential",
+        "KiltCredential2020"
+      ],
+      "credentialSubject": {
+        "id": "did:kilt:4oftX1QYBPvwFALLKST5FG5AT2oqqRSXkfamTBLCB843RfUk",
+        "origin": "https://attesting-dapp.vercel.app",
+        "rootHash": "0xa87d296eb4e6659a3ec2968910727f96aa5b088d2c91bc32856069154890dd88"
+      },
+      "proof": {
+        "type": "KILTSelfSigned2020",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "did:kilt:4oftX1QYBPvwFALLKST5FG5AT2oqqRSXkfamTBLCB843RfUk#0xf7bab762c5ae85f10210334ac2ee32110380d8b8dabe133f4d008abdd737f7a0",
+        "signature": "0xfcf5524ae279fdf82910b24a644d7e0ed11faebab98bb133c7dfdbd3bd49fc7436f9ddf5356bd9b2d586e6721e3a4cc9e249e0b1551b35a85f3e95c3fb31e707"
+      }
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable import/no-extraneous-dependencies */
 import { createRoot } from 'react-dom/client';
 
@@ -10,6 +11,7 @@ import {
   Routes,
   useParams,
 } from 'react-router-dom';
+import { Dna } from 'react-loader-spinner';
 import { onSnapshot, getFirestore, doc } from 'firebase/firestore';
 import { initializeApp, getApps } from 'firebase/app';
 
@@ -66,7 +68,12 @@ declare global {
 
 type FlowError = 'closed' | 'unauthorized' | 'unknown';
 
-const btnStyle = (isError: boolean) => (isError ? 'btn-error' : 'btn-neutral');
+const btnStyle = (isError: boolean, processing: boolean) =>
+  processing
+    ? 'bg-base-100 border-none'
+    : isError
+    ? 'btn-error'
+    : 'btn-neutral';
 
 const errors: Record<FlowError, JSX.Element> = {
   closed: <p>Your wallet was closed. Please try again.</p>,
@@ -152,23 +159,28 @@ function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
 
       {extensions.map((extension) => (
         <button
-          className={btnStyle(!!error) + ' btn btn-active max-w-[200px]'}
+          className={`btn ${btnStyle(
+            !!error,
+            processing,
+          )} btn-active max-w-[200px]`}
           key={extension}
           type="button"
           onClick={() => handleConnect(extension)}
         >
-          Connect to {kilt[extension].name}
+          {processing ? (
+            <Dna
+              visible={true}
+              height="40"
+              width="40"
+              ariaLabel="dna-loading"
+              wrapperStyle={{}}
+              wrapperClass="dna-wrapper"
+            />
+          ) : (
+            `Connect to ${kilt[extension].name}`
+          )}
         </button>
       ))}
-
-      {processing && (
-        <button
-          className="btn btn-active btn-neutral max-w-[200px]"
-          type="button"
-        >
-          <span className="loading loading-ring loading-md" />
-        </button>
-      )}
 
       {error && errors[error]}
     </section>

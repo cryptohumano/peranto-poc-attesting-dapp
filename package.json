@@ -25,6 +25,7 @@
     "@kiltprotocol/sdk-js": "^0.33.1",
     "@kiltprotocol/vc-export": "^0.33.1",
     "@polkadot/util-crypto": "^12.2.2",
+    "add": "^2.0.6",
     "body-parser": "^1.20.2",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
@@ -37,7 +38,9 @@
     "pino-pretty": "^10.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.12.1"
+    "react-loader-spinner": "^5.3.4",
+    "react-router-dom": "^6.12.1",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
