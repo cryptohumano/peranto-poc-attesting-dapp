@@ -431,8 +431,8 @@ function Home() {
       style={{
         backgroundImage: `url(${perantoLogo})`,
         backgroundRepeat: 'no-repeat',
-        backgroundSize: '210px',
-        backgroundPosition: 'bottom',
+        backgroundSize: '369px auto',
+        backgroundPosition: 'center 60px',
       }}
     >
       <div className="hero min-h-screen container mx-auto max-w-5xl">

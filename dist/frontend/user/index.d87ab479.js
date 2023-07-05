@@ -3383,12 +3383,12 @@ _s1(Claim, "sVIK2ofO2eRwc9G30oo67OoV3Ak=", false, function() {
 _c2 = Claim;
 function Home() {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("section", {
-        className: "bg-base-200",
+        className: "bg-base-200 ",
         style: {
             backgroundImage: `url(${(0, _perantoLogoPngDefault.default)})`,
             backgroundRepeat: "no-repeat",
-            backgroundSize: "210px",
-            backgroundPosition: "bottom"
+            backgroundSize: "369px auto",
+            backgroundPosition: "center 60px"
         },
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
             className: "hero min-h-screen container mx-auto max-w-5xl",
