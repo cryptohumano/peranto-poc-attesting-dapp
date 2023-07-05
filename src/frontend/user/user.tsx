@@ -38,6 +38,8 @@ import {
 import { paths as apiPaths } from '../../backend/endpoints/paths';
 import { sessionHeader } from '../../backend/endpoints/user/sessionHeader';
 
+import perantoLogo from './peranto_logo.png';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyAAwR5GvEUi3lLWy9bb1tz65jhvHI3vufc',
   authDomain: 'peranto-test.firebaseapp.com',
@@ -424,13 +426,19 @@ function Claim() {
 
 function Home() {
   return (
-    <section className="bg-base-200">
+    <section
+      className="bg-base-200"
+      style={{
+        backgroundImage: `url(${perantoLogo})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '210px',
+        backgroundPosition: 'bottom',
+      }}
+    >
       <div className="hero min-h-screen container mx-auto max-w-5xl">
         <div className="hero-content flex-col lg:flex-row">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold text-[#1b2a51]">
-              Peranto Attest App
-            </h1>
+          <div className="flex flex-col text-center lg:text-left">
+            <h1 className="text-5xl font-bold text-[#1b2a51]">Attest App</h1>
             <p className="py-6 text-[#1b2a51]">
               This KILT Attester Example demonstrates how to issue credentials
               for a couple basic claim types which already exist on the KILT
