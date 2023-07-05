@@ -351,7 +351,10 @@ function Claim() {
           </div>
 
           <div className="flex flex-col items-center">
-            <form className="my-2" onSubmit={handleClaim}>
+            <form
+              className="my-2 flex flex-col items-center"
+              onSubmit={handleClaim}
+            >
               {status === 'start' && type === 'id' && (
                 <>
                   <div className="my-8" onMouseEnter={triggerListener}>
