@@ -106,11 +106,17 @@ function calculateAge(dob: Date) {
   return Math.abs(age_dt.getUTCFullYear() - 1970);
 }
 
-export const Button = ({ onClick, isError, isLoading, label }: any) => {
+export const Button = ({
+  onClick,
+  isError,
+  isLoading,
+  label,
+  isSubmit,
+}: any) => {
   return (
     <button
       className={`btn ${btnStyle(isError, isLoading)} btn-active max-w-[200px]`}
-      type="button"
+      type={isSubmit ? 'submit' : 'button'}
       onClick={onClick}
     >
       {isLoading ? (
