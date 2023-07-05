@@ -66,6 +66,8 @@ declare global {
 
 type FlowError = 'closed' | 'unauthorized' | 'unknown';
 
+const btnStyle = (isError: boolean) => (isError ? 'btn-error' : 'btn-neutral');
+
 const errors: Record<FlowError, JSX.Element> = {
   closed: <p>Your wallet was closed. Please try again.</p>,
   unauthorized: (
@@ -150,7 +152,7 @@ function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
 
       {extensions.map((extension) => (
         <button
-          className="btn btn-active btn-neutral max-w-[200px]"
+          className={btnStyle(!!error) + ' btn btn-active max-w-[200px]'}
           key={extension}
           type="button"
           onClick={() => handleConnect(extension)}
@@ -159,7 +161,14 @@ function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
         </button>
       ))}
 
-      {processing && <p>Connecting…</p>}
+      {processing && (
+        <button
+          className="btn btn-active btn-neutral max-w-[200px]"
+          type="button"
+        >
+          <span className="loading loading-ring loading-md" />
+        </button>
+      )}
 
       {error && errors[error]}
     </section>
