@@ -351,48 +351,50 @@ function Claim() {
           </div>
 
           <div className="flex flex-col items-center">
-            {status === 'start' && type === 'id' && (
-              <>
-                <div className="my-8" onMouseEnter={triggerListener}>
-                  <mati-button
-                    clientid="64811ce44d683b001b9013f0"
-                    flowId="64811ce44d683b001b9013ef"
-                  />
-                </div>
-                <form className="my-2" onSubmit={handleClaim}>
-                  {Object.keys(properties).map((property) => (
-                    <label className="hidden" key={property}>
-                      {property}:
-                      <input name={property} disabled={!session} required />
-                    </label>
-                  ))}
-                </form>
-              </>
-            )}
+            <form className="my-2" onSubmit={handleClaim}>
+              {status === 'start' && type === 'id' && (
+                <>
+                  <div className="my-8" onMouseEnter={triggerListener}>
+                    <mati-button
+                      clientid="64811ce44d683b001b9013f0"
+                      flowId="64811ce44d683b001b9013ef"
+                    />
+                  </div>
+                  <>
+                    {Object.keys(properties).map((property) => (
+                      <label className="hidden" key={property}>
+                        {property}:
+                        <input name={property} disabled={!session} required />
+                      </label>
+                    ))}
+                  </>
+                </>
+              )}
 
-            {status === 'start' && type !== 'id' && (
-              // implement custom claim forms if you want to handle non-string properties
-              <>
-                <form onSubmit={handleClaim}>
-                  {Object.keys(properties).map((property) => (
-                    <label key={property}>
-                      {property}:
-                      <input name={property} disabled={!session} required />
-                    </label>
-                  ))}
-                </form>
-              </>
-            )}
+              {status === 'start' && type !== 'id' && (
+                // implement custom claim forms if you want to handle non-string properties
+                <>
+                  <>
+                    {Object.keys(properties).map((property) => (
+                      <label key={property}>
+                        {property}:
+                        <input name={property} disabled={!session} required />
+                      </label>
+                    ))}
+                  </>
+                </>
+              )}
 
-            {!session && <Connect onConnect={handleConnect} />}
-            {session && (
-              <Button
-                isLoading={loading}
-                isError={!!error}
-                label="Submit"
-                isSubmit
-              />
-            )}
+              {!session && <Connect onConnect={handleConnect} />}
+              {session && (
+                <Button
+                  isLoading={loading}
+                  isError={!!error}
+                  label="Submit"
+                  isSubmit
+                />
+              )}
+            </form>
 
             {status === 'requested' && (
               <form onSubmit={handlePayment}>
