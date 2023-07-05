@@ -106,6 +106,31 @@ function calculateAge(dob: Date) {
   return Math.abs(age_dt.getUTCFullYear() - 1970);
 }
 
+export const Button = ({ onClick, isError, isLoading, label }: any) => {
+  return (
+    <button
+      className={`btn ${btnStyle(isError, isLoading)} btn-active max-w-[200px]`}
+      type="button"
+      onClick={onClick}
+    >
+      {isLoading ? (
+        <Dna
+          visible={true}
+          height="40"
+          width="40"
+          ariaLabel="dna-loading"
+          wrapperStyle={{}}
+          wrapperClass="dna-wrapper"
+        />
+      ) : isError ? (
+        'Try again'
+      ) : (
+        label
+      )}
+    </button>
+  );
+};
+
 function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
   const { kilt } = apiWindow;
 
@@ -158,28 +183,13 @@ function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
       )}
 
       {extensions.map((extension) => (
-        <button
-          className={`btn ${btnStyle(
-            !!error,
-            processing,
-          )} btn-active max-w-[200px]`}
+        <Button
           key={extension}
-          type="button"
           onClick={() => handleConnect(extension)}
-        >
-          {processing ? (
-            <Dna
-              visible={true}
-              height="40"
-              width="40"
-              ariaLabel="dna-loading"
-              wrapperStyle={{}}
-              wrapperClass="dna-wrapper"
-            />
-          ) : (
-            `Connect to ${kilt[extension].name}`
-          )}
-        </button>
+          isError={!!error}
+          isLoading={processing}
+          label={`Connect to ${kilt[extension].name}`}
+        />
       ))}
 
       {error && errors[error]}
@@ -194,6 +204,7 @@ function Claim() {
   const [session, setSession] = useState<Session>();
   const [status, setStatus] = useState<'start' | 'requested' | 'paid'>('start');
   const [error, setError] = useState<FlowError>();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (verificationId)
@@ -234,6 +245,7 @@ function Claim() {
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setError(undefined);
+      setLoading(true);
 
       if (!session || !type || !isSupportedCType(type)) {
         return;
@@ -275,6 +287,8 @@ function Claim() {
           setError('unknown');
           console.error(exception);
         }
+      } finally {
+        setLoading(false);
       }
     },
     [session, type],
@@ -346,17 +360,6 @@ function Claim() {
                       <input name={property} disabled={!session} required />
                     </label>
                   ))}
-
-                  {!session && <Connect onConnect={handleConnect} />}
-
-                  {session && (
-                    <button
-                      className="btn btn-active btn-primary"
-                      type="submit"
-                    >
-                      Submit
-                    </button>
-                  )}
                 </form>
               </>
             )}
@@ -371,19 +374,18 @@ function Claim() {
                       <input name={property} disabled={!session} required />
                     </label>
                   ))}
-
-                  {!session && <Connect onConnect={handleConnect} />}
-
-                  {session && (
-                    <button
-                      className="btn btn-active btn-primary"
-                      type="submit"
-                    >
-                      Submit
-                    </button>
-                  )}
                 </form>
               </>
+            )}
+
+            {!session && <Connect onConnect={handleConnect} />}
+            {session && (
+              <Button
+                isLoading={loading}
+                isError={!!error}
+                label="Submit"
+                isSubmit
+              />
             )}
 
             {status === 'requested' && (
