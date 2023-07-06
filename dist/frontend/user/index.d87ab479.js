@@ -3603,7 +3603,7 @@ $RefreshReg$(_c3, "Home");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"hEt4l","react-dom/client":"4pZWP","react":"e9zAD","react-router-dom":"cfDu6","react-loader-spinner":"j3NTa","firebase/firestore":"6P8of","firebase/app":"X7gGt","@heroicons/react/20/solid":"5BREm","ky":"8yu3h","../utilities/session":"34xbu","../utilities/exceptionToError":"32v4a","../utilities/paths":"5w95x","../../backend/utilities/supportedCTypes":"45zNN","../../backend/endpoints/paths":"jzUd7","../../backend/endpoints/user/sessionHeader":"3uiN7","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"gXTgn","./peranto_logo.png":"bvlns"}],"hEt4l":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"hEt4l","react-dom/client":"4pZWP","react":"e9zAD","react-router-dom":"cfDu6","react-loader-spinner":"j3NTa","firebase/firestore":"6P8of","firebase/app":"X7gGt","@heroicons/react/20/solid":"5BREm","ky":"8yu3h","../utilities/session":"34xbu","../utilities/exceptionToError":"32v4a","../utilities/paths":"5w95x","../../backend/utilities/supportedCTypes":"45zNN","../../backend/endpoints/paths":"jzUd7","../../backend/endpoints/user/sessionHeader":"3uiN7","./peranto_logo.png":"bvlns","@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"gXTgn"}],"hEt4l":[function(require,module,exports) {
 "use strict";
 module.exports = require("./cjs/react-jsx-dev-runtime.development.js");
 
@@ -72762,7 +72762,44 @@ const idCType = {
     $id: "kilt:ctype:0xdf952230c87e7fbdc8503a394540c8e99029180611e7107c4eee33f67f57aa57"
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"gXTgn":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"cBYnK"}],"bvlns":[function(require,module,exports) {
+module.exports = require("./helpers/bundle-url").getBundleURL("kuqnk") + "peranto_logo.6c0233b1.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"2frhH"}],"2frhH":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return "/";
+}
+function getBaseURL(url) {
+    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error("Origin not found");
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"gXTgn":[function(require,module,exports) {
 "use strict";
 var Refresh = require("react-refresh/runtime");
 function debounce(func, delay) {
@@ -72882,43 +72919,6 @@ function registerExportsForReactRefresh(module1) {
     }
 }
 
-},{"react-refresh/runtime":"RU52H"}],"bvlns":[function(require,module,exports) {
-module.exports = require("./helpers/bundle-url").getBundleURL("kuqnk") + "peranto_logo.6c0233b1.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"2frhH"}],"2frhH":[function(require,module,exports) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return "/";
-}
-function getBaseURL(url) {
-    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
-    if (!matches) throw new Error("Origin not found");
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}]},["77Yv0","drM8P","7ccFj"], "7ccFj", "parcelRequire94c2")
+},{"react-refresh/runtime":"RU52H"}]},["77Yv0","drM8P","7ccFj"], "7ccFj", "parcelRequire94c2")
 
 //# sourceMappingURL=index.d87ab479.js.map
