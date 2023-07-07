@@ -12,7 +12,13 @@ import {
   useParams,
 } from 'react-router-dom';
 import { Dna } from 'react-loader-spinner';
-import { onSnapshot, getFirestore, doc } from 'firebase/firestore';
+import {
+  getDocs,
+  query,
+  collection,
+  getFirestore,
+  where,
+} from 'firebase/firestore';
 import { initializeApp, getApps } from 'firebase/app';
 
 import { ChevronLeftIcon } from '@heroicons/react/20/solid';
@@ -100,13 +106,6 @@ const errors: Record<FlowError, JSX.Element> = {
     </p>
   ),
 };
-
-function calculateAge(dob: Date) {
-  const diff_ms = Date.now() - dob.getTime();
-  const age_dt = new Date(diff_ms);
-
-  return Math.abs(age_dt.getUTCFullYear() - 1970);
-}
 
 export const Button = ({
   onClick,
@@ -208,42 +207,21 @@ function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
 function Claim() {
   const { type } = useParams();
 
-  const [verificationId, setVerificationId] = useState('');
   const [session, setSession] = useState<Session>();
   const [status, setStatus] = useState<'start' | 'requested' | 'paid'>('start');
   const [error, setError] = useState<FlowError>();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (verificationId)
-      onSnapshot(
-        doc(firestore, 'metamap', 'testId_verification_completed'),
-        // doc(firestore, 'metamap', 'testId_verification_started'),
-        (doc: any) => {
-          const data = doc.data();
+    const m = JSON.parse(
+      localStorage.getItem(`truoraFlow_document-validation`) || '{}',
+    );
 
-          if (!data) return;
+    console.log('META::', m);
+  }, []);
 
-          const parsed = JSON.parse(data.payload);
-
-          const docs = parsed.documents[0];
-
-          const age = calculateAge(new Date(docs.fields.dateOfBirth.value));
-          const name = docs.fields.fullName.value;
-
-          (document.querySelector('[name="email"]') as any).value = name;
-          (document.querySelector('[name="username"]') as any).value = age;
-        },
-      );
-  }, [verificationId]);
-
-  const triggerListener = () => {
-    const button: any = document.querySelector('mati-button');
-
-    button?.addEventListener('mati:userStartedSdk', ({ detail }: any) => {
-      setVerificationId(detail.verificationId);
-    });
-  };
+  (document.querySelector('[name="email"]') as any).value = '';
+  (document.querySelector('[name="username"]') as any).value = '';
 
   const handleConnect = useCallback((session: Session) => {
     setSession(session);
@@ -359,12 +337,12 @@ function Claim() {
             >
               {status === 'start' && type === 'id' && (
                 <>
-                  <div className="my-8" onMouseEnter={triggerListener}>
-                    <mati-button
-                      clientid="64811ce44d683b001b9013f0"
-                      flowId="64811ce44d683b001b9013ef"
-                    />
-                  </div>
+                  <a
+                    className="btn btn-info"
+                    href="https://identity.truora.com/preview/IPFcbd9b16226d31a44b0b22eda776afd0d"
+                  >
+                    Validation with Truora
+                  </a>
                   <>
                     {Object.keys(properties).map((property) => (
                       <label className="hidden" key={property}>
@@ -424,7 +402,35 @@ function Claim() {
   );
 }
 
+// http://localhost/?process_id=IDPb989ea3628144f820412dc73a7cf58e0&account_id=ACC309e853aa77c8623d22f019bbe140a6a
 function Home() {
+  useEffect(() => {
+    const callAsync = async () => {
+      const q = query(
+        collection(firestore, 'truora'),
+        where('account_id', '==', account_id),
+        where('identity_process_id', '==', process_id),
+      );
+
+      const querySnapshot = await getDocs(q);
+      let result: any = {};
+
+      querySnapshot.forEach((doc) => {
+        result = { ...doc.data(), id: doc.id };
+      });
+
+      localStorage.setItem(`truoraFlow_${result.type}`, JSON.stringify(result));
+
+      if (result.type === 'document-validation') location.replace('/claim/id');
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const process_id = params.get('process_id');
+    const account_id = params.get('account_id');
+
+    if (process_id && account_id) callAsync();
+  }, []);
+
   return (
     <section
       className="bg-base-200 "

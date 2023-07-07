@@ -869,20 +869,20 @@ parcelHelpers.export(exports, "deleteCredential", ()=>deleteCredential);
 parcelHelpers.export(exports, "addAttestation", ()=>addAttestation);
 /* eslint-disable import/no-extraneous-dependencies */ var _nodeCrypto = require("crypto");
 var _firestore = require("firebase/firestore");
-var _metamap = require("../endpoints/user/metamap");
+var _truora = require("../endpoints/user/truora");
 class NotFoundError extends Error {
 }
 function addClaim(claim) {
     const id = (0, _nodeCrypto.randomUUID)();
     // credentials.set(id, { claim });
-    (0, _firestore.setDoc)((0, _firestore.doc)((0, _metamap.firestore), "credentials", id), {
+    (0, _firestore.setDoc)((0, _firestore.doc)((0, _truora.firestore), "credentials", id), {
         claim
     });
 }
 async function listCredentials() {
     // return Object.fromEntries(credentials.entries());
     let result = {};
-    const docs = await (0, _firestore.getDocs)((0, _firestore.collection)((0, _metamap.firestore), "credentials"));
+    const docs = await (0, _firestore.getDocs)((0, _firestore.collection)((0, _truora.firestore), "credentials"));
     docs.forEach((doc)=>{
         result = {
             ...result,
@@ -896,7 +896,7 @@ async function listCredentials() {
 }
 async function getCredential(id) {
     // const credential = credentials.get(id);
-    const _doc = await (0, _firestore.getDoc)((0, _firestore.doc)((0, _metamap.firestore), "credentials", id));
+    const _doc = await (0, _firestore.getDoc)((0, _firestore.doc)((0, _truora.firestore), "credentials", id));
     const credential = {
         ..._doc.data(),
         id
@@ -905,7 +905,7 @@ async function getCredential(id) {
     return credential;
 }
 async function deleteCredential(id) {
-    await (0, _firestore.deleteDoc)((0, _firestore.doc)((0, _metamap.firestore), "credentials", id));
+    await (0, _firestore.deleteDoc)((0, _firestore.doc)((0, _truora.firestore), "credentials", id));
 // const deleted = credentials.delete(id);
 // if (!deleted) {
 //   throw new NotFoundError('Credential not found');
@@ -914,19 +914,19 @@ async function deleteCredential(id) {
 async function addAttestation(id, attestation) {
     const credential = await getCredential(id);
     // credentials.set(id, { ...credential, attestation });
-    await (0, _firestore.updateDoc)((0, _firestore.doc)((0, _metamap.firestore), "credentials", id), {
+    await (0, _firestore.updateDoc)((0, _firestore.doc)((0, _truora.firestore), "credentials", id), {
         ...credential,
         attestation
     });
     return await getCredential(id);
 }
 
-},{"../endpoints/user/metamap":"agC8v","@parcel/transformer-js/src/esmodule-helpers.js":"jV6S9"}],"agC8v":[function(require,module,exports) {
+},{"../endpoints/user/truora":"i74Sb","@parcel/transformer-js/src/esmodule-helpers.js":"jV6S9"}],"i74Sb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "firebase", ()=>firebase);
 parcelHelpers.export(exports, "firestore", ()=>firestore);
-parcelHelpers.export(exports, "metamap", ()=>metamap);
+parcelHelpers.export(exports, "truora", ()=>truora);
 /* eslint-disable import/no-extraneous-dependencies */ var _express = require("express");
 var _httpStatusCodes = require("http-status-codes");
 var _app = require("firebase/app");
@@ -967,8 +967,8 @@ async function handler(req, res) {
         res.status((0, _httpStatusCodes.StatusCodes).INTERNAL_SERVER_ERROR).send(error);
     }
 }
-const metamap = (0, _express.Router)();
-metamap.post("/api/truora", handler);
+const truora = (0, _express.Router)();
+truora.post("/api/truora", handler);
 
 },{"../../utilities/logger":"gJFlT","@parcel/transformer-js/src/esmodule-helpers.js":"jV6S9"}],"2qfnu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -1083,14 +1083,14 @@ var _pay = require("../endpoints/user/pay");
 var _requestAttestation = require("../endpoints/user/requestAttestation");
 var _session = require("../endpoints/user/session");
 var _terms = require("../endpoints/user/terms");
-var _metamap = require("../endpoints/user/metamap");
+var _truora = require("../endpoints/user/truora");
 var _configuration = require("../utilities/configuration");
 const userRouter = (0, _express.Router)();
 userRouter.use((0, _session.session));
 userRouter.use((0, _terms.terms));
 userRouter.use((0, _requestAttestation.requestAttestation));
 userRouter.use((0, _pay.pay));
-userRouter.use((0, _metamap.metamap));
+userRouter.use((0, _truora.truora));
 userRouter.use(// eslint-disable-next-line import/no-named-as-default-member
 (0, _expressDefault.default).static(`${(0, _configuration.configuration).distFolder}/user`, {
     dotfiles: "allow",
@@ -1102,7 +1102,7 @@ userRouter.get("*", (request, response)=>{
     response.sendFile(`${(0, _configuration.configuration).distFolder}/user/index.html`);
 });
 
-},{"../endpoints/user/pay":"6hBXU","../endpoints/user/requestAttestation":"kOrJk","../endpoints/user/session":"9afji","../endpoints/user/terms":"fA0Id","../endpoints/user/metamap":"agC8v","../utilities/configuration":"js8cz","@parcel/transformer-js/src/esmodule-helpers.js":"jV6S9"}],"6hBXU":[function(require,module,exports) {
+},{"../endpoints/user/pay":"6hBXU","../endpoints/user/requestAttestation":"kOrJk","../endpoints/user/session":"9afji","../endpoints/user/terms":"fA0Id","../endpoints/user/truora":"i74Sb","../utilities/configuration":"js8cz","@parcel/transformer-js/src/esmodule-helpers.js":"jV6S9"}],"6hBXU":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "pay", ()=>pay);
@@ -1253,7 +1253,7 @@ parcelHelpers.export(exports, "kiltCost", ()=>kiltCost);
 parcelHelpers.export(exports, "isSupportedCType", ()=>isSupportedCType);
 var _emailCType = require("../cTypes/emailCType");
 var _twitterCType = require("../cTypes/twitterCType");
-var _idCType = require("../cTypes/idCType");
+var _ineCType = require("../cTypes/ineCType");
 const supportedCTypeKeys = [
     "email",
     "twitter",
@@ -1262,7 +1262,7 @@ const supportedCTypeKeys = [
 const supportedCTypes = {
     email: (0, _emailCType.emailCType),
     twitter: (0, _twitterCType.twitterCType),
-    id: (0, _idCType.idCType)
+    id: (0, _ineCType.ineCType)
 };
 const kiltCost = {
     id: 2,
@@ -1273,7 +1273,7 @@ function isSupportedCType(cType) {
     return supportedCTypeKeys.includes(cType);
 }
 
-},{"../cTypes/emailCType":"jMvua","../cTypes/twitterCType":"bahPB","../cTypes/idCType":"jjfle","@parcel/transformer-js/src/esmodule-helpers.js":"jV6S9"}],"jMvua":[function(require,module,exports) {
+},{"../cTypes/emailCType":"jMvua","../cTypes/twitterCType":"bahPB","../cTypes/ineCType":"bJJhJ","@parcel/transformer-js/src/esmodule-helpers.js":"jV6S9"}],"jMvua":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "emailCType", ()=>emailCType);
@@ -1305,11 +1305,11 @@ const twitterCType = {
     $id: "kilt:ctype:0x47d04c42bdf7fdd3fc5a194bcaa367b2f4766a6b16ae3df628927656d818f420"
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jV6S9"}],"jjfle":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jV6S9"}],"bJJhJ":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "idCType", ()=>idCType);
-const idCType = {
+parcelHelpers.export(exports, "ineCType", ()=>ineCType);
+const ineCType = {
     $schema: "http://kilt-protocol.org/draft-01/ctype#",
     properties: {
         email: {

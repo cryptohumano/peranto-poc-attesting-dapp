@@ -2,7 +2,7 @@ import type { ICType } from '@kiltprotocol/sdk-js';
 
 import { emailCType } from '../cTypes/emailCType';
 import { twitterCType } from '../cTypes/twitterCType';
-import { idCType } from '../cTypes/idCType';
+import { ineCType } from '../cTypes/ineCType';
 
 export const supportedCTypeKeys = ['email', 'twitter', 'id'] as const;
 
@@ -11,7 +11,7 @@ export type SupportedCType = (typeof supportedCTypeKeys)[number];
 export const supportedCTypes: Record<SupportedCType, ICType> = {
   email: emailCType,
   twitter: twitterCType,
-  id: idCType,
+  id: ineCType,
 };
 
 export const kiltCost: Record<SupportedCType, number> = {

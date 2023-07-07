@@ -4,7 +4,7 @@ import { pay } from '../endpoints/user/pay';
 import { requestAttestation } from '../endpoints/user/requestAttestation';
 import { session } from '../endpoints/user/session';
 import { terms } from '../endpoints/user/terms';
-import { metamap } from '../endpoints/user/metamap';
+import { truora } from '../endpoints/user/truora';
 
 import { configuration } from '../utilities/configuration';
 
@@ -14,7 +14,7 @@ userRouter.use(session);
 userRouter.use(terms);
 userRouter.use(requestAttestation);
 userRouter.use(pay);
-userRouter.use(metamap);
+userRouter.use(truora);
 
 userRouter.use(
   // eslint-disable-next-line import/no-named-as-default-member

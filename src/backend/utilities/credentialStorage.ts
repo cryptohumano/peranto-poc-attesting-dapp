@@ -11,7 +11,7 @@ import {
   updateDoc,
   deleteDoc,
 } from 'firebase/firestore';
-import { firestore } from '../endpoints/user/metamap';
+import { firestore } from '../endpoints/user/truora';
 
 export class NotFoundError extends Error {}
 
