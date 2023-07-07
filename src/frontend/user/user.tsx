@@ -18,6 +18,8 @@ import {
   collection,
   getFirestore,
   where,
+  onSnapshot,
+  doc,
 } from 'firebase/firestore';
 import { initializeApp, getApps } from 'firebase/app';
 
@@ -211,17 +213,66 @@ function Claim() {
   const [status, setStatus] = useState<'start' | 'requested' | 'paid'>('start');
   const [error, setError] = useState<FlowError>();
   const [loading, setLoading] = useState(false);
+  const [payload, setPayload] = useState<any>();
+  const [waitResponse, setWaitResponse] = useState<any>(false);
 
   useEffect(() => {
     const m = JSON.parse(
-      localStorage.getItem(`truoraFlow_document-validation`) || '{}',
+      (localStorage.getItem(`truoraFlow_document-validation`) || null) as any,
     );
 
-    console.log('META::', m);
+    if (m === null) return;
+
+    if (m.validation_status === 'success') {
+      const {
+        name,
+        first_last_name,
+        last_name,
+        date_of_birth,
+        machine_readable,
+      } = m.details.document_details;
+
+      setPayload({
+        fullName: `${name} ${first_last_name} ${last_name}`,
+        dateOfBirth: date_of_birth,
+        ineID: machine_readable,
+      });
+    } else {
+      setWaitResponse(true);
+
+      onSnapshot(doc(firestore, 'truora', m.id), (doc) => {
+        const data = doc.data();
+
+        if (!doc.exists) return;
+
+        if (data?.validation_status === 'success') {
+          const {
+            name,
+            first_last_name,
+            last_name,
+            date_of_birth,
+            machine_readable,
+          } = data.details.document_details;
+
+          setPayload({
+            fullName: `${name} ${first_last_name} ${last_name}`,
+            dateOfBirth: date_of_birth,
+            ineID: machine_readable,
+          });
+
+          setWaitResponse(false);
+        }
+      });
+    }
   }, []);
 
-  (document.querySelector('[name="email"]') as any).value = '';
-  (document.querySelector('[name="username"]') as any).value = '';
+  useEffect(() => {
+    if (payload) {
+      (document.querySelector('[name="email"]') as any).value = payload.ineID;
+      (document.querySelector('[name="username"]') as any).value =
+        payload.fullName;
+    }
+  }, [payload]);
 
   const handleConnect = useCallback((session: Session) => {
     setSession(session);
@@ -312,7 +363,7 @@ function Claim() {
 
   return (
     <section className="bg-base-200 min-h-screen flex flex-col justify-center">
-      <div className="container mx-auto max-w-5xl card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <div className="container mx-auto max-w-5xl card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
         <div className="card-body flex flex-col gap-4">
           <div className="relative">
             <Link
@@ -337,12 +388,37 @@ function Claim() {
             >
               {status === 'start' && type === 'id' && (
                 <>
-                  <a
-                    className="btn btn-info"
-                    href="https://identity.truora.com/preview/IPFcbd9b16226d31a44b0b22eda776afd0d"
-                  >
-                    Validation with Truora
-                  </a>
+                  {!waitResponse && payload && (
+                    <>
+                      <p>Validation successful!</p>
+                      <br />
+                      <table className="table mb-8">
+                        <tr>
+                          <td>Name: </td>
+                          <td className="break-all">{payload.fullName}</td>
+                        </tr>
+                        <tr>
+                          <td>Date of birth:</td>
+                          <td className="break-all">{payload.dateOfBirth}</td>
+                        </tr>
+                        <tr>
+                          <td>INE</td>
+                          <td className="break-all">{payload.ineID}</td>
+                        </tr>
+                      </table>
+                    </>
+                  )}
+                  {!waitResponse && !payload && (
+                    <a
+                      className="btn btn-info mt-4 mb-8"
+                      href="https://identity.truora.com/preview/IPFcbd9b16226d31a44b0b22eda776afd0d"
+                    >
+                      Validation with Truora
+                    </a>
+                  )}
+                  {waitResponse && (
+                    <p className="mt-4 mb-8">Waiting for Truora response.</p>
+                  )}
                   <>
                     {Object.keys(properties).map((property) => (
                       <label className="hidden" key={property}>

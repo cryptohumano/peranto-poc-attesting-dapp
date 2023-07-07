@@ -2940,7 +2940,7 @@ const errors = {
         children: "Your wallet was closed. Please try again."
     }, void 0, false, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 87,
+        lineNumber: 89,
         columnNumber: 11
     }, undefined),
     unauthorized: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -2953,20 +2953,20 @@ const errors = {
                 children: "Tech Support"
             }, void 0, false, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 93,
+                lineNumber: 95,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 89,
+        lineNumber: 91,
         columnNumber: 5
     }, undefined),
     unknown: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
         children: "Something went wrong! Try again or reload the page or restart your browser."
     }, void 0, false, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 103,
+        lineNumber: 105,
         columnNumber: 5
     }, undefined)
 };
@@ -2984,12 +2984,12 @@ const Button = ({ onClick , isError , isLoading , label , isSubmit  })=>{
             wrapperClass: "dna-wrapper"
         }, void 0, false, {
             fileName: "src/frontend/user/user.tsx",
-            lineNumber: 124,
+            lineNumber: 126,
             columnNumber: 9
         }, undefined) : isError ? "Try again" : label
     }, void 0, false, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 118,
+        lineNumber: 120,
         columnNumber: 5
     }, undefined);
 };
@@ -3034,7 +3034,7 @@ function Connect({ onConnect  }) {
                 children: "Looking for a wallet… To make a claim you need to have e.g. Sporran wallet installed and have an identity configured in it."
             }, void 0, false, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 186,
+                lineNumber: 188,
                 columnNumber: 9
             }, this),
             extensions.map((extension)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Button, {
@@ -3044,14 +3044,14 @@ function Connect({ onConnect  }) {
                     label: `Connect to ${kilt[extension].name}`
                 }, extension, false, {
                     fileName: "src/frontend/user/user.tsx",
-                    lineNumber: 193,
+                    lineNumber: 195,
                     columnNumber: 9
                 }, this)),
             error && errors[error]
         ]
     }, void 0, true, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 184,
+        lineNumber: 186,
         columnNumber: 5
     }, this);
 }
@@ -3064,12 +3064,43 @@ function Claim() {
     const [status, setStatus] = (0, _react.useState)("start");
     const [error, setError] = (0, _react.useState)();
     const [loading, setLoading] = (0, _react.useState)(false);
+    const [payload, setPayload] = (0, _react.useState)();
+    const [waitResponse, setWaitResponse] = (0, _react.useState)(false);
     (0, _react.useEffect)(()=>{
-        const m = JSON.parse(localStorage.getItem(`truoraFlow_document-validation`) || "{}");
-        console.log("META::", m);
+        const m = JSON.parse(localStorage.getItem(`truoraFlow_document-validation`) || null);
+        if (m === null) return;
+        if (m.validation_status === "success") {
+            const { name , first_last_name , last_name , date_of_birth , machine_readable ,  } = m.details.document_details;
+            setPayload({
+                fullName: `${name} ${first_last_name} ${last_name}`,
+                dateOfBirth: date_of_birth,
+                ineID: machine_readable
+            });
+        } else {
+            setWaitResponse(true);
+            (0, _firestore.onSnapshot)((0, _firestore.doc)(firestore, "truora", m.id), (doc)=>{
+                const data = doc.data();
+                if (!doc.exists) return;
+                if (data?.validation_status === "success") {
+                    const { name , first_last_name , last_name , date_of_birth , machine_readable ,  } = data.details.document_details;
+                    setPayload({
+                        fullName: `${name} ${first_last_name} ${last_name}`,
+                        dateOfBirth: date_of_birth,
+                        ineID: machine_readable
+                    });
+                    setWaitResponse(false);
+                }
+            });
+        }
     }, []);
-    document.querySelector('[name="email"]').value = "";
-    document.querySelector('[name="username"]').value = "";
+    (0, _react.useEffect)(()=>{
+        if (payload) {
+            document.querySelector('[name="email"]').value = payload.ineID;
+            document.querySelector('[name="username"]').value = payload.fullName;
+        }
+    }, [
+        payload
+    ]);
     const handleConnect = (0, _react.useCallback)((session)=>{
         setSession(session);
     }, []);
@@ -3142,7 +3173,7 @@ function Claim() {
         children: "Error - Unsupported CType"
     }, void 0, false, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 307,
+        lineNumber: 358,
         columnNumber: 12
     }, this);
     const cType = (0, _supportedCTypes.supportedCTypes)[type];
@@ -3150,7 +3181,7 @@ function Claim() {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("section", {
         className: "bg-base-200 min-h-screen flex flex-col justify-center",
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-            className: "container mx-auto max-w-5xl card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100",
+            className: "container mx-auto max-w-5xl card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100",
             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "card-body flex flex-col gap-4",
                 children: [
@@ -3163,17 +3194,17 @@ function Claim() {
                                 className: "w-6"
                             }, void 0, false, {
                                 fileName: "src/frontend/user/user.tsx",
-                                lineNumber: 322,
+                                lineNumber: 373,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "src/frontend/user/user.tsx",
-                            lineNumber: 318,
+                            lineNumber: 369,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "src/frontend/user/user.tsx",
-                        lineNumber: 317,
+                        lineNumber: 368,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -3184,7 +3215,7 @@ function Claim() {
                                 children: title === "Authorization" ? "INE" : title
                             }, void 0, false, {
                                 fileName: "src/frontend/user/user.tsx",
-                                lineNumber: 327,
+                                lineNumber: 378,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
@@ -3195,13 +3226,13 @@ function Claim() {
                                 ]
                             }, void 0, true, {
                                 fileName: "src/frontend/user/user.tsx",
-                                lineNumber: 330,
+                                lineNumber: 381,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/frontend/user/user.tsx",
-                        lineNumber: 326,
+                        lineNumber: 377,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -3213,14 +3244,116 @@ function Claim() {
                                 children: [
                                     status === "start" && type === "id" && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                                         children: [
-                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
-                                                className: "btn btn-info",
+                                            !waitResponse && payload && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+                                                children: [
+                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                                        children: "Validation successful!"
+                                                    }, void 0, false, {
+                                                        fileName: "src/frontend/user/user.tsx",
+                                                        lineNumber: 393,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
+                                                        fileName: "src/frontend/user/user.tsx",
+                                                        lineNumber: 394,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("table", {
+                                                        className: "table mb-8",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tr", {
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+                                                                        children: "Name: "
+                                                                    }, void 0, false, {
+                                                                        fileName: "src/frontend/user/user.tsx",
+                                                                        lineNumber: 397,
+                                                                        columnNumber: 27
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+                                                                        className: "break-all",
+                                                                        children: payload.fullName
+                                                                    }, void 0, false, {
+                                                                        fileName: "src/frontend/user/user.tsx",
+                                                                        lineNumber: 398,
+                                                                        columnNumber: 27
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "src/frontend/user/user.tsx",
+                                                                lineNumber: 396,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tr", {
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+                                                                        children: "Date of birth:"
+                                                                    }, void 0, false, {
+                                                                        fileName: "src/frontend/user/user.tsx",
+                                                                        lineNumber: 401,
+                                                                        columnNumber: 27
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+                                                                        className: "break-all",
+                                                                        children: payload.dateOfBirth
+                                                                    }, void 0, false, {
+                                                                        fileName: "src/frontend/user/user.tsx",
+                                                                        lineNumber: 402,
+                                                                        columnNumber: 27
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "src/frontend/user/user.tsx",
+                                                                lineNumber: 400,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tr", {
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+                                                                        children: "INE"
+                                                                    }, void 0, false, {
+                                                                        fileName: "src/frontend/user/user.tsx",
+                                                                        lineNumber: 405,
+                                                                        columnNumber: 27
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+                                                                        className: "break-all",
+                                                                        children: payload.ineID
+                                                                    }, void 0, false, {
+                                                                        fileName: "src/frontend/user/user.tsx",
+                                                                        lineNumber: 406,
+                                                                        columnNumber: 27
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "src/frontend/user/user.tsx",
+                                                                lineNumber: 404,
+                                                                columnNumber: 25
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "src/frontend/user/user.tsx",
+                                                        lineNumber: 395,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                ]
+                                            }, void 0, true),
+                                            !waitResponse && !payload && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
+                                                className: "btn btn-info mt-4 mb-8",
                                                 href: "https://identity.truora.com/preview/IPFcbd9b16226d31a44b0b22eda776afd0d",
                                                 children: "Validation with Truora"
                                             }, void 0, false, {
                                                 fileName: "src/frontend/user/user.tsx",
-                                                lineNumber: 340,
-                                                columnNumber: 19
+                                                lineNumber: 412,
+                                                columnNumber: 21
+                                            }, this),
+                                            waitResponse && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                                className: "mt-4 mb-8",
+                                                children: "Waiting for Truora response."
+                                            }, void 0, false, {
+                                                fileName: "src/frontend/user/user.tsx",
+                                                lineNumber: 420,
+                                                columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                                                 children: Object.keys(properties).map((property)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -3234,13 +3367,13 @@ function Claim() {
                                                                 required: true
                                                             }, void 0, false, {
                                                                 fileName: "src/frontend/user/user.tsx",
-                                                                lineNumber: 350,
+                                                                lineNumber: 426,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, property, true, {
                                                         fileName: "src/frontend/user/user.tsx",
-                                                        lineNumber: 348,
+                                                        lineNumber: 424,
                                                         columnNumber: 23
                                                     }, this))
                                             }, void 0, false)
@@ -3259,13 +3392,13 @@ function Claim() {
                                                             required: true
                                                         }, void 0, false, {
                                                             fileName: "src/frontend/user/user.tsx",
-                                                            lineNumber: 364,
+                                                            lineNumber: 440,
                                                             columnNumber: 25
                                                         }, this)
                                                     ]
                                                 }, property, true, {
                                                     fileName: "src/frontend/user/user.tsx",
-                                                    lineNumber: 362,
+                                                    lineNumber: 438,
                                                     columnNumber: 23
                                                 }, this))
                                         }, void 0, false)
@@ -3274,7 +3407,7 @@ function Claim() {
                                         onConnect: handleConnect
                                     }, void 0, false, {
                                         fileName: "src/frontend/user/user.tsx",
-                                        lineNumber: 371,
+                                        lineNumber: 447,
                                         columnNumber: 28
                                     }, this),
                                     session && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Button, {
@@ -3284,13 +3417,13 @@ function Claim() {
                                         isSubmit: true
                                     }, void 0, false, {
                                         fileName: "src/frontend/user/user.tsx",
-                                        lineNumber: 373,
+                                        lineNumber: 449,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/frontend/user/user.tsx",
-                                lineNumber: 334,
+                                lineNumber: 385,
                                 columnNumber: 13
                             }, this),
                             status === "requested" && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
@@ -3300,54 +3433,54 @@ function Claim() {
                                         children: "Thanks for your request. Please pay"
                                     }, void 0, false, {
                                         fileName: "src/frontend/user/user.tsx",
-                                        lineNumber: 384,
+                                        lineNumber: 460,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                                         children: "Pay"
                                     }, void 0, false, {
                                         fileName: "src/frontend/user/user.tsx",
-                                        lineNumber: 385,
+                                        lineNumber: 461,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/frontend/user/user.tsx",
-                                lineNumber: 383,
+                                lineNumber: 459,
                                 columnNumber: 15
                             }, this),
                             status === "paid" && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                                 children: "Thanks for your payment! Your request has been sent to the attester for processing. You can check the attestation status in your wallet."
                             }, void 0, false, {
                                 fileName: "src/frontend/user/user.tsx",
-                                lineNumber: 390,
+                                lineNumber: 466,
                                 columnNumber: 15
                             }, this),
                             error && errors[error]
                         ]
                     }, void 0, true, {
                         fileName: "src/frontend/user/user.tsx",
-                        lineNumber: 333,
+                        lineNumber: 384,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 316,
+                lineNumber: 367,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "src/frontend/user/user.tsx",
-            lineNumber: 315,
+            lineNumber: 366,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 314,
+        lineNumber: 365,
         columnNumber: 5
     }, this);
 }
-_s1(Claim, "/Fz+lYp3qL/Eu8iQG3jOcKwbzYE=", false, function() {
+_s1(Claim, "Jhs8WqpACKudt7Q2HlWmTxZ1vkg=", false, function() {
     return [
         (0, _reactRouterDom.useParams)
     ];
@@ -3396,7 +3529,7 @@ function Home() {
                                 children: "Attest App"
                             }, void 0, false, {
                                 fileName: "src/frontend/user/user.tsx",
-                                lineNumber: 447,
+                                lineNumber: 523,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -3404,13 +3537,13 @@ function Home() {
                                 children: "This KILT Attester Example demonstrates how to issue credentials for a couple basic claim types which already exist on the KILT blockchain. The user chooses a claim type, enters the claim data, makes a (mock) payment, and the claim is sent to the attester to be reviewed."
                             }, void 0, false, {
                                 fileName: "src/frontend/user/user.tsx",
-                                lineNumber: 448,
+                                lineNumber: 524,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/frontend/user/user.tsx",
-                        lineNumber: 446,
+                        lineNumber: 522,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -3423,7 +3556,7 @@ function Home() {
                                     children: "Start selecting a claim type:"
                                 }, void 0, false, {
                                     fileName: "src/frontend/user/user.tsx",
-                                    lineNumber: 458,
+                                    lineNumber: 534,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
@@ -3448,12 +3581,12 @@ function Home() {
                                                             d: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                                                         }, void 0, false, {
                                                             fileName: "src/frontend/user/user.tsx",
-                                                            lineNumber: 475,
+                                                            lineNumber: 551,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "src/frontend/user/user.tsx",
-                                                        lineNumber: 468,
+                                                        lineNumber: 544,
                                                         columnNumber: 25
                                                     }, this),
                                                     k === 1 && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("svg", {
@@ -3469,12 +3602,12 @@ function Home() {
                                                             d: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                                         }, void 0, false, {
                                                             fileName: "src/frontend/user/user.tsx",
-                                                            lineNumber: 491,
+                                                            lineNumber: 567,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "src/frontend/user/user.tsx",
-                                                        lineNumber: 484,
+                                                        lineNumber: 560,
                                                         columnNumber: 25
                                                     }, this),
                                                     k === 2 && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("svg", {
@@ -3490,56 +3623,56 @@ function Home() {
                                                             d: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                                                         }, void 0, false, {
                                                             fileName: "src/frontend/user/user.tsx",
-                                                            lineNumber: 507,
+                                                            lineNumber: 583,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "src/frontend/user/user.tsx",
-                                                        lineNumber: 500,
+                                                        lineNumber: 576,
                                                         columnNumber: 25
                                                     }, this),
                                                     (0, _supportedCTypes.supportedCTypes)[type].title === "Authorization" ? "INE" : (0, _supportedCTypes.supportedCTypes)[type].title
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "src/frontend/user/user.tsx",
-                                                lineNumber: 463,
+                                                lineNumber: 539,
                                                 columnNumber: 21
                                             }, this)
                                         }, type, false, {
                                             fileName: "src/frontend/user/user.tsx",
-                                            lineNumber: 462,
+                                            lineNumber: 538,
                                             columnNumber: 19
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "src/frontend/user/user.tsx",
-                                    lineNumber: 460,
+                                    lineNumber: 536,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "src/frontend/user/user.tsx",
-                            lineNumber: 457,
+                            lineNumber: 533,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "src/frontend/user/user.tsx",
-                        lineNumber: 456,
+                        lineNumber: 532,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 445,
+                lineNumber: 521,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "src/frontend/user/user.tsx",
-            lineNumber: 444,
+            lineNumber: 520,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 435,
+        lineNumber: 511,
         columnNumber: 5
     }, this);
 }
@@ -3554,7 +3687,7 @@ root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Browser
                 element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Home, {}, void 0, false, void 0, void 0)
             }, void 0, false, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 534,
+                lineNumber: 610,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -3562,7 +3695,7 @@ root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Browser
                 element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Claim, {}, void 0, false, void 0, void 0)
             }, void 0, false, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 535,
+                lineNumber: 611,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -3572,18 +3705,18 @@ root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Browser
                 }, void 0, false, void 0, void 0)
             }, void 0, false, {
                 fileName: "src/frontend/user/user.tsx",
-                lineNumber: 537,
+                lineNumber: 613,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/frontend/user/user.tsx",
-        lineNumber: 533,
+        lineNumber: 609,
         columnNumber: 5
     }, undefined)
 }, void 0, false, {
     fileName: "src/frontend/user/user.tsx",
-    lineNumber: 532,
+    lineNumber: 608,
     columnNumber: 3
 }, undefined));
 var _c, _c1, _c2, _c3;
