@@ -4,18 +4,18 @@ import { emailCType } from '../cTypes/emailCType';
 import { twitterCType } from '../cTypes/twitterCType';
 import { ineCType } from '../cTypes/ineCType';
 
-export const supportedCTypeKeys = ['email', 'twitter', 'id'] as const;
+export const supportedCTypeKeys = ['email', 'twitter', 'ine'] as const;
 
 export type SupportedCType = (typeof supportedCTypeKeys)[number];
 
 export const supportedCTypes: Record<SupportedCType, ICType> = {
   email: emailCType,
   twitter: twitterCType,
-  id: ineCType,
+  ine: ineCType,
 };
 
 export const kiltCost: Record<SupportedCType, number> = {
-  id: 2,
+  ine: 2,
   email: 2,
   twitter: 3,
 };

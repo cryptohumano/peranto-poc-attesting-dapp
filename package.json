@@ -2,6 +2,7 @@
   "engines": {
     "node": ">= v18.12.1"
   },
+  "type": "module",
   "scripts": {
     "prettify": "prettier --write \"src/**/*.ts*\"",
     "lint": "yarn run lint-css && yarn run lint-js",

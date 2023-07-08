@@ -259,9 +259,15 @@ function Claim() {
             dateOfBirth: date_of_birth,
             ineID: machine_readable,
           });
-
-          setWaitResponse(false);
         }
+
+        if (data?.validation_status === 'failure') {
+          setPayload({
+            failure: data.declined_reason,
+          });
+        }
+
+        setWaitResponse(false);
       });
     }
   }, []);
@@ -354,6 +360,12 @@ function Claim() {
     [session],
   );
 
+  const handleResetFlow = () => {
+    localStorage.removeItem(`truoraFlow_document-validation`);
+
+    location.reload();
+  };
+
   if (!type || !isSupportedCType(type)) {
     return <p>Error - Unsupported CType</p>;
   }
@@ -386,9 +398,18 @@ function Claim() {
               className="my-2 flex flex-col items-center"
               onSubmit={handleClaim}
             >
-              {status === 'start' && type === 'id' && (
+              {status === 'start' && type === 'ine' && (
                 <>
-                  {!waitResponse && payload && (
+                  {!waitResponse && payload?.failure ? (
+                    <>
+                      <p className="text-red">Validation not successful</p>
+                      <br />
+                      <span className="text-red-400 mb-8">
+                        <span className="font-bold text-red-600">Error: </span>
+                        {payload.failure}
+                      </span>
+                    </>
+                  ) : payload ? (
                     <>
                       <p>Validation successful!</p>
                       <br />
@@ -407,7 +428,17 @@ function Claim() {
                         </tr>
                       </table>
                     </>
+                  ) : null}
+
+                  {!waitResponse && payload?.failure && (
+                    <button
+                      className="btn btn-error mb-8"
+                      onClick={handleResetFlow}
+                    >
+                      Try Truora validation again
+                    </button>
                   )}
+
                   {!waitResponse && !payload && (
                     <a
                       className="btn btn-info mt-4 mb-8"
@@ -430,7 +461,7 @@ function Claim() {
                 </>
               )}
 
-              {status === 'start' && type !== 'id' && (
+              {status === 'start' && type !== 'ine' && (
                 // implement custom claim forms if you want to handle non-string properties
                 <>
                   <>
@@ -479,6 +510,8 @@ function Claim() {
 }
 
 // http://localhost/?process_id=IDPb989ea3628144f820412dc73a7cf58e0&account_id=ACC309e853aa77c8623d22f019bbe140a6a
+// https://ui-v2-66a48.uc.r.appspot.com/?process_id=IDP1834f8c74e9c8fe6bd3e3d9d0a12866c&account_id=ACC9d7b04086c54c5c9bbbfad6231793903
+
 function Home() {
   useEffect(() => {
     const callAsync = async () => {
@@ -497,7 +530,7 @@ function Home() {
 
       localStorage.setItem(`truoraFlow_${result.type}`, JSON.stringify(result));
 
-      if (result.type === 'document-validation') location.replace('/claim/id');
+      if (result.type === 'document-validation') location.replace('/claim/ine');
     };
 
     const params = new URLSearchParams(window.location.search);
