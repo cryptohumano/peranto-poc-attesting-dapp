@@ -15,5 +15,6 @@ export async function encryptMessageBody(
   const { did } = Did.parse(encryptionKeyUri);
 
   const message = Message.fromBody(messageBody, configuration.did, did);
+
   return Message.encrypt(message, encrypt, encryptionKeyUri);
 }

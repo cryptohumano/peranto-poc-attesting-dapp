@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
+
 import { StatusCodes } from 'http-status-codes';
 import NodeCache from 'node-cache';
 import { DidResourceUri, DidUri, ICredential } from '@kiltprotocol/sdk-js';
 
-import { sessionHeader } from '../endpoints/user/sessionHeader';
+import { sessionHeader } from '@/common/constants';
 
 export interface BasicSession {
   sessionId: string;
@@ -23,6 +23,7 @@ const sessionStorage = new NodeCache({ stdTTL: 5 * 60 * 60, useClones: false });
 
 function getSessionById(sessionId: string): BasicSession {
   const session = sessionStorage.get(sessionId);
+
   if (!session) {
     throw new Error(`Unknown or expired session ${sessionId}`);
   }
@@ -30,7 +31,7 @@ function getSessionById(sessionId: string): BasicSession {
 }
 
 function getBasicSession(request: Request): BasicSession {
-  const sessionId = request.get(sessionHeader);
+  const sessionId = request.headers.get(sessionHeader);
 
   if (!sessionId) {
     throw new Error(`Required header ${sessionHeader} is missing`);
@@ -39,10 +40,11 @@ function getBasicSession(request: Request): BasicSession {
   return getSessionById(sessionId);
 }
 
-function getSession(request: Request): Session {
+export function getSession(request: Request): Session {
   const session = getBasicSession(request);
 
   const { did, didConfirmed, encryptionKeyUri } = session;
+
   if (!did || !didConfirmed || !encryptionKeyUri) {
     throw new Error('Unconfirmed DID');
   }
@@ -55,29 +57,17 @@ export function setSession(session: BasicSession): void {
 }
 
 export function basicSessionMiddleware(
-  request: Request,
-  response: Response,
-  next: NextFunction,
-): void {
-  try {
-    const session = getBasicSession(request);
-    (request as Request & { session: BasicSession }).session = session;
-    next();
-  } catch (error) {
-    response.status(StatusCodes.FORBIDDEN).send(error);
-  }
+  request: Request
+) {
+  const session = getBasicSession(request);
+
+  return session as BasicSession;
 }
 
 export function sessionMiddleware(
   request: Request,
-  response: Response,
-  next: NextFunction,
-): void {
-  try {
+) {
     const session = getSession(request);
-    (request as Request & { session: Session }).session = session;
-    next();
-  } catch (error) {
-    response.status(StatusCodes.FORBIDDEN).send(error);
-  }
+
+    return session as Session
 }

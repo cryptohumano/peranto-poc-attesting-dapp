@@ -13,5 +13,6 @@ export async function checkSession(
   sessionId: string,
 ): Promise<void> {
   const headers = { [sessionHeader]: sessionId };
+
   await ky.post(paths.session, { json, headers });
 }

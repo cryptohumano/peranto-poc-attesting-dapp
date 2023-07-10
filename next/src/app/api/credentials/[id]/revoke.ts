@@ -6,6 +6,7 @@ import {
 } from '@/common/utilities/credentialStorage';
 import { revoke } from '@/common/utilities/revoke';
 import { logger } from '@/common/utilities/logger';
+import { sendErrorResponse } from '@/common/utilities/errorResponse';
 
 export async function POST(_: Request, { id }: { id: string }) {
   try {
@@ -18,5 +19,7 @@ export async function POST(_: Request, { id }: { id: string }) {
     return NextResponse.json(attestedCredential)
   } catch (error) {
     logger.error(error)
+
+    return sendErrorResponse(error)
   }
 }
