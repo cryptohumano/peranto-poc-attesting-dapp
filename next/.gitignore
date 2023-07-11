@@ -1,0 +1,13 @@
+# GIT IGNORE
+
+.env
+.DS_Store
+.next
+
+node_modules
+/.idea
+/.DS_Store
+/yarn-error.log
+/.parcel-cache
+/coverage
+/.vscode

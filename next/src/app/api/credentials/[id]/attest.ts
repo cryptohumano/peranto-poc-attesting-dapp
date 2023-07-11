@@ -8,7 +8,7 @@ import { attest } from '@/common/utilities/attest';
 import { logger } from '@/common/utilities/logger';
 import { sendErrorResponse } from '@/common/utilities/errorResponse';
 
-export async function POST(_: Request, { id }: { id: string }) {
+export async function POST(_: Request, { params: { id } }: { params: { id: string } }) {
   try {
     const { claim } = (await getCredential(id)) as any;
 

@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "did-create": "ts-node src/scripts/createDID.ts",
+    "did-configuration": "ts-node src/scripts/createDIDConfiguration.ts"
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.1.2",
@@ -40,9 +42,11 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
+    "dotenv": "^16.3.1",
     "eslint-config-next": "13.4.4",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.3.1",
+    "ts-node": "^10.9.1",
     "typescript": "5.0.3"
   }
 }

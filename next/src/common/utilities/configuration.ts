@@ -60,7 +60,7 @@ export const configuration = {
   port: parseInt(env.PORT as string) || 3000,
   blockchainEndpoint,
   baseUri,
-  distFolder: path.join(cwd(), 'dist', 'frontend'),
+  distFolder: path.join(cwd(), 'public'),
   did,
   payerMnemonic,
   authenticationMnemonic,
