@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "did-create": "ts-node src/scripts/createDID.ts",
-    "did-configuration": "ts-node src/scripts/createDIDConfiguration.ts"
+    "did-configuration": "ts-node src/scripts/createDIDConfiguration.ts",
+    "postinstall": "yarn did-configuration"
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.1.2",
