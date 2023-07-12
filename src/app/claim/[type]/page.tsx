@@ -5,15 +5,10 @@ import { FormEvent, useCallback, useEffect, useState } from 'react';
 import ky from 'ky';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { Dna } from 'react-loader-spinner';
+
 import { IClaimContents, IEncryptedMessage } from '@kiltprotocol/sdk-js';
 
-import {
-  apiWindow,
-  getCompatibleExtensions,
-  getSession,
-  Session,
-} from '@/common/utilities/session';
+import { Session } from '@/common/utilities/session';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { firestore } from '@/common/utilities/firebase';
 import {
@@ -23,156 +18,11 @@ import {
 } from '@/common/utilities/supportedCTypes';
 import { sessionHeader } from '@/common/constants';
 import { exceptionToError } from '@/common/utilities/exceptionToError';
+import { Button, Connect, FlowError, errors } from '@/app/components/Buttons';
 
-type FlowError = 'closed' | 'unauthorized' | 'unknown';
-
-const btnStyle = (isError: boolean, processing: boolean) =>
-  processing
-    ? 'bg-base-100 border-none'
-    : isError
-    ? 'btn-error'
-    : 'btn-neutral';
-
-const errors: Record<FlowError, JSX.Element> = {
-  closed: <p>Your wallet was closed. Please try again.</p>,
-  unauthorized: (
-    <p>
-      The authorization was rejected. Follow the instructions on our Tech
-      Support site to establish the connection between this attester and your
-      wallet.
-      <a
-        href="https://support.kilt.io/support/solutions/articles/80000968082-how-to-grant-access-to-website"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Tech Support
-      </a>
-    </p>
-  ),
-  unknown: (
-    <p>
-      Something went wrong! Try again or reload the page or restart your
-      browser.
-    </p>
-  ),
-};
-
-const Button = ({ onClick, isError, isLoading, label, isSubmit }: any) => {
-  return (
-    <button
-      className={`btn ${btnStyle(isError, isLoading)} btn-active max-w-[200px]`}
-      type={isSubmit ? 'submit' : 'button'}
-      onClick={onClick}
-    >
-      {isLoading ? (
-        <Dna
-          visible={true}
-          height="40"
-          width="40"
-          ariaLabel="dna-loading"
-          wrapperStyle={{}}
-          wrapperClass="dna-wrapper"
-        />
-      ) : isError ? (
-        'Try again'
-      ) : (
-        label
-      )}
-    </button>
-  );
-};
-
-function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
-  const { kilt } = apiWindow();
-
-  const [extensions, setExtensions] = useState<string[]>([]);
-
-  const [processing, setProcessing] = useState(false);
-  const [error, setError] = useState<FlowError>();
-
-  useEffect(() => {
-    function handler() {
-      setExtensions(getCompatibleExtensions());
-    }
-
-    const script = document.createElement('script');
-
-    script.innerHTML = `
-      window.kilt = {};
-
-      Object.defineProperty(window.kilt, 'meta', {
-        value: { versions: { credentials: '3.0' } },
-        enumerable: false,
-      });
-    `;
-
-    document.querySelector('head')?.appendChild(script);
-
-    setTimeout(() => {
-      window.dispatchEvent(new CustomEvent('kilt-dapp#initialized'));
-    }, 300);
-
-    window.addEventListener('kilt-extension#initialized', handler);
-    return () =>
-      window.removeEventListener('kilt-extension#initialized', handler);
-  }, []);
-
-  const handleConnect = useCallback(
-    async (extension: string) => {
-      try {
-        setProcessing(true);
-        setError(undefined);
-
-        onConnect(await getSession(kilt[extension]));
-      } catch (exception) {
-        const { message } = exceptionToError(exception);
-        if (message.includes('closed')) {
-          setError('closed');
-        } else if (message.includes('Not authorized')) {
-          setError('unauthorized');
-        } else {
-          setError('unknown');
-          console.error(exception);
-        }
-        setProcessing(false);
-      }
-    },
-    [onConnect, kilt],
-  );
-
-  return (
-    <section className="flex flex-col items-center gap-4 text-justify">
-      {extensions.length === 0 && (
-        <p>
-          Looking for a wallet… To make a claim you need to have e.g. Sporran
-          wallet installed and have an identity configured in it.
-        </p>
-      )}
-
-      {extensions.map((extension) => (
-        <Button
-          key={extension}
-          onClick={() => handleConnect(extension)}
-          isError={!!error}
-          isLoading={processing}
-          label={`Connect to ${kilt[extension].name}`}
-        />
-      ))}
-
-      {error && errors[error]}
-    </section>
-  );
-}
-
-export default function Claim() {
-  const { type } = useParams();
-
-  const [session, setSession] = useState<Session>();
-  const [status, setStatus] = useState<'start' | 'requested' | 'paid'>('start');
-  const [error, setError] = useState<FlowError>();
-  const [loading, setLoading] = useState(false);
-  const [payload, setPayload] = useState<any>();
+const INECtypeForm = ({ properties }: any) => {
   const [waitResponse, setWaitResponse] = useState<any>(false);
+  const [payload, setPayload] = useState<any>();
 
   useEffect(() => {
     const m = JSON.parse(
@@ -237,6 +87,100 @@ export default function Claim() {
         payload.fullName;
     }
   }, [payload]);
+
+  const handleResetFlow = () => {
+    localStorage.removeItem(`truoraFlow_document-validation`);
+
+    location.reload();
+  };
+
+  return (
+    <>
+      {!waitResponse && payload?.failure ? (
+        <>
+          <p className="text-red">Validation not successful</p>
+          <br />
+          <span className="text-red-400 mb-8">
+            <span className="font-bold text-red-600">Error: </span>
+            {payload.failure}
+          </span>
+        </>
+      ) : payload ? (
+        <>
+          <p>Validation successful!</p>
+          <br />
+          <table className="table mb-8">
+            <tr>
+              <td>Name: </td>
+              <td className="break-all">{payload.fullName}</td>
+            </tr>
+            <tr>
+              <td>Date of birth:</td>
+              <td className="break-all">{payload.dateOfBirth}</td>
+            </tr>
+            <tr>
+              <td>INE</td>
+              <td className="break-all">{payload.ineID}</td>
+            </tr>
+          </table>
+        </>
+      ) : null}
+
+      {!waitResponse && payload?.failure && (
+        <button className="btn btn-error mb-8" onClick={handleResetFlow}>
+          Try Truora validation again
+        </button>
+      )}
+
+      {!waitResponse && !payload && (
+        <a
+          className="btn btn-info mt-4 mb-8"
+          href="https://identity.truora.com/preview/IPFcbd9b16226d31a44b0b22eda776afd0d"
+        >
+          Validation with Truora
+        </a>
+      )}
+      {waitResponse && (
+        <p className="mt-4 mb-8">Waiting for Truora response.</p>
+      )}
+      <>
+        {Object.keys(properties).map((property) => (
+          <label className="hidden" key={property}>
+            {property}:
+            <input name={property} required />
+          </label>
+        ))}
+      </>
+    </>
+  );
+};
+
+const GenericCtypeForm = ({ properties }: any) => (
+  <>
+    <>
+      {Object.keys(properties).map((property) => (
+        <label key={property}>
+          {property}:
+          <input name={property} required />
+        </label>
+      ))}
+    </>
+  </>
+);
+
+const ctypeForms = {
+  [supportedCTypes.ine.$id]: INECtypeForm,
+  [supportedCTypes.email.$id]: GenericCtypeForm,
+  [supportedCTypes.twitter.$id]: GenericCtypeForm,
+};
+
+export default function Claim() {
+  const { type } = useParams();
+
+  const [session, setSession] = useState<Session>();
+  const [status, setStatus] = useState<'start' | 'requested' | 'paid'>('start');
+  const [error, setError] = useState<FlowError>();
+  const [loading, setLoading] = useState(false);
 
   const handleConnect = useCallback((session: Session) => {
     setSession(session);
@@ -320,18 +264,13 @@ export default function Claim() {
     [session],
   );
 
-  const handleResetFlow = () => {
-    localStorage.removeItem(`truoraFlow_document-validation`);
-
-    location.reload();
-  };
-
   if (!type || !isSupportedCType(type)) {
     return <p>Error - Unsupported CType</p>;
   }
 
   const cType = supportedCTypes[type];
-  const { title, properties } = cType;
+  const { title, properties, $id } = cType;
+  const Form = ctypeForms[$id];
 
   return (
     <section className="bg-base-200 min-h-screen flex flex-col justify-center">
@@ -358,82 +297,7 @@ export default function Claim() {
               className="my-2 flex flex-col items-center"
               onSubmit={handleClaim}
             >
-              {status === 'start' && type === 'ine' && (
-                <>
-                  {!waitResponse && payload?.failure ? (
-                    <>
-                      <p className="text-red">Validation not successful</p>
-                      <br />
-                      <span className="text-red-400 mb-8">
-                        <span className="font-bold text-red-600">Error: </span>
-                        {payload.failure}
-                      </span>
-                    </>
-                  ) : payload ? (
-                    <>
-                      <p>Validation successful!</p>
-                      <br />
-                      <table className="table mb-8">
-                        <tr>
-                          <td>Name: </td>
-                          <td className="break-all">{payload.fullName}</td>
-                        </tr>
-                        <tr>
-                          <td>Date of birth:</td>
-                          <td className="break-all">{payload.dateOfBirth}</td>
-                        </tr>
-                        <tr>
-                          <td>INE</td>
-                          <td className="break-all">{payload.ineID}</td>
-                        </tr>
-                      </table>
-                    </>
-                  ) : null}
-
-                  {!waitResponse && payload?.failure && (
-                    <button
-                      className="btn btn-error mb-8"
-                      onClick={handleResetFlow}
-                    >
-                      Try Truora validation again
-                    </button>
-                  )}
-
-                  {!waitResponse && !payload && (
-                    <a
-                      className="btn btn-info mt-4 mb-8"
-                      href="https://identity.truora.com/preview/IPFcbd9b16226d31a44b0b22eda776afd0d"
-                    >
-                      Validation with Truora
-                    </a>
-                  )}
-                  {waitResponse && (
-                    <p className="mt-4 mb-8">Waiting for Truora response.</p>
-                  )}
-                  <>
-                    {Object.keys(properties).map((property) => (
-                      <label className="hidden" key={property}>
-                        {property}:
-                        <input name={property} disabled={!session} required />
-                      </label>
-                    ))}
-                  </>
-                </>
-              )}
-
-              {status === 'start' && type !== 'ine' && (
-                // implement custom claim forms if you want to handle non-string properties
-                <>
-                  <>
-                    {Object.keys(properties).map((property) => (
-                      <label key={property}>
-                        {property}:
-                        <input name={property} disabled={!session} required />
-                      </label>
-                    ))}
-                  </>
-                </>
-              )}
+              {status === 'start' && <Form properties={properties} />}
 
               {!session && <Connect onConnect={handleConnect} />}
               {session && (
