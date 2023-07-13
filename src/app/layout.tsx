@@ -150,7 +150,7 @@ export default function RootLayout({
       <body>
         <img
           src={kilt_logo.src}
-          style={{ position: 'absolute', right: '1rem', bottom: '0rem' }}
+          style={{ position: 'absolute', right: '1rem', top: '1rem' }}
         />
         <CacheProvider>
           <ChakraProvider>
