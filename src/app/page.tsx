@@ -26,7 +26,7 @@ import perantoLogo from './peranto_logo.svg';
 import chrome from './chrome-web-store.png';
 import firefox from './firefox-web-store.png';
 
-export function Hero() {
+function Hero() {
   return (
     <Flex
       align="center"
