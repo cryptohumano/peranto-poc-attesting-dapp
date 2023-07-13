@@ -23,13 +23,15 @@ import {
 } from '@chakra-ui/react';
 
 import perantoLogo from './peranto_logo.svg';
+import chrome from './chrome-web-store.png';
+import firefox from './firefox-web-store.png';
 
 export function Hero() {
   return (
     <Flex
       align="center"
       justify={{ base: 'center', md: 'space-around', xl: 'space-between' }}
-      direction={{ base: 'column-reverse', md: 'row' }}
+      direction={{ base: 'column', md: 'row' }}
       wrap="nowrap"
       minH="70vh"
       px={8}
@@ -80,15 +82,80 @@ export function Hero() {
           <span className="font-bold">ARCO</span>.
         </Heading>
       </Stack>
-      <Box w={{ base: '80%', sm: '60%', md: '40%' }} mb={{ base: 12, md: 0 }}>
+      <Flex
+        direction="column"
+        w={{ base: '80%', sm: '60%', md: '40%' }}
+        mb={{ base: 12, md: 0 }}
+        gap={2}
+      >
+        <div className="flex justify-center w-full">
+          <div className="animation-example">
+            <div className="item">
+              <div className="line"></div>
+              <div className="dot"></div>
+              <div className="circle"></div>
+            </div>
+            <div className="item">
+              <div className="line"></div>
+              <div className="dot"></div>
+              <div className="circle"></div>
+            </div>
+            <div className="item">
+              <div className="line"></div>
+              <div className="dot"></div>
+              <div className="circle"></div>
+            </div>
+            <div className="item">
+              <div className="line"></div>
+              <div className="dot"></div>
+              <div className="circle"></div>
+            </div>
+            <div className="item -type2">
+              <div className="line"></div>
+              <div className="dot"></div>
+              <div className="circle"></div>
+            </div>
+            <div className="item -type2">
+              <div className="line"></div>
+              <div className="dot"></div>
+              <div className="circle"></div>
+            </div>
+            <div className="item -type2">
+              <div className="line"></div>
+              <div className="dot"></div>
+              <div className="circle"></div>
+            </div>
+            <div className="item -type2">
+              <div className="line"></div>
+              <div className="dot"></div>
+              <div className="circle"></div>
+            </div>
+            <div className="center">
+              <div className="circle"></div>
+              <div className="circle"></div>
+              <div className="circle"></div>
+            </div>
+          </div>
+        </div>
         {/* TODO: Make this change every X secs */}
-        <Image
+        {/* <Image
           src="https://source.unsplash.com/collection/404339/800x600"
           size="100%"
           rounded="1rem"
           shadow="2xl"
-        />
-      </Box>
+        /> */}
+        <h2 className="font-bold text-lg mt-12 mb-4">
+          Descargar Sporran y <br /> reclamar mi identidad
+        </h2>
+        <div className="flex flex-col gap-4">
+          <a href="https://chrome.google.com/webstore/detail/sporran/djdnajgjcbjhhbdblkegbcgodlkkfhcl">
+            <img src={chrome.src} className="w-52" />
+          </a>
+          <a href="https://addons.mozilla.org/es/firefox/addon/sporran/">
+            <img src={firefox.src} className="w-52" />
+          </a>
+        </div>
+      </Flex>
     </Flex>
   );
 }

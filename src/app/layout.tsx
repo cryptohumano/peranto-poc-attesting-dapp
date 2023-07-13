@@ -102,7 +102,8 @@ const Header = (props: any) => {
           <MenuItem to="/pricing">Pricing </MenuItem> */}
           <MenuItem to="/signup" isLast>
             <Button
-              size="sm"
+              className="border text-black rounded-2xl px-6 py-0"
+              size="xs"
               rounded="md"
               color={['primary.500', 'primary.500', 'white', 'white']}
               bg={['white', 'white', 'primary.500', 'primary.500']}
@@ -115,7 +116,7 @@ const Header = (props: any) => {
                 ],
               }}
             >
-              Create Account
+              Connect Sporran
             </Button>
           </MenuItem>
         </Flex>
