@@ -22,6 +22,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 
+import perantoLogo from './peranto_logo.svg';
+
 export function Hero() {
   return (
     <Flex
@@ -34,10 +36,12 @@ export function Hero() {
       mb={16}
     >
       <Stack
-        spacing={4}
-        w={{ base: '80%', md: '40%' }}
+        spacing={8}
+        w={{ base: '80%', md: '50%' }}
         align={['center', 'center', 'flex-start', 'flex-start']}
+        pr={14}
       >
+        <img className="mb-8" src={perantoLogo.src} width={300} />
         <Heading
           as="h1"
           size="xl"
@@ -45,7 +49,8 @@ export function Hero() {
           color="primary.800"
           textAlign={['center', 'center', 'left', 'left']}
         >
-          Titulo
+          Con peranto administra y utiliza tu identidad de la forma más óptima y
+          eficiente.
         </Heading>
         <Heading
           as="h2"
@@ -56,31 +61,26 @@ export function Hero() {
           lineHeight={1.5}
           textAlign={['center', 'center', 'left', 'left']}
         >
-          Subtitulo
+          La plataforma que usarás a continuación{' '}
+          <span className="font-bold">NO</span> guarda tus datos personales,
+          pero confía en que <span className="font-bold">TÚ SÍ</span> sabes
+          guardar tus datos.
         </Heading>
-        <Link href="/signup">
-          <Button
-            colorScheme="primary"
-            borderRadius="8px"
-            py="4"
-            px="4"
-            lineHeight="1"
-            size="md"
-          >
-            Create Loko
-          </Button>
-        </Link>
-        <Text
-          fontSize="xs"
-          mt={2}
-          textAlign="center"
+        <Heading
           color="primary.800"
-          opacity="0.6"
+          opacity="0.8"
+          size="md"
+          as="h2"
+          fontWeight="normal"
+          lineHeight={1.5}
         >
-          No credit card required.
-        </Text>
+          Nos valemos de servicios de verificación de identidad de partners, por
+          lo que los datos que provees para validación son rastreados para que
+          puedas hacer uso de tus derechos{' '}
+          <span className="font-bold">ARCO</span>.
+        </Heading>
       </Stack>
-      <Box w={{ base: '80%', sm: '60%', md: '50%' }} mb={{ base: 12, md: 0 }}>
+      <Box w={{ base: '80%', sm: '60%', md: '40%' }} mb={{ base: 12, md: 0 }}>
         {/* TODO: Make this change every X secs */}
         <Image
           src="https://source.unsplash.com/collection/404339/800x600"

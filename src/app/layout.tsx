@@ -66,7 +66,7 @@ const Header = (props: any) => {
     <Flex
       as="nav"
       align="center"
-      justify="space-between"
+      justify="end"
       wrap="wrap"
       w="100%"
       mb={8}
@@ -75,12 +75,12 @@ const Header = (props: any) => {
       color={['white', 'white', 'primary.700', 'primary.700']}
       {...props}
     >
-      <Flex align="center">
+      {/* <Flex align="center">
         <Logo
           w="100px"
           color={['white', 'white', 'primary.500', 'primary.500']}
         />
-      </Flex>
+      </Flex> */}
 
       <Box display={{ base: 'block', md: 'none' }} onClick={toggleMenu}>
         {show ? <CloseIcon /> : <MenuIcon />}
@@ -96,10 +96,10 @@ const Header = (props: any) => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItem to="/">Home</MenuItem>
+          {/* <MenuItem to="/">Home</MenuItem>
           <MenuItem to="/how">How It works </MenuItem>
           <MenuItem to="/faetures">Features </MenuItem>
-          <MenuItem to="/pricing">Pricing </MenuItem>
+          <MenuItem to="/pricing">Pricing </MenuItem> */}
           <MenuItem to="/signup" isLast>
             <Button
               size="sm"
