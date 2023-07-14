@@ -83,7 +83,7 @@ export function SporranConnect({
 }: {
   onConnect: (s: Session) => void;
 }) {
-  const { kilt } = apiWindow();
+  const { kilt } = apiWindow() || ({} as any);
 
   const [extensions, setExtensions] = useState<string[]>([]);
 
@@ -91,6 +91,8 @@ export function SporranConnect({
   const [error, setError] = useState<FlowError>();
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     function handler() {
       setExtensions(getCompatibleExtensions());
     }

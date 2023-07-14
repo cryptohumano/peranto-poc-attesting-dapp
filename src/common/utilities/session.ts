@@ -28,12 +28,12 @@ interface InjectedWindowProvider {
   specVersion: '3.0';
 }
 
-export const apiWindow = () => window as unknown as {
+export const apiWindow = () => typeof window !== "undefined" && window as unknown as {
   kilt: Record<string, InjectedWindowProvider>;
 };
 
 export function getCompatibleExtensions(): Array<string> {
-  return Object.entries(apiWindow().kilt)
+  return Object.entries((apiWindow() || { kilt: {} }).kilt)
     .filter(([, provider]) => provider.specVersion.startsWith('3.'))
     .map(([name]) => name);
 }

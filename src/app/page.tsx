@@ -187,7 +187,9 @@ export default function Home() {
       if (result.type === 'document-validation') location.replace('/claim/ine');
     };
 
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(
+      (typeof window !== 'undefined' && window.location.search) || '',
+    );
     const process_id = params.get('process_id');
     const account_id = params.get('account_id');
 
