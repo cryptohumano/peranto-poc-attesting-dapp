@@ -11,6 +11,7 @@ import {
   Session,
 } from '@/common/utilities/session';
 import { exceptionToError } from '@/common/utilities/exceptionToError';
+import { sporranState } from '../layout';
 
 export type FlowError = 'closed' | 'unauthorized' | 'unknown';
 
@@ -54,7 +55,7 @@ export const Button = ({
 }: any) => {
   return (
     <button
-      className={`flex items-center font-semibold py-1 text-xs h-[26px] ${btnStyle(
+      className={`flex items-center font-semibold py-1 text-xs max-h-[26px] ${btnStyle(
         isError,
         isLoading,
       )}`}
@@ -85,6 +86,8 @@ export function SporranConnect({
   onConnect: (s: Session) => void;
 }) {
   const { kilt } = apiWindow() || ({} as any);
+  const state = useHookstate(sporranState);
+  const session = state.get() as { sessionId: string };
 
   const [extensions, setExtensions] = useState<string[]>([]);
 
@@ -145,30 +148,49 @@ export function SporranConnect({
     [onConnect, kilt],
   );
 
+  console.log(session);
+  if (!!session?.sessionId)
+    return (
+      <>
+        <div className="flex items-center max-h-[26px] min-w-[165.02px] justify-center text-xs py-1 font-semibold border text-black rounded-2xl px-6 py-0">
+          Dashboard
+        </div>
+      </>
+    );
+
+  if (!!error)
+    return (
+      <>
+        <div className="flex items-center max-h-[26px] min-w-[165.02px] justify-center border border-red-500 text-red-500 rounded-2xl px-6 py-0">
+          <Tooltip label={errors[error]}>
+            <NotAllowedIcon className="my-1" />
+          </Tooltip>
+        </div>
+      </>
+    );
+
+  if (extensions.length === 0)
+    return (
+      <>
+        <div className="flex items-center max-h-[26px] min-w-[165.02px] justify-center border border-yellow-500 text-yellow-500 rounded-2xl px-6 py-0">
+          <Tooltip label="Looking for a wallet… To make a claim you need to have e.g. Sporran wallet installed and have an identity configured in it.">
+            <QuestionOutlineIcon className="my-1" />
+          </Tooltip>
+        </div>
+      </>
+    );
+
   return (
-    <div className="flex items-center border text-black rounded-2xl px-6 py-0">
-      {extensions.length === 0 && (
-        <Tooltip label="Looking for a wallet… To make a claim you need to have e.g. Sporran wallet installed and have an identity configured in it.">
-          <QuestionOutlineIcon className="my-1" />
-        </Tooltip>
-      )}
-
-      {!error &&
-        extensions.map((extension) => (
-          <Button
-            key={extension}
-            onClick={() => handleConnect(extension)}
-            isError={!!error}
-            isLoading={processing}
-            label={`Connect to ${kilt[extension].name}`}
-          />
-        ))}
-
-      {!!error && (
-        <Tooltip label={errors[error]}>
-          <NotAllowedIcon className="my-1" />
-        </Tooltip>
-      )}
+    <div className="flex items-center max-h-[26px] min-w-[165.02px] justify-center border text-black rounded-2xl px-6 py-0">
+      {extensions.map((extension) => (
+        <Button
+          key={extension}
+          onClick={() => handleConnect(extension)}
+          isError={!!error}
+          isLoading={processing}
+          label={`Connect to ${kilt[extension].name}`}
+        />
+      ))}
     </div>
   );
 }
