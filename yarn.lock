@@ -345,6 +345,13 @@
   dependencies:
     "@chakra-ui/shared-utils" "2.0.5"
 
+"@chakra-ui/icons@^2.0.19":
+  version "2.0.19"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-2.0.19.tgz#b4581a59c2e2a2b95b01ab251eabb8cf984bb00f"
+  integrity sha512-0A6U1ZBZhLIxh3QgdjuvIEhAZi3B9v8g6Qvlfa3mu6vSnXQn2CHBZXmJwxpXxO40NK/2gj/gKXrLeUaFR6H/Qw==
+  dependencies:
+    "@chakra-ui/icon" "3.0.16"
+
 "@chakra-ui/image@2.0.16":
   version "2.0.16"
   resolved "https://registry.yarnpkg.com/@chakra-ui/image/-/image-2.0.16.tgz#0e3a48c3caa6dc1d340502ea96766d9ef31e27e8"
@@ -1534,6 +1541,11 @@
   version "2.0.18"
   resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-2.0.18.tgz#f80301907c243df03c7e9fd76c0286e95361f7c1"
   integrity sha512-7TyMjRrZZMBPa+/5Y8lN0iyvUU/01PeMGX2+RE7cQWpEUIcb4QotzUObFkJDejj/HUH4qjP/eQ0gzzKs2f+6Yw==
+
+"@hookstate/core@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@hookstate/core/-/core-4.0.1.tgz#6744380e96ce13fe3488c926c1cbae93bbea0ff6"
+  integrity sha512-Uh2D8Z0z/pqOJ7t+SfC+2sj13JQcB4yFhtL+T1choCaBxTSlgOS/CKRBohgJ4cjTKoxOmTT8uSQysu3gUjX+Gw==
 
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.10"

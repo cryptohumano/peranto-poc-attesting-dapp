@@ -148,10 +148,16 @@ function Hero() {
           Descargar Sporran y <br /> reclamar mi identidad
         </h2>
         <div className="flex flex-col gap-4">
-          <a href="https://chrome.google.com/webstore/detail/sporran/djdnajgjcbjhhbdblkegbcgodlkkfhcl">
+          <a
+            target="_blank"
+            href="https://chrome.google.com/webstore/detail/sporran/djdnajgjcbjhhbdblkegbcgodlkkfhcl"
+          >
             <img src={chrome.src} className="w-52" />
           </a>
-          <a href="https://addons.mozilla.org/es/firefox/addon/sporran/">
+          <a
+            target="_blank"
+            href="https://addons.mozilla.org/es/firefox/addon/sporran/"
+          >
             <img src={firefox.src} className="w-52" />
           </a>
         </div>

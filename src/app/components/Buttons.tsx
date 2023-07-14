@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Dna } from 'react-loader-spinner';
+import { Tooltip } from '@chakra-ui/react';
+import { NotAllowedIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 
 import {
   apiWindow,
@@ -51,21 +53,24 @@ export const Button = ({
 }: any) => {
   return (
     <button
-      className={`btn ${btnStyle(isError, isLoading)} btn-active max-w-[200px]`}
+      className={`flex items-center font-semibold py-1 text-xs h-[26px] ${btnStyle(
+        isError,
+        isLoading,
+      )}`}
       type={isSubmit ? 'submit' : 'button'}
       onClick={onClick}
     >
       {isLoading ? (
         <Dna
           visible={true}
-          height="40"
+          height="30"
           width="40"
           ariaLabel="dna-loading"
           wrapperStyle={{}}
           wrapperClass="dna-wrapper"
         />
       ) : isError ? (
-        'Try again'
+        ''
       ) : (
         label
       )}
@@ -73,7 +78,11 @@ export const Button = ({
   );
 };
 
-export function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
+export function SporranConnect({
+  onConnect,
+}: {
+  onConnect: (s: Session) => void;
+}) {
   const { kilt } = apiWindow();
 
   const [extensions, setExtensions] = useState<string[]>([]);
@@ -117,6 +126,7 @@ export function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
         onConnect(await getSession(kilt[extension]));
       } catch (exception) {
         const { message } = exceptionToError(exception);
+
         if (message.includes('closed')) {
           setError('closed');
         } else if (message.includes('Not authorized')) {
@@ -132,25 +142,29 @@ export function Connect({ onConnect }: { onConnect: (s: Session) => void }) {
   );
 
   return (
-    <section className="flex flex-col items-center gap-4 text-justify">
+    <div className="flex items-center border text-black rounded-2xl px-6 py-0">
       {extensions.length === 0 && (
-        <p>
-          Looking for a wallet… To make a claim you need to have e.g. Sporran
-          wallet installed and have an identity configured in it.
-        </p>
+        <Tooltip label="Looking for a wallet… To make a claim you need to have e.g. Sporran wallet installed and have an identity configured in it.">
+          <QuestionOutlineIcon className="my-1" />
+        </Tooltip>
       )}
 
-      {extensions.map((extension) => (
-        <Button
-          key={extension}
-          onClick={() => handleConnect(extension)}
-          isError={!!error}
-          isLoading={processing}
-          label={`Connect to ${kilt[extension].name}`}
-        />
-      ))}
+      {!error &&
+        extensions.map((extension) => (
+          <Button
+            key={extension}
+            onClick={() => handleConnect(extension)}
+            isError={!!error}
+            isLoading={processing}
+            label={`Connect to ${kilt[extension].name}`}
+          />
+        ))}
 
-      {error && errors[error]}
-    </section>
+      {!!error && (
+        <Tooltip label={errors[error]}>
+          <NotAllowedIcon className="my-1" />
+        </Tooltip>
+      )}
+    </div>
   );
 }

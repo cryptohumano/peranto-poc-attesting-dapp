@@ -18,7 +18,12 @@ import {
 } from '@/common/utilities/supportedCTypes';
 import { sessionHeader } from '@/common/constants';
 import { exceptionToError } from '@/common/utilities/exceptionToError';
-import { Button, Connect, FlowError, errors } from '@/app/components/Buttons';
+import {
+  Button,
+  SporranConnect,
+  FlowError,
+  errors,
+} from '@/app/components/Buttons';
 
 const INECtypeForm = ({ properties }: any) => {
   const [waitResponse, setWaitResponse] = useState<any>(false);
@@ -182,10 +187,6 @@ export default function Claim() {
   const [error, setError] = useState<FlowError>();
   const [loading, setLoading] = useState(false);
 
-  const handleConnect = useCallback((session: Session) => {
-    setSession(session);
-  }, []);
-
   const handleClaim = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -299,7 +300,6 @@ export default function Claim() {
             >
               {status === 'start' && <Form properties={properties} />}
 
-              {!session && <Connect onConnect={handleConnect} />}
               {session && (
                 <Button
                   isLoading={loading}
