@@ -57,7 +57,7 @@
 }
 
 .animation-example {
-  transform: translateX(0%) translateY(-10%);
+  transform: translateX(0%) translateY(0%);
   height: 300px;
   width: 300px;
 }

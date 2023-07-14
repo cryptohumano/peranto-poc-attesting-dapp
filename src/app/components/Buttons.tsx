@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Dna } from 'react-loader-spinner';
 import { Tooltip } from '@chakra-ui/react';
 import { NotAllowedIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
+import { useHookstate } from '@hookstate/core';
 
 import {
   apiWindow,
@@ -137,6 +138,7 @@ export function SporranConnect({
           setError('unknown');
           console.error(exception);
         }
+      } finally {
         setProcessing(false);
       }
     },

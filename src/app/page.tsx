@@ -30,18 +30,17 @@ function Hero() {
   return (
     <Flex
       align="center"
-      justify={{ base: 'center', md: 'space-around', xl: 'space-between' }}
+      justify={{ base: 'center', md: 'space-around', xl: 'space-around' }}
       direction={{ base: 'column', md: 'row' }}
       wrap="nowrap"
-      minH="70vh"
+      minH="60vh"
       px={8}
-      mb={16}
     >
       <Stack
-        spacing={8}
+        spacing={4}
         w={{ base: '80%', md: '50%' }}
         align={['center', 'center', 'flex-start', 'flex-start']}
-        pr={14}
+        pl={14}
       >
         <img className="mb-8" src={perantoLogo.src} width={300} />
         <Heading
@@ -49,6 +48,7 @@ function Hero() {
           size="xl"
           fontWeight="bold"
           color="primary.800"
+          mb={6}
           textAlign={['center', 'center', 'left', 'left']}
         >
           Con peranto administra y utiliza tu identidad de la forma más óptima y
@@ -88,7 +88,7 @@ function Hero() {
         mb={{ base: 12, md: 0 }}
         gap={2}
       >
-        <div className="flex justify-center w-full">
+        <div className="flex justify-start w-full">
           <div className="animation-example">
             <div className="item">
               <div className="line"></div>
@@ -144,23 +144,6 @@ function Hero() {
           rounded="1rem"
           shadow="2xl"
         /> */}
-        <h2 className="font-bold text-lg mt-12 mb-4">
-          Descargar Sporran y <br /> reclamar mi identidad
-        </h2>
-        <div className="flex flex-col gap-4">
-          <a
-            target="_blank"
-            href="https://chrome.google.com/webstore/detail/sporran/djdnajgjcbjhhbdblkegbcgodlkkfhcl"
-          >
-            <img src={chrome.src} className="w-52" />
-          </a>
-          <a
-            target="_blank"
-            href="https://addons.mozilla.org/es/firefox/addon/sporran/"
-          >
-            <img src={firefox.src} className="w-52" />
-          </a>
-        </div>
       </Flex>
     </Flex>
   );
@@ -200,6 +183,25 @@ export default function Home() {
     return (
       <>
         <Hero />
+        <div>
+          <h2 className="font-bold text-center text-lg mt-12 mb-8">
+            Descargar Sporran y reclamar mi identidad
+          </h2>
+          <div className="flex gap-4">
+            <a
+              target="_blank"
+              href="https://chrome.google.com/webstore/detail/sporran/djdnajgjcbjhhbdblkegbcgodlkkfhcl"
+            >
+              <img src={chrome.src} className="w-52" />
+            </a>
+            <a
+              target="_blank"
+              href="https://addons.mozilla.org/es/firefox/addon/sporran/"
+            >
+              <img src={firefox.src} className="w-52" />
+            </a>
+          </div>
+        </div>
       </>
     );
 
