@@ -12,6 +12,8 @@ import {
 } from '@/common/utilities/session';
 import { exceptionToError } from '@/common/utilities/exceptionToError';
 import { sporranState } from '../layout';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export type FlowError = 'closed' | 'unauthorized' | 'unknown';
 
@@ -85,6 +87,7 @@ export function SporranConnect({
 }: {
   onConnect: (s: Session) => void;
 }) {
+  const pathname = usePathname();
   const { kilt } = apiWindow() || ({} as any);
   const state = useHookstate(sporranState);
   const session = state.get() as { sessionId: string };
@@ -148,14 +151,13 @@ export function SporranConnect({
     [onConnect, kilt],
   );
 
-  console.log(session);
-  if (!!session?.sessionId)
+  if (!!session?.sessionId && pathname === '/')
     return (
-      <>
+      <Link href="/dashboard">
         <div className="flex items-center max-h-[26px] min-w-[165.02px] justify-center text-xs py-1 font-semibold border text-black rounded-2xl px-6 py-0">
           Dashboard
         </div>
-      </>
+      </Link>
     );
 
   if (!!error)

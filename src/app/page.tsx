@@ -167,7 +167,8 @@ export default function Home() {
 
       localStorage.setItem(`truoraFlow_${result.type}`, JSON.stringify(result));
 
-      if (result.type === 'document-validation') location.replace('/claim/ine');
+      if (result.type === 'document-validation')
+        location.replace('/dashboard/claim/ine');
     };
 
     const params = new URLSearchParams(

@@ -3,6 +3,8 @@
 .env
 .DS_Store
 .next
+.well-known
+did-configuration.json
 
 node_modules
 /.idea

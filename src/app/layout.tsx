@@ -110,9 +110,7 @@ const Header = (props: any) => {
           <MenuItem to="/how">How It works </MenuItem>
           <MenuItem to="/faetures">Features </MenuItem>
           <MenuItem to="/pricing">Pricing </MenuItem> */}
-          <MenuItem isLast>
-            <SporranConnect onConnect={handleConnect} />
-          </MenuItem>
+          <SporranConnect onConnect={handleConnect} />
         </Flex>
       </Box>
     </Flex>

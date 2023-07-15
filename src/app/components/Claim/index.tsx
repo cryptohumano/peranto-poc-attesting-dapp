@@ -179,9 +179,7 @@ const ctypeForms = {
   [supportedCTypes.twitter.$id]: GenericCtypeForm,
 };
 
-export default function Claim() {
-  const { type } = useParams();
-
+export default function Claim({ type }: any) {
   const [session, setSession] = useState<Session>();
   const [status, setStatus] = useState<'start' | 'requested' | 'paid'>('start');
   const [error, setError] = useState<FlowError>();
@@ -274,18 +272,9 @@ export default function Claim() {
   const Form = ctypeForms[$id];
 
   return (
-    <section className="bg-base-200 min-h-screen flex flex-col justify-center">
-      <div className="container mx-auto max-w-5xl card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
+    <section className="flex flex-col justify-center">
+      <div className="container mx-auto max-w-5xl flex-shrink-0 w-full max-w-lg">
         <div className="card-body flex flex-col gap-4">
-          <div className="relative">
-            <Link
-              href="/"
-              className="absolute -top-7 -left-2 text-xs flex items-center btn btn-link p-0 m-0"
-            >
-              {'<'}
-            </Link>
-          </div>
-
           <div className="flex justify-between items-end mt-2">
             <h2 className="text-xl">
               {title === 'Authorization' ? 'INE' : title}
