@@ -5,6 +5,7 @@ import { FormEvent, useCallback, useEffect, useState } from 'react';
 import ky from 'ky';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { Box, Button as Btn } from '@chakra-ui/react';
 
 import { IClaimContents, IEncryptedMessage } from '@kiltprotocol/sdk-js';
 
@@ -18,12 +19,7 @@ import {
 } from '@/common/utilities/supportedCTypes';
 import { sessionHeader } from '@/common/constants';
 import { exceptionToError } from '@/common/utilities/exceptionToError';
-import {
-  Button,
-  SporranConnect,
-  FlowError,
-  errors,
-} from '@/app/components/Buttons';
+import { Button, FlowError, errors } from '@/app/components/Buttons';
 
 const INECtypeForm = ({ properties }: any) => {
   const [waitResponse, setWaitResponse] = useState<any>(false);
@@ -139,10 +135,17 @@ const INECtypeForm = ({ properties }: any) => {
 
       {!waitResponse && !payload && (
         <a
-          className="btn btn-info mt-4 mb-8"
+          className="mt-4 mb-8"
           href="https://identity.truora.com/preview/IPFcbd9b16226d31a44b0b22eda776afd0d"
         >
-          Validation with Truora
+          <Btn
+            colorScheme="blue"
+            variant="solid"
+            bgColor="blue.700 !important"
+            _hover={{ bgColor: 'blue.500 !important' }}
+          >
+            Validation with Truora
+          </Btn>
         </a>
       )}
       {waitResponse && (
@@ -264,7 +267,7 @@ export default function Claim({ type }: any) {
   );
 
   if (!type || !isSupportedCType(type)) {
-    return <p>Error - Unsupported CType</p>;
+    return <p className="text-center">Error - Unsupported CType</p>;
   }
 
   const cType = supportedCTypes[type];
@@ -276,13 +279,15 @@ export default function Claim({ type }: any) {
       <div className="container mx-auto max-w-5xl flex-shrink-0 w-full max-w-lg">
         <div className="card-body flex flex-col gap-4">
           <div className="flex justify-between items-end mt-2">
-            <h2 className="text-xl">
-              {title === 'Authorization' ? 'INE' : title}
-            </h2>
-            <span>Price: {kiltCost[type]} KILT</span>
+            <Box textStyle="h2" fontSize="lg" fontWeight="bold">
+              Credential: {title === 'Authorization' ? 'INE' : title}
+            </Box>
+            <Box textStyle="paragraph" fontSize="lg" fontWeight="bold">
+              Price: {kiltCost[type]} KILT
+            </Box>
           </div>
 
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center pt-16">
             <form
               className="my-2 flex flex-col items-center"
               onSubmit={handleClaim}

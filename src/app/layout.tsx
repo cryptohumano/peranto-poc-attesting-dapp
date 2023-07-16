@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-sync-scripts */
 'use client';
 
 import React, { useCallback } from 'react';
 
 import { CacheProvider, Link } from '@chakra-ui/next-js';
-import { Flex, Text, Box, Button, ChakraProvider } from '@chakra-ui/react';
+import { Flex, Text, Box, ChakraProvider } from '@chakra-ui/react';
 import { hookstate } from '@hookstate/core';
 
 import { Session } from '@/common/utilities/session';
@@ -139,6 +140,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>Peranto App</title>
+        <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/nprogress@0.2.0/nprogress.css"
+        />
+      </head>
       <body>
         <img
           src={kilt_logo.src}

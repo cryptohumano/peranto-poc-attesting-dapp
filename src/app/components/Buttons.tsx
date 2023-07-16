@@ -153,7 +153,7 @@ export function SporranConnect({
 
   if (!!session?.sessionId && pathname === '/')
     return (
-      <Link href="/dashboard">
+      <Link href="/dashboard/profile">
         <div className="flex items-center max-h-[26px] min-w-[165.02px] justify-center text-xs py-1 font-semibold border text-black rounded-2xl px-6 py-0">
           Dashboard
         </div>

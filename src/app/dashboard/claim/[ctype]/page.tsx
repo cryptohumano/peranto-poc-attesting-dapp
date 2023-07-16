@@ -2,16 +2,28 @@
 
 import { useHookstate } from '@hookstate/core';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import { sporranState } from '../../../layout';
 import Claim from '@/app/components/Claim';
+import TabsNav from '@/app/components/TabsNav';
 
 const tabs = {
-  ine: 1,
+  ine: 0,
+  ncrl: 1,
 };
 
+const claimNav = [
+  { title: 'INE', path: '/ine' },
+  { title: 'Carta de antecedentes', path: '/ncrl' },
+  { title: 'RFC', path: '/rfc', disabled: true },
+  { title: 'CURP', path: '/curp', disabled: true },
+  { title: 'Licencia de conducir', path: '/driver_license', disabled: true },
+  { title: 'Expediente Médico', path: '/medical_background', disabled: true },
+];
+
 const Dashboard = () => {
+  const router = useRouter();
   const params = useParams();
   const state = useHookstate(sporranState);
   const session = state.get() as { sessionId: string };
@@ -19,66 +31,44 @@ const Dashboard = () => {
   console.log('ASD', session);
 
   return (
-    <Tabs
-      isFitted
-      defaultIndex={1}
-      variant="soft-rounded"
-      colorScheme="telegram"
-      width="100%"
-    >
-      <TabList>
-        <Tab>Perfil</Tab>
-        <Tab>Credenciales</Tab>
-        <Tab>Contratos</Tab>
-        <Tab>Chat</Tab>
-        <Tab>Permuta</Tab>
-        <Tab>Métodos de Pago</Tab>
-        <Tab>Historial</Tab>
-      </TabList>
-      <TabPanels>
-        <TabPanel>
-          <p>one!</p>
-        </TabPanel>
-        <TabPanel>
-          <Tabs
-            orientation="vertical"
-            defaultIndex={tabs[params.ctype as keyof typeof tabs]}
-            variant="unstyled"
-            colorScheme="telegram"
-          >
-            <TabList marginTop="14">
-              <Tab mb={4} justifyContent="start" minWidth="44" paddingLeft="0">
-                Perfil
-              </Tab>
-              <Tab mb={4} justifyContent="start" minWidth="44" paddingLeft="0">
-                Credenciales
-              </Tab>
-              <Tab mb={4} justifyContent="start" minWidth="44" paddingLeft="0">
-                Contratos
-              </Tab>
-              <Tab mb={4} justifyContent="start" minWidth="44" paddingLeft="0">
-                Chat
-              </Tab>
-              <Tab mb={4} justifyContent="start" minWidth="44" paddingLeft="0">
-                Permuta
-              </Tab>
-              <Tab mb={4} justifyContent="start" minWidth="44" paddingLeft="0">
-                Métodos de Pago
-              </Tab>
-              <Tab mb={4} justifyContent="start" minWidth="44" paddingLeft="0">
-                Historial
-              </Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel></TabPanel>
-              <TabPanel pt="14">
-                <Claim type={params.ctype} />
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </TabPanel>
-      </TabPanels>
-    </Tabs>
+    <TabsNav defaultIndex={1}>
+      <Tabs
+        orientation="vertical"
+        defaultIndex={tabs[params.ctype as keyof typeof tabs]}
+        colorScheme="telegram"
+        onChange={(i) => router.push('/dashboard/claim/' + claimNav[i].path)}
+      >
+        <TabList marginTop="14">
+          {claimNav.map((cN) => (
+            <Tab
+              key={cN.path}
+              mb={4}
+              justifyContent="start"
+              textAlign="left"
+              minWidth="44"
+              paddingLeft="4"
+              isDisabled={cN.disabled}
+            >
+              {cN.title}
+            </Tab>
+          ))}
+        </TabList>
+        <TabPanels>
+          {claimNav.map((cN) => (
+            <TabPanel
+              key={cN.path}
+              mt="14"
+              bgColor="blue.50"
+              borderRadius="md"
+              minH="96"
+              pt="12"
+            >
+              <Claim type={params.ctype} />
+            </TabPanel>
+          ))}
+        </TabPanels>
+      </Tabs>
+    </TabsNav>
   );
 };
 
