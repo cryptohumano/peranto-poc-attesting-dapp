@@ -1,10 +1,8 @@
 'use client';
 
-import { useHookstate } from '@hookstate/core';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { useParams, useRouter } from 'next/navigation';
 
-import { sporranState } from '../../../layout';
 import Claim from '@/app/components/Claim';
 import TabsNav from '@/app/components/TabsNav';
 
@@ -15,8 +13,8 @@ const tabs = {
 
 const claimNav = [
   { title: 'INE', path: '/ine' },
+  { title: 'Telefono celular', path: '/mobile' },
   { title: 'Carta de antecedentes', path: '/ncrl' },
-  { title: 'RFC', path: '/rfc', disabled: true },
   { title: 'CURP', path: '/curp', disabled: true },
   { title: 'Licencia de conducir', path: '/driver_license', disabled: true },
   { title: 'Expediente Médico', path: '/medical_background', disabled: true },
@@ -25,10 +23,6 @@ const claimNav = [
 const Dashboard = () => {
   const router = useRouter();
   const params = useParams();
-  const state = useHookstate(sporranState);
-  const session = state.get() as { sessionId: string };
-
-  console.log('ASD', session);
 
   return (
     <TabsNav defaultIndex={1}>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Dna } from 'react-loader-spinner';
-import { Tooltip } from '@chakra-ui/react';
+import { Box, Tooltip } from '@chakra-ui/react';
 import { NotAllowedIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import { useHookstate } from '@hookstate/core';
 
@@ -158,6 +158,14 @@ export function SporranConnect({
           Dashboard
         </div>
       </Link>
+    );
+
+  if (!!session?.sessionId)
+    return (
+      <div className="flex gap-2 items-center max-h-[26px] min-w-[165.02px] justify-center text-xs py-1 font-semibold border text-black rounded-2xl px-6 py-0">
+        Connected{' '}
+        <Box backgroundColor="#83e63e" w="7px" h="7px" borderRadius="full" />
+      </div>
     );
 
   if (!!error)

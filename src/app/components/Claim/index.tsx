@@ -3,13 +3,11 @@
 import React from 'react';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import ky from 'ky';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
+
 import { Box, Button as Btn } from '@chakra-ui/react';
 
 import { IClaimContents, IEncryptedMessage } from '@kiltprotocol/sdk-js';
 
-import { Session } from '@/common/utilities/session';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { firestore } from '@/common/utilities/firebase';
 import {
@@ -20,6 +18,8 @@ import {
 import { sessionHeader } from '@/common/constants';
 import { exceptionToError } from '@/common/utilities/exceptionToError';
 import { Button, FlowError, errors } from '@/app/components/Buttons';
+import { useHookstate } from '@hookstate/core';
+import { sporranState } from '@/app/layout';
 
 const INECtypeForm = ({ properties }: any) => {
   const [waitResponse, setWaitResponse] = useState<any>(false);
@@ -183,10 +183,11 @@ const ctypeForms = {
 };
 
 export default function Claim({ type }: any) {
-  const [session, setSession] = useState<Session>();
   const [status, setStatus] = useState<'start' | 'requested' | 'paid'>('start');
   const [error, setError] = useState<FlowError>();
   const [loading, setLoading] = useState(false);
+  const state = useHookstate(sporranState);
+  const session = state.get();
 
   const handleClaim = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
