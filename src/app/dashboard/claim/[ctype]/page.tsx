@@ -20,6 +20,8 @@ const claimNav = [
   { title: 'Expediente Médico', path: '/medical_background', disabled: true },
 ];
 
+// https://attesting-dapp.vercel.app/?process_id=IDP9059ef45802e673e4625a04cdf65d6bc&account_id=ACCf563223b5b5bbde84a1223c84c80a670
+
 const Dashboard = () => {
   const router = useRouter();
   const params = useParams();
