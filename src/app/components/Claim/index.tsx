@@ -327,7 +327,7 @@ export default function Claim({ type }: any) {
                 />
               )}
 
-              {session && (
+              {session && status === 'start' && (
                 <Button
                   isLoading={loading}
                   isError={!!error}

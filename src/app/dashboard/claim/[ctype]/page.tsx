@@ -8,8 +8,8 @@ import TabsNav from '@/app/components/TabsNav';
 
 const tabs = {
   ine: 0,
-  mobile: 1,
-  ncrl: 2,
+  curp: 1,
+  mobile: 2,
 };
 
 const claimNav = [
