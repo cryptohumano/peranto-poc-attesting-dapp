@@ -21,6 +21,27 @@ import { Button, FlowError, errors } from '@/app/components/Buttons';
 import { useHookstate } from '@hookstate/core';
 import { sporranState } from '@/app/layout';
 
+const getCURP = (
+  name: string,
+  firstLastName: string,
+  lastName: string,
+  _day: string,
+  _month: string,
+  year: string,
+) => {
+  const monthNumber = parseInt(_month);
+  const monthParsed = monthNumber < 10 ? '0' + monthNumber : monthNumber;
+  const dayNumber = parseInt(_day);
+  const dayParsed = dayNumber < 10 ? '0' + dayNumber : dayNumber;
+
+  return `${firstLastName.toUpperCase().slice(0, 2)}${lastName
+    .toUpperCase()
+    .charAt(0)}${name.toUpperCase().charAt(0)}${year.slice(
+    0,
+    2,
+  )}${monthParsed}${dayParsed}`;
+};
+
 const INECtypeForm = ({ properties }: any) => {
   const [waitResponse, setWaitResponse] = useState<any>(false);
   const [payload, setPayload] = useState<any>();
