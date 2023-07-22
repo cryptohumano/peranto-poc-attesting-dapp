@@ -48,7 +48,7 @@ export async function getCredential(id: string) {
   const _doc = await getDoc(doc(firestore, 'credentials', id));
   const credential = { ..._doc.data(), id };
 
-  if (!credential) {
+  if (!_doc.exists) {
     throw new NotFoundError('Credential not found');
   }
 

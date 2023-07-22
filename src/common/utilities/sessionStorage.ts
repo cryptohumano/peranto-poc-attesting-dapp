@@ -2,7 +2,17 @@
 import { StatusCodes } from 'http-status-codes';
 import NodeCache from 'node-cache';
 import { DidResourceUri, DidUri, ICredential } from '@kiltprotocol/sdk-js';
+import {
+  doc,
+  setDoc,
+  getDocs,
+  getDoc,
+  collection,
+  updateDoc,
+  deleteDoc,
+} from 'firebase/firestore';
 
+import { firestore } from '@/common/utilities/firebase';
 import { sessionHeader } from '@/common/constants';
 
 export interface BasicSession {
@@ -19,29 +29,32 @@ export type Session = BasicSession & {
   encryptionKeyUri: DidResourceUri;
 };
 
-const sessionStorage = new NodeCache({ stdTTL: 5 * 60 * 60, useClones: false });
+// const sessionStorage = new NodeCache({ stdTTL: 5 * 60 * 60, useClones: false });
 
-function getSessionById(sessionId: string): BasicSession {
-  const session = sessionStorage.get(sessionId);
+async function getSessionById(sessionId: string): Promise<BasicSession> {
+  // const session = sessionStorage.get(sessionId);
+  const _doc = await getDoc(doc(firestore, 'sessions', sessionId));
+  const session = { ..._doc.data(), sessionId };
 
-  if (!session) {
+  if (!_doc.exists) {
     throw new Error(`Unknown or expired session ${sessionId}`);
   }
+
   return session as BasicSession;
 }
 
-function getBasicSession(request: Request): BasicSession {
+async function getBasicSession(request: Request): Promise<BasicSession> {
   const sessionId = request.headers.get(sessionHeader);
 
   if (!sessionId) {
     throw new Error(`Required header ${sessionHeader} is missing`);
   }
 
-  return getSessionById(sessionId);
+  return await getSessionById(sessionId);
 }
 
-export function getSession(request: Request): Session {
-  const session = getBasicSession(request);
+export async function getSession(request: Request): Promise<Session> {
+  const session = await getBasicSession(request);
 
   const { did, didConfirmed, encryptionKeyUri } = session;
 
@@ -53,21 +66,23 @@ export function getSession(request: Request): Session {
 }
 
 export function setSession(session: BasicSession): void {
-  sessionStorage.set(session.sessionId, session);
+  // sessionStorage.set(session.sessionId, session);
+
+  setDoc(doc(firestore, 'sessions', session.sessionId), session);
 }
 
-export function basicSessionMiddleware(
+export async function basicSessionMiddleware(
   request: Request
 ) {
-  const session = getBasicSession(request);
+  const session = await getBasicSession(request);
 
   return session as BasicSession;
 }
 
-export function sessionMiddleware(
+export async function sessionMiddleware(
   request: Request,
 ) {
-    const session = getSession(request);
+    const session = await getSession(request);
 
     return session as Session
 }
