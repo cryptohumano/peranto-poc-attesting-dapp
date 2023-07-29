@@ -26,7 +26,7 @@ export async function POST(request: Request) {
   try {
     logger.debug('Submit terms started');
 
-    const session = sessionMiddleware(request);
+    const session = await sessionMiddleware(request);
     const { encryptionKeyUri } = session;
 
     const { type, claimContents } = await request.json() as Input;
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
 
     logger.debug('Submit terms complete');
 
-    return new NextResponse(output as unknown as string)
+    return new NextResponse(JSON.stringify(output))
   } catch (error) {
     return sendErrorResponse(error)
   }

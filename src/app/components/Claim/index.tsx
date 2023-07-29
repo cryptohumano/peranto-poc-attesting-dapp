@@ -21,6 +21,27 @@ import { Button, FlowError, errors } from '@/app/components/Buttons';
 import { useHookstate } from '@hookstate/core';
 import { sporranState } from '@/app/layout';
 
+const getCURP = (
+  name: string,
+  firstLastName: string,
+  lastName: string,
+  _day: string,
+  _month: string,
+  year: string,
+) => {
+  const monthNumber = parseInt(_month);
+  const monthParsed = monthNumber < 10 ? '0' + monthNumber : monthNumber;
+  const dayNumber = parseInt(_day);
+  const dayParsed = dayNumber < 10 ? '0' + dayNumber : dayNumber;
+
+  return `${firstLastName.toUpperCase().slice(0, 2)}${lastName
+    .toUpperCase()
+    .charAt(0)}${name.toUpperCase().charAt(0)}${year.slice(
+    0,
+    2,
+  )}${monthParsed}${dayParsed}`;
+};
+
 const INECtypeForm = ({ properties }: any) => {
   const [waitResponse, setWaitResponse] = useState<any>(false);
   const [payload, setPayload] = useState<any>();
@@ -80,14 +101,6 @@ const INECtypeForm = ({ properties }: any) => {
       });
     }
   }, []);
-
-  useEffect(() => {
-    if (payload) {
-      (document.querySelector('[name="email"]') as any).value = payload.ineID;
-      (document.querySelector('[name="username"]') as any).value =
-        payload.fullName;
-    }
-  }, [payload]);
 
   const handleResetFlow = () => {
     localStorage.removeItem(`truoraFlow_document-validation`);
@@ -152,10 +165,10 @@ const INECtypeForm = ({ properties }: any) => {
         <p className="mt-4 mb-8">Waiting for Truora response.</p>
       )}
       <>
-        {Object.keys(properties).map((property) => (
+        {Object.keys(payload || {}).map((property) => (
           <label className="hidden" key={property}>
             {property}:
-            <input name={property} required />
+            <input name={property} defaultValue={payload[property]} required />
           </label>
         ))}
       </>
@@ -187,7 +200,7 @@ export default function Claim({ type }: any) {
   const [error, setError] = useState<FlowError>();
   const [loading, setLoading] = useState(false);
   const state = useHookstate(sporranState);
-  const session = state.get();
+  const session = state.get({ noproxy: true });
 
   const handleClaim = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
@@ -202,6 +215,13 @@ export default function Claim({ type }: any) {
       const claimContents = Object.fromEntries(
         new FormData(event.currentTarget).entries(),
       ) as IClaimContents;
+
+      if (Object.keys(claimContents).some((field) => !claimContents[field])) {
+        setError('missingFields');
+        setLoading(false);
+
+        return;
+      }
 
       try {
         const { sessionId } = session;
@@ -261,6 +281,7 @@ export default function Claim({ type }: any) {
         setStatus('paid');
       } catch (error) {
         console.error(error);
+
         setError('unknown');
       }
     },
@@ -292,14 +313,25 @@ export default function Claim({ type }: any) {
             <form
               className="my-2 flex flex-col items-center"
               onSubmit={handleClaim}
+              noValidate
             >
               {status === 'start' && <Form properties={properties} />}
 
-              {session && (
+              {!session && (
                 <Button
                   isLoading={loading}
                   isError={!!error}
-                  label="Submit"
+                  label="Connect Sporran"
+                  isSubmit
+                  disabled
+                />
+              )}
+
+              {session && status === 'start' && (
+                <Button
+                  isLoading={loading}
+                  isError={!!error}
+                  label="Submit new credential"
                   isSubmit
                 />
               )}
@@ -320,7 +352,9 @@ export default function Claim({ type }: any) {
               </p>
             )}
 
-            {error && errors[error]}
+            <Box color="red.500" fontWeight="semibold">
+              {error && errors[error]}
+            </Box>
           </div>
         </div>
       </div>

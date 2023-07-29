@@ -15,7 +15,7 @@ import { sporranState } from '../layout';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export type FlowError = 'closed' | 'unauthorized' | 'unknown';
+export type FlowError = 'closed' | 'unauthorized' | 'unknown' | 'missingFields';
 
 export const btnStyle = (isError: boolean, processing: boolean) =>
   processing
@@ -46,6 +46,7 @@ export const errors: Record<FlowError, JSX.Element> = {
       browser.
     </p>
   ),
+  missingFields: <p>Missing required fields to submit the new credential</p>,
 };
 
 export const Button = ({
@@ -54,9 +55,11 @@ export const Button = ({
   isLoading,
   label,
   isSubmit,
+  disabled,
 }: any) => {
   return (
     <button
+      disabled={disabled}
       className={`flex items-center font-semibold py-1 text-xs max-h-[26px] ${btnStyle(
         isError,
         isLoading,
@@ -74,7 +77,7 @@ export const Button = ({
           wrapperClass="dna-wrapper"
         />
       ) : isError ? (
-        ''
+        'Try Again'
       ) : (
         label
       )}

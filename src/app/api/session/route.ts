@@ -21,7 +21,7 @@ export async function POST(request: Request) {
   let session: BasicSession | undefined
 
   try {
-    session = basicSessionMiddleware(request)
+    session = await basicSessionMiddleware(request)
   } catch (error) {
     return new NextResponse(JSON.stringify(error), { status: StatusCodes.FORBIDDEN })
   }

@@ -8,17 +8,20 @@ import TabsNav from '@/app/components/TabsNav';
 
 const tabs = {
   ine: 0,
-  ncrl: 1,
+  curp: 1,
+  mobile: 2,
 };
 
 const claimNav = [
   { title: 'INE', path: '/ine' },
-  { title: 'Telefono celular', path: '/mobile' },
-  { title: 'Carta de antecedentes', path: '/ncrl' },
-  { title: 'CURP', path: '/curp', disabled: true },
+  { title: 'CURP', path: '/curp' },
+  { title: 'Telefono celular', path: '/mobile', disabled: true },
+  { title: 'Carta de antecedentes', path: '/ncrl', disabled: true },
   { title: 'Licencia de conducir', path: '/driver_license', disabled: true },
   { title: 'Expediente Médico', path: '/medical_background', disabled: true },
 ];
+
+// https://attesting-dapp.vercel.app/?process_id=IDP9059ef45802e673e4625a04cdf65d6bc&account_id=ACCf563223b5b5bbde84a1223c84c80a670
 
 const Dashboard = () => {
   const router = useRouter();

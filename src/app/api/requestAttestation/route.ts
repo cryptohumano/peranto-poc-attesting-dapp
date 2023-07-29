@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { Credential, CType, Message, Quote } from '@kiltprotocol/sdk-js';
+import Kilt, { Credential, CType, Message, Quote, connect } from '@kiltprotocol/sdk-js';
 
 import { logger } from '@/common/utilities/logger'
 import { decrypt } from '@/common/utilities/cryptoCallbacks';
@@ -14,6 +14,8 @@ import { sendErrorResponse } from '@/common/utilities/errorResponse';
 
 export async function POST(request: Request) {
   try {
+    await connect('wss://peregrine.kilt.io')
+
     const body = await request.json()
     logger.debug('Handling attestation request');
 
@@ -53,7 +55,7 @@ export async function POST(request: Request) {
     await Credential.verifyWellFormed(credential, { ctype });
     logger.debug('Credential data structure verified');
 
-    const session = sessionMiddleware(request);
+    const session = await sessionMiddleware(request);
 
     setSession({ ...session, credential });
 
