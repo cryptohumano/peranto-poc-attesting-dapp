@@ -86,3 +86,57 @@ export async function GET(req: Request) {
     encryptedMessage
   })
 }
+
+export async function POST(req: Request) {
+  const { message } = req.json() as any
+  const { keyAgreement } = await keypairsPromise;
+
+  const decryptCallback: Kilt.DecryptCallback = async ({
+    data,
+    nonce,
+    peerPublicKey
+  }) => {
+    const result = Kilt.Utils.Crypto.decryptAsymmetric(
+      { box: data, nonce },
+      peerPublicKey,
+      keyAgreement.secretKey
+    )
+    if (!result) {
+      throw new Error('Cannot decrypt')
+    }
+    return {
+      data: result
+    }
+  }
+
+  const decryptedMessage = await Kilt.Message.decrypt(
+    message,
+    decryptCallback
+  )
+
+  if (decryptedMessage.body.type !== 'submit-credential') {
+    throw new Error('Unexpected message type')
+  }
+
+  const credential = decryptedMessage.body.content[0]
+
+  const { revoked, attester } = await Kilt.Credential.verifyPresentation(
+    credential
+  )
+
+  if (revoked) {
+    throw new Error("Credential has been revoked and hence it's not valid.")
+  }
+
+  console.log("AAAA", attester)
+  if (false /* isTrustedAttester(attester) */) {
+    console.log(
+      "The claim is valid. Claimer's email:",
+      credential.claim.contents.Email
+    )
+  }
+
+  return NextResponse.json({
+
+  })
+}

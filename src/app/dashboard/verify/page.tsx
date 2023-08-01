@@ -11,12 +11,11 @@ import { sessionHeader } from '@/common/constants';
 const Verify = () => {
   const state = useHookstate(sporranState);
   const session = state.get({ noproxy: true });
-  console.log('SESSION:::', session);
 
   const requestPresentation = useCallback(async () => {
     if (!session) return;
 
-    const { sessionId } = session;
+    const { sessionId } = session || { sessionId: null };
     const headers = { [sessionHeader]: sessionId };
 
     const {
@@ -26,6 +25,16 @@ const Verify = () => {
     });
 
     await session.send(encryptedMessage);
+
+    await session.listen(async (message: Kilt.IEncryptedMessage) => {
+      await axios.post(
+        '/api/verify/presentation',
+        { message },
+        {
+          headers,
+        },
+      );
+    });
   }, [session]);
 
   return (
