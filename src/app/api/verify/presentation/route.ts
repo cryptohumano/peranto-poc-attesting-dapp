@@ -9,7 +9,7 @@ import { keypairsPromise } from '@/common/utilities/keypairs'
 import { connect } from '@kiltprotocol/sdk-js'
 
 // Store somewhere in the backend.
-export function generateRequestChallenge() {
+function generateRequestChallenge() {
   return randomAsHex(24)
 }
 
