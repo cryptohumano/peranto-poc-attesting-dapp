@@ -1,18 +1,38 @@
 'use client';
 
+import { useCallback } from 'react';
 import { sporranState } from '@/app/layout';
 import { useHookstate } from '@hookstate/core';
+import * as Kilt from '@kiltprotocol/sdk-js';
+import axios from 'axios';
+
+import { sessionHeader } from '@/common/constants';
 
 const Verify = () => {
   const state = useHookstate(sporranState);
   const session = state.get({ noproxy: true });
-  console.log('METAMTEA:::', session);
+  console.log('SESSION:::', session);
 
-  if (session) {
-    (window as any).meta = session;
-  }
+  const requestPresentation = useCallback(async () => {
+    if (!session) return;
 
-  return null;
+    const { sessionId } = session;
+    const headers = { [sessionHeader]: sessionId };
+
+    const {
+      data: { encryptedMessage },
+    } = await axios.get('/api/verify/presentation', {
+      headers,
+    });
+
+    await session.send(encryptedMessage);
+  }, [session]);
+
+  return (
+    <div>
+      <button onClick={requestPresentation}>Request Presentation</button>
+    </div>
+  );
 };
 
 export default Verify;
