@@ -1,4 +1,4 @@
-import { Claim, IClaimContents, IQuote, Quote } from '@kiltprotocol/sdk-js';
+import { CType, Claim, IClaimContents, IQuote, Quote, connect } from '@kiltprotocol/sdk-js';
 
 import { StatusCodes } from 'http-status-codes';
 import { configuration } from '@/common/utilities/configuration';
@@ -24,6 +24,8 @@ interface Input {
 
 export async function POST(request: Request) {
   try {
+    await connect('wss://peregrine.kilt.io')
+
     logger.debug('Submit terms started');
 
     const session = await sessionMiddleware(request);
@@ -32,6 +34,9 @@ export async function POST(request: Request) {
     const { type, claimContents } = await request.json() as Input;
 
     logger.info('ctype: ' + JSON.stringify(supportedCTypes[type]));
+    const a = await CType.fetchFromChain("kilt:ctype:0x6023e692aa21ed94f24e22c061b840ea777eccceb103469617ec7d1e7388a1a5")
+    logger.info('ctype: ' + JSON.stringify(a));
+
     const claim = Claim.fromCTypeAndClaimContents(
       supportedCTypes[type],
       claimContents,

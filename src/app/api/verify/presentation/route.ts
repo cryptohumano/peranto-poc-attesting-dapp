@@ -88,7 +88,7 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  const { message } = req.json() as any
+  const { message } = await req.json() as any
   const { keyAgreement } = await keypairsPromise;
 
   const decryptCallback: Kilt.DecryptCallback = async ({
