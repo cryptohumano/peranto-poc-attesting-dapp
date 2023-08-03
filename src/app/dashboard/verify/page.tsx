@@ -27,13 +27,16 @@ const Verify = () => {
     await session.send(encryptedMessage);
 
     await session.listen(async (message: Kilt.IEncryptedMessage) => {
-      await axios.post(
+      const { data } = await axios.post(
         '/api/verify/presentation',
         { message },
         {
           headers,
         },
       );
+
+      console.log('RESULT::', data);
+      if (data?.attester) alert('Verification successful!.');
     });
   }, [session]);
 

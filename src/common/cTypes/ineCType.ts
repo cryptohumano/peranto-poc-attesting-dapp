@@ -14,7 +14,7 @@ export const ineCType: ICType = {
       type: 'string',
     },
   },
-  title: 'Perantotestine1',
+  title: 'Perantotestine',
   type: 'object',
-  $id: 'kilt:ctype:0x6023e692aa21ed94f24e22c061b840ea777eccceb103469617ec7d1e7388a1a5',
+  $id: 'kilt:ctype:0xa308e706b9326580bc4e90a48933b382466344ddd18059f5b09ab3607cfd92a8',
 };

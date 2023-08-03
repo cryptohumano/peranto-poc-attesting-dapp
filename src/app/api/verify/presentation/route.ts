@@ -32,7 +32,7 @@ export async function GET(req: Request) {
           {
             cTypeHash:
               ineCType.$id.replace("kilt:ctype:", "") as `0x${string}`,
-            requiredProperties: ['dateOfBirth', 'fullName', 'ineID']
+            requiredProperties: ['dateofbirth', 'fullname', 'ineid']
           }
         ],
         challenge: generateRequestChallenge()
@@ -128,15 +128,14 @@ export async function POST(req: Request) {
     throw new Error("Credential has been revoked and hence it's not valid.")
   }
 
-  console.log("AAAA", attester)
-  if (false /* isTrustedAttester(attester) */) {
+  if (attester === configuration.did) {
     console.log(
       "The claim is valid. Claimer's email:",
-      credential.claim.contents.Email
+      credential.claim.contents
     )
   }
 
   return NextResponse.json({
-
+    attester
   })
 }
