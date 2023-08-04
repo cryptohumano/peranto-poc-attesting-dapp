@@ -4,6 +4,8 @@ import React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import ky from 'ky';
 import { useParams, useRouter } from 'next/navigation';
+import ReactJson from 'react-json-view';
+import { Box, Button } from '@chakra-ui/react';
 
 import { Credential } from '@/common/utilities/credentialStorage';
 
@@ -93,34 +95,37 @@ export default function Credential() {
   const { claim, attestation } = credential;
 
   return (
-    <section>
-      <pre>{JSON.stringify(claim, null, 4)}</pre>
+    <>
+      <section className="max-w-full overflow-x-auto p-4 border">
+        <ReactJson src={claim} />
+      </section>
+      <Box flex="column" p={4}>
+        {!attestation && (
+          <div className="flex gap-4">
+            <Button disabled={processing} onClick={handleAttest}>
+              Attest
+            </Button>
+            <Button disabled={processing} onClick={handleReject}>
+              Reject
+            </Button>
+          </div>
+        )}
 
-      {!attestation && (
-        <div>
-          <button disabled={processing} onClick={handleAttest}>
-            Attest
-          </button>
-          <button disabled={processing} onClick={handleReject}>
-            Reject
-          </button>
-        </div>
-      )}
+        {attestation && !attestation.revoked && (
+          <div>
+            <p>Attested ✅</p>
+            <Button disabled={processing} onClick={handleRevoke}>
+              Revoke
+            </Button>
+          </div>
+        )}
 
-      {attestation && !attestation.revoked && (
-        <div>
-          <p>Attested ✅</p>
-          <button disabled={processing} onClick={handleRevoke}>
-            Revoke
-          </button>
-        </div>
-      )}
+        {attestation && attestation.revoked && <p>Revoked ❌</p>}
 
-      {attestation && attestation.revoked && <p>Revoked ❌</p>}
+        {processing && <p>Processing...</p>}
 
-      {processing && <p>Processing...</p>}
-
-      {error && <p>Oops, there was an error</p>}
-    </section>
+        {error && <p>Oops, there was an error</p>}
+      </Box>
+    </>
   );
 }
