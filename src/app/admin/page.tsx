@@ -56,19 +56,11 @@ function Credentials({
       </TableContainer>
     </>
   );
-  return (
-    <ul>
-      {credentials.map(([id]) => (
-        <li key={id}></li>
-      ))}
-    </ul>
-  );
 }
 
 export default function Admin() {
-  const state = useHookstate(sporranState);
-  const session = state.get({ noproxy: true });
-  console.log('sesso', session);
+  // const state = useHookstate(sporranState);
+  // const session = state.get({ noproxy: true });
 
   const [credentials, setCredentials] = useState<[string, Credential][]>();
   const [error, setError] = useState(false);
@@ -97,8 +89,8 @@ export default function Admin() {
     })();
   }, []);
 
-  if (!session || !~session?.encryptionKeyUri.indexOf('XJayjT5V88GvL'))
-    return <p>Wallet has no access to admin panel</p>;
+  // if (!session || !~session?.encryptionKeyUri.indexOf('XJayjT5V88GvL'))
+  //   return <p>Wallet has no access to admin panel</p>;
 
   if (!credentials) {
     return error ? <p>Unable to fetch credentials</p> : null;
