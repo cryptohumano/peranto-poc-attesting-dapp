@@ -1,5 +1,6 @@
 'use client';
 
+import { waitReady } from '@polkadot/wasm-crypto';
 import { useCallback } from 'react';
 import { sporranState } from '@/app/layout';
 import { useHookstate } from '@hookstate/core';

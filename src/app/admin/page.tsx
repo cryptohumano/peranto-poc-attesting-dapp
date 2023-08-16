@@ -97,8 +97,8 @@ export default function Admin() {
     })();
   }, []);
 
-  if (!session || !~session?.encryptionKeyUri.indexOf('XJayjT5V88GvL'))
-    return <p>Wallet has no access to admin panel</p>;
+  // if (!session || !~session?.encryptionKeyUri.indexOf('XJayjT5V88GvL'))
+  // return <p>Wallet has no access to admin panel</p>;
 
   if (!credentials) {
     return error ? <p>Unable to fetch credentials</p> : null;
