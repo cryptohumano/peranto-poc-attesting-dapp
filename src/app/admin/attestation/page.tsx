@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 
 import { Credential } from '@/common/utilities/credentialStorage';
-import { sporranState } from '../layout';
+import { sporranState } from '../../layout';
 import { useHookstate } from '@hookstate/core';
 
 function Credentials({
@@ -45,7 +45,10 @@ function Credentials({
                 <Td>{id}</Td>
                 <Td>{credential.attestation?.claimHash}</Td>
                 <Td>
-                  <Link color="purple" href={`/admin/credential/${id}`}>
+                  <Link
+                    color="purple"
+                    href={`/admin/attestation/credential/${id}`}
+                  >
                     Link
                   </Link>
                 </Td>
