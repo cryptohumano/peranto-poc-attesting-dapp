@@ -9,10 +9,10 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   const { candidate } = await request.json()
   const session = await sessionMiddleware(request);
-  const { encryptionKeyUri } = session;
+  const { did } = session;
 
   await setDoc(
-    doc(firestore, 'votation', encryptionKeyUri),
+    doc(firestore, 'votation', did),
     {
       candidate
     },
