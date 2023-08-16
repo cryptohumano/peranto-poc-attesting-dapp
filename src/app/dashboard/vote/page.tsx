@@ -1,25 +1,120 @@
 'use client';
 
-import { waitReady } from '@polkadot/wasm-crypto';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { sporranState } from '@/app/layout';
 import { useHookstate } from '@hookstate/core';
 import * as Kilt from '@kiltprotocol/sdk-js';
 import axios from 'axios';
 
 import { sessionHeader } from '@/common/constants';
-import { Button, Flex } from '@chakra-ui/react';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogCloseButton,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Button,
+  Flex,
+  useDisclosure,
+} from '@chakra-ui/react';
 import TabsNav from '@/app/components/TabsNav';
 
 import marcelo from '../../marcelo.png';
 import xochitl from '../../xochitl.png';
 
+import morena from '../../morena.png';
+import pan from '../../pan.png';
+
+function ConfirmDialog({
+  isOpen,
+  onClose,
+  onConfirm,
+  selectedCandidate,
+  voteSuccess,
+}: any) {
+  const [loading, setLoading] = useState(false);
+  const cancelRef = useRef();
+
+  const onClick = () => {
+    setLoading(true);
+
+    onConfirm();
+  };
+
+  useEffect(() => {
+    if (voteSuccess) setLoading(false);
+  }, [voteSuccess]);
+
+  return (
+    <>
+      <AlertDialog
+        motionPreset="slideInBottom"
+        leastDestructiveRef={cancelRef as any}
+        onClose={onClose}
+        isOpen={isOpen}
+        isCentered
+      >
+        <AlertDialogOverlay />
+
+        <AlertDialogContent>
+          <AlertDialogHeader>Vote confirmation</AlertDialogHeader>
+          <AlertDialogCloseButton />
+          {!voteSuccess && (
+            <AlertDialogBody>
+              Are you sure you want to vote for the candidate:{' '}
+              <span className="font-bold">
+                {selectedCandidate === 0 ? 'Marcelo Ebrard' : 'Xochitl Galvéz'}
+              </span>
+            </AlertDialogBody>
+          )}
+
+          {voteSuccess && (
+            <AlertDialogBody>Thanks for participating</AlertDialogBody>
+          )}
+          <AlertDialogFooter>
+            {!voteSuccess && (
+              <Button ref={cancelRef.current} onClick={onClose}>
+                No
+              </Button>
+            )}
+            {!voteSuccess && (
+              <Button
+                isLoading={loading}
+                backgroundColor="pink.400 !important"
+                color="white !important"
+                ml={3}
+                onClick={onClick}
+              >
+                Yes
+              </Button>
+            )}
+            {voteSuccess && (
+              <Button
+                backgroundColor="pink.400 !important"
+                color="white !important"
+                ml={3}
+                onClick={onClose}
+              >
+                Close
+              </Button>
+            )}
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+}
+
 const Verify = () => {
   const [verification, setVerification] = useState(false);
   const [voteSuccess, setVoteSuccess] = useState(false);
+  const [selectedCandidate, setSelectedCandidate] = useState(-1);
   const [loading, setLoading] = useState(false);
   const state = useHookstate(sporranState);
   const session = state.get({ noproxy: true });
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const requestPresentation = useCallback(async () => {
     if (!session) return;
@@ -77,6 +172,7 @@ const Verify = () => {
         );
 
         setLoading(false);
+        setVoteSuccess(true);
       } catch {
         setLoading(false);
       }
@@ -87,11 +183,21 @@ const Verify = () => {
   const submit = async (candidate: number) => {
     if (!verification) await requestPresentation();
 
-    if (verification) await vote(candidate);
+    if (verification) {
+      setSelectedCandidate(candidate);
+      onOpen();
+    }
   };
 
   return (
     <TabsNav defaultIndex={1}>
+      <ConfirmDialog
+        isOpen={isOpen}
+        onClose={onClose}
+        onConfirm={async () => await vote(selectedCandidate)}
+        selectedCandidate={selectedCandidate}
+        voteSuccess={voteSuccess}
+      />
       <Flex alignContent="center" mt="14" gap="8" justifyContent="center">
         <Flex direction="column" gap="4">
           <Flex fontWeight="bold">Presidencia de la República Mexicana</Flex>
@@ -137,6 +243,7 @@ const Verify = () => {
               <span className="font-bold">
                 Partido Político y/o Coaliciones
               </span>
+              <img src={morena.src} />
               <Button
                 isLoading={loading}
                 disabled={!session || !verification || voteSuccess}
@@ -190,6 +297,7 @@ const Verify = () => {
               <span className="font-bold">
                 Partido Político y/o Coaliciones
               </span>
+              <img src={pan.src} />
               <Button
                 isLoading={loading}
                 disabled={!session || !verification || voteSuccess}
