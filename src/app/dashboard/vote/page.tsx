@@ -84,12 +84,6 @@ const Verify = () => {
     [session],
   );
 
-  // <div>
-  //         <button onClick={requestPresentation}>Request Presentation</button>
-  //         <br />
-  //         <button onClick={vote}>Vote</button>
-  //       </div>
-
   const submit = async (candidate: number) => {
     if (!verification) await requestPresentation();
 
@@ -104,16 +98,45 @@ const Verify = () => {
 
           <Flex backgroundColor="pink.100" gap="4" borderRadius="md" p="4">
             <Flex>
-              <img src={marcelo.src} />
+              <img className="w-[64px] h-[64px]" src={marcelo.src} />
             </Flex>
-            <Flex>
+            <Flex direction="column">
               Candidato:
               <br />
               C. Marcelo Ebrard Casaubón
               <br />
               Cargo: Presidencia de la República Mexicana
+              <br />
+              <br />
+              <Flex direction="column" maxW="96">
+                <span className="font-bold">Proyecto de Gobierno:</span>
+                Abstract:
+                <br />
+                <Flex textAlign="justify">
+                  Este proyecto de presidencia tiene como objetivo fundamental
+                  transformar México en un país sostenible, equitativo y
+                  próspero para todos sus ciudadanos. A través de una serie de
+                  puntos estratégicos de acción, se busca abordar los desafíos
+                  actuales que enfrenta la nación, desde la seguridad y la
+                  economía hasta la educación y el medio ambiente. Al
+                  implementar políticas y medidas con visión de largo plazo, se
+                  espera lograr un México donde prevalezca el desarrollo
+                  integral, la justicia social y la participación ciudadana
+                  activa.
+                </Flex>
+              </Flex>
             </Flex>
-            <Flex alignItems="flex-end">
+            <Flex
+              alignItems="center"
+              backgroundColor="pink.50"
+              p="4"
+              borderRadius="md"
+              direction="column"
+              justifyContent="space-between"
+            >
+              <span className="font-bold">
+                Partido Político y/o Coaliciones
+              </span>
               <Button
                 isLoading={loading}
                 disabled={!session || !verification || voteSuccess}
@@ -132,16 +155,41 @@ const Verify = () => {
 
           <Flex backgroundColor="pink.100" gap="4" borderRadius="md" p="4">
             <Flex>
-              <img src={xochitl.src} />
+              <img className="w-[64px] h-[64px]" src={xochitl.src} />
             </Flex>
-            <Flex>
+            <Flex direction="column">
               Candidato:
               <br />
               C. Xochitl Gálvez
               <br />
               Cargo: Presidencia de la República Mexicana
+              <br />
+              <br />
+              <Flex direction="column" maxW="96">
+                <span className="font-bold">Proyecto de Gobierno:</span>
+                Abstract:
+                <br />
+                <Flex textAlign="justify">
+                  Este proyecto de presidencia tiene como objetivo fundamental
+                  transformar México en un país sostenible, equitativo y
+                  próspero para todos sus ciudadanos. A través de una serie de
+                  puntos estratégicos de acción, se busca abordar los desafíos
+                  actuales que enfrenta la nación, desde la seguridad y la
+                  economía hasta la educación y el medio ambiente.
+                </Flex>
+              </Flex>
             </Flex>
-            <Flex alignItems="flex-end">
+            <Flex
+              alignItems="center"
+              backgroundColor="pink.50"
+              p="4"
+              borderRadius="md"
+              direction="column"
+              justifyContent="space-between"
+            >
+              <span className="font-bold">
+                Partido Político y/o Coaliciones
+              </span>
               <Button
                 isLoading={loading}
                 disabled={!session || !verification || voteSuccess}
