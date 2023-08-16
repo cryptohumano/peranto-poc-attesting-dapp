@@ -3,23 +3,65 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import ky from 'ky';
-import Link from 'next/link';
+import {
+  Link,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from '@chakra-ui/react';
 
 import { Credential } from '@/common/utilities/credentialStorage';
+import { sporranState } from '../layout';
+import { useHookstate } from '@hookstate/core';
 
-function Credentials({ credentials }: { credentials: [string, Credential][] }) {
+function Credentials({
+  credentials,
+  title,
+}: {
+  credentials: [string, Credential][];
+  title: string;
+}) {
   return (
-    <ul>
-      {credentials.map(([id]) => (
-        <li key={id}>
-          <Link href={`/admin/credential/${id}`}>{id}</Link>
-        </li>
-      ))}
-    </ul>
+    <>
+      <TableContainer>
+        <Table variant="striped" colorScheme="telegram">
+          <TableCaption placement="top">{title}</TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Id</Th>
+              <Th>Claim Hash</Th>
+              <Th>#</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {credentials.map(([id, credential]) => (
+              <Tr key={id}>
+                <Td>{id}</Td>
+                <Td>{credential.attestation?.claimHash}</Td>
+                <Td>
+                  <Link color="purple" href={`/admin/credential/${id}`}>
+                    Link
+                  </Link>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
 
 export default function Admin() {
+  // const state = useHookstate(sporranState);
+  // const session = state.get({ noproxy: true });
+
   const [credentials, setCredentials] = useState<[string, Credential][]>();
   const [error, setError] = useState(false);
 
@@ -47,33 +89,42 @@ export default function Admin() {
     })();
   }, []);
 
+  // if (!session || !~session?.encryptionKeyUri.indexOf('XJayjT5V88GvL'))
+  // return <p>Wallet has no access to admin panel</p>;
+
   if (!credentials) {
     return error ? <p>Unable to fetch credentials</p> : null;
   }
 
   return (
     <section>
-      <h1>Admin Page</h1>
+      <h1 className="mb-8">Admin Page</h1>
       {credentials.length === 0 && <p>No credentials</p>}
 
       {pendingCredentials && pendingCredentials.length > 0 && (
         <section>
-          <h2>Pending credentials</h2>
-          <Credentials credentials={pendingCredentials} />
+          <Credentials
+            credentials={pendingCredentials}
+            title="Pending credentials"
+          />
         </section>
       )}
 
       {attestedCredentials && attestedCredentials.length > 0 && (
         <section>
-          <h2>Attested credentials</h2>
-          <Credentials credentials={attestedCredentials} />
+          <Credentials
+            credentials={attestedCredentials}
+            title="Attested credentials"
+          />
         </section>
       )}
 
       {revokedCredentials && revokedCredentials.length > 0 && (
         <section>
-          <h2>Revoked credentials</h2>
-          <Credentials credentials={revokedCredentials} />
+          <Credentials
+            credentials={revokedCredentials}
+            title="Revoked credentials"
+          />
         </section>
       )}
     </section>

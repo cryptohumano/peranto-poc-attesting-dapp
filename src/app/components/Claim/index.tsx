@@ -63,9 +63,9 @@ const INECtypeForm = ({ properties }: any) => {
       } = m.details.document_details;
 
       setPayload({
-        fullName: `${name} ${first_last_name} ${last_name}`,
-        dateOfBirth: date_of_birth,
-        ineID: machine_readable,
+        fullname: `${name} ${first_last_name} ${last_name}`,
+        dateofbirth: date_of_birth,
+        ineid: machine_readable,
       });
     } else {
       setWaitResponse(true);
@@ -85,9 +85,9 @@ const INECtypeForm = ({ properties }: any) => {
           } = data.details.document_details;
 
           setPayload({
-            fullName: `${name} ${first_last_name} ${last_name}`,
-            dateOfBirth: date_of_birth,
-            ineID: machine_readable,
+            fullname: `${name} ${first_last_name} ${last_name}`,
+            dateofbirth: date_of_birth,
+            ineid: machine_readable,
           });
         }
 
@@ -126,15 +126,15 @@ const INECtypeForm = ({ properties }: any) => {
           <table className="table mb-8">
             <tr>
               <td>Name: </td>
-              <td className="break-all">{payload.fullName}</td>
+              <td className="break-all">{payload.fullname}</td>
             </tr>
             <tr>
               <td>Date of birth:</td>
-              <td className="break-all">{payload.dateOfBirth}</td>
+              <td className="break-all">{payload.dateofbirth}</td>
             </tr>
             <tr>
               <td>INE</td>
-              <td className="break-all">{payload.ineID}</td>
+              <td className="break-all">{payload.ineid}</td>
             </tr>
           </table>
         </>

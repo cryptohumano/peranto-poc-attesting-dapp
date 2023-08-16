@@ -1,19 +1,20 @@
 import type { ICType } from '@kiltprotocol/sdk-js';
 
 export const ineCType: ICType = {
-  $schema: 'http://kilt-protocol.org/draft-01/ctype#',
+  $schema: 'ipfs://bafybeiah66wbkhqbqn7idkostj2iqyan2tstc4tpqt65udlhimd7hcxjyq/',
+  additionalProperties: false,
   properties: {
-    dateOfBirth: {
+    dateofbirth: {
       type: 'string',
     },
-    fullName: {
+    fullname: {
       type: 'string',
     },
-    ineID: {
+    ineid: {
       type: 'string',
     },
   },
-  title: 'PerantoTestINE1_',
+  title: 'Perantotestine',
   type: 'object',
-  $id: 'kilt:ctype:0xff6fb695fdd5355908ac6fb40002d93452ec6b1aa85cddb85541b336f033f53b',
+  $id: 'kilt:ctype:0xa308e706b9326580bc4e90a48933b382466344ddd18059f5b09ab3607cfd92a8',
 };
