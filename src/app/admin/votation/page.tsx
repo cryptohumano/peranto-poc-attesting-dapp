@@ -18,6 +18,13 @@ export default function Votation() {
     init();
   }, []);
 
+  if (!votation)
+    return (
+      <section className="max-w-full overflow-x-auto p-4 border">
+        <p>...</p>
+      </section>
+    );
+
   return (
     <>
       <section className="max-w-full overflow-x-auto p-4 border">
