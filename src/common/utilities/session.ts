@@ -23,6 +23,7 @@ interface InjectedWindowProvider {
     dAppEncryptionKeyUri: DidResourceUri,
     challenge: string,
   ) => Promise<PubSubSession>;
+  getDidList: () => { did: DidResourceUri }[]
   name: string;
   version: string;
   specVersion: '3.0';
@@ -60,9 +61,20 @@ export async function getSession(
     challenge,
   );
 
+  let selectedDid
+
+  if (~location.pathname.indexOf("/admin/")) {
+    const [{ did }] = await provider.getDidList()
+
+    selectedDid = did
+  }
+
+
   const { encryptionKeyUri, encryptedChallenge, nonce } = session;
+
   await checkSession(
     {
+      selectedDid,
       encryptionKeyUri,
       encryptedChallenge,
       nonce,

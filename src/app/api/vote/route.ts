@@ -4,7 +4,9 @@ import { sessionMiddleware } from '@/common/utilities/sessionStorage'
 import { collection, doc, getDoc, getDocs, setDoc, where } from 'firebase/firestore';
 import { NextResponse } from 'next/server';
 
-export async function GET(_request: Request) {
+export async function GET(request: Request) {
+  await sessionMiddleware(request);
+
   const docs = await getDocs(collection(firestore, 'votation'))
   let candidate0 = 0
   let candidate1 = 0

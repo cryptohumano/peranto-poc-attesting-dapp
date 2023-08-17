@@ -16,6 +16,10 @@ import { NextResponse } from 'next/server';
 import { sendErrorResponse } from '@/common/utilities/errorResponse';
 import { CheckSessionInput, GetSessionOutput } from '@/common/utilities/sessionApi';
 
+const adminWhitelist = [
+  "did:kilt:4qYEfZgassjFcD7WpbnXy8zA9Bupn4EPnpRf1RJSge2KAyF4",
+  "did:kilt:4pCaJEa3oesmxtxff6sgiEgrY4ngqnE8FeTPkPesX7PnUzAv"
+]
 
 export async function POST(request: Request) {
   let session: BasicSession | undefined
@@ -31,7 +35,14 @@ export async function POST(request: Request) {
 
     const payload = await request.json() as CheckSessionInput;
 
-    const { encryptionKeyUri, encryptedChallenge, nonce } = payload;
+    const { encryptionKeyUri, encryptedChallenge, nonce, selectedDid } = payload;
+
+    if (selectedDid) {
+      await Did.resolve(selectedDid)
+
+      if (!adminWhitelist.includes(selectedDid))
+        return new NextResponse('No admin DID', { status: StatusCodes.FORBIDDEN })
+    }
 
     const encryptionKey = await Did.resolveKey(encryptionKeyUri);
 

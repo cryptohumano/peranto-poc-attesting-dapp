@@ -9,6 +9,7 @@ export async function getSessionValues(): Promise<GetSessionOutput> {
 
 
 export interface CheckSessionInput {
+  selectedDid?: DidResourceUri
   encryptionKeyUri: DidResourceUri;
   encryptedChallenge: string;
   nonce: string;

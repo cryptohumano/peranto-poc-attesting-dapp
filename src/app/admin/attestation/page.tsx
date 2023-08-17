@@ -19,6 +19,7 @@ import {
 import { Credential } from '@/common/utilities/credentialStorage';
 import { sporranState } from '../../layout';
 import { useHookstate } from '@hookstate/core';
+import { sessionHeader } from '@/common/constants';
 
 function Credentials({
   credentials,
@@ -62,9 +63,6 @@ function Credentials({
 }
 
 export default function Admin() {
-  // const state = useHookstate(sporranState);
-  // const session = state.get({ noproxy: true });
-
   const [credentials, setCredentials] = useState<[string, Credential][]>();
   const [error, setError] = useState(false);
 
@@ -78,19 +76,25 @@ export default function Admin() {
     ([, { attestation }]) => attestation && attestation.revoked,
   );
 
+  const state = useHookstate(sporranState);
+  const session = state.get({ noproxy: true });
+  const headers = { [sessionHeader]: session?.sessionId };
+
   useEffect(() => {
     (async () => {
       try {
-        const credentials = await ky
-          .get('/api/credentials')
+        if (!session?.sessionId || credentials) return;
+
+        const _credentials = await ky
+          .get('/api/credentials', { headers })
           .json<Record<string, Credential>>();
 
-        setCredentials(Object.entries(credentials));
+        setCredentials(Object.entries(_credentials));
       } catch {
         setError(true);
       }
     })();
-  }, []);
+  }, [headers, session?.sessionId, credentials]);
 
   // if (!session || !~session?.encryptionKeyUri.indexOf('XJayjT5V88GvL'))
   // return <p>Wallet has no access to admin panel</p>;

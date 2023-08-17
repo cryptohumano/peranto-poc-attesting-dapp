@@ -6,27 +6,31 @@ import { useParams, useRouter } from 'next/navigation';
 import _ReactJson from 'react-json-view';
 import { Box, Button } from '@chakra-ui/react';
 import ky from 'ky';
+import { useHookstate } from '@hookstate/core';
+import { sporranState } from '@/app/layout';
+import { sessionHeader } from '@/common/constants';
 
 const ReactJson = React.lazy(() => import('react-json-view'));
 
 export default function Votation() {
   const [votation, setvotation] = useState<any>(null);
+  const state = useHookstate(sporranState);
+  const session = state.get({ noproxy: true });
+  const headers = { [sessionHeader]: session?.sessionId };
 
   useEffect(() => {
     const init = async () => {
-      const r = await ky.get(`/api/vote`).json();
+      if (votation) return;
+
+      const r = await ky.get(`/api/vote`, { headers }).json();
 
       setTimeout(() => {
         setvotation(r);
       }, 1000);
     };
 
-    if (
-      typeof window !== 'undefined' &&
-      typeof window?.document !== 'undefined'
-    )
-      init();
-  }, []);
+    if (session?.sessionId) init();
+  }, [headers, session?.sessionId, votation]);
 
   if (votation)
     return (
