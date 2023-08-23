@@ -110,6 +110,7 @@ function ConfirmDialog({
 const Verify = () => {
   const [verification, setVerification] = useState(false);
   const [voteSuccess, setVoteSuccess] = useState(false);
+  const [ineId, setIneId] = useState();
   const [selectedCandidate, setSelectedCandidate] = useState(-1);
   const [loading, setLoading] = useState(false);
   const state = useHookstate(sporranState);
@@ -142,7 +143,9 @@ const Verify = () => {
           },
         );
 
-        if (data?.attester) {
+        if (data?.attester && data?.ineId) {
+          setIneId(data?.ineId);
+
           setVerification(true);
         }
 
@@ -165,7 +168,7 @@ const Verify = () => {
 
         await axios.post(
           '/api/vote',
-          { candidate },
+          { candidate, ineId },
           {
             headers,
           },
@@ -177,7 +180,7 @@ const Verify = () => {
         setLoading(false);
       }
     },
-    [session],
+    [session, ineId],
   );
 
   const submit = async (candidate: number) => {

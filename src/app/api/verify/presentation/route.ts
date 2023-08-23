@@ -7,6 +7,7 @@ import { configuration } from '@/common/utilities/configuration'
 import { ineCType } from '@/common/cTypes/ineCType'
 import { keypairsPromise } from '@/common/utilities/keypairs'
 import { connect } from '@kiltprotocol/sdk-js'
+import crypto from 'crypto'
 
 // Store somewhere in the backend.
 function generateRequestChallenge() {
@@ -130,12 +131,17 @@ export async function POST(req: Request) {
 
   if (attester === configuration.did) {
     console.log(
-      "The claim is valid. Claimer's email:",
+      "The claim is valid. Claimer's INE:",
       credential.claim.contents
     )
   }
 
+
+  const secret = 'thekey-to-jashh';
+  const ineId = crypto.createHmac('sha256', credential.claim.contents.ineid + ' ' + secret).digest('hex');
+
   return NextResponse.json({
-    attester
+    attester,
+    ineId
   })
 }

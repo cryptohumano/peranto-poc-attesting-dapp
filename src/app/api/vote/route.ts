@@ -4,6 +4,20 @@ import { sessionMiddleware } from '@/common/utilities/sessionStorage'
 import { collection, doc, getDoc, getDocs, setDoc, where } from 'firebase/firestore';
 import { NextResponse } from 'next/server';
 
+// function encrypt(text,password){
+//   var cipher = crypto.createCipher(algorithm,password)
+//   var crypted = cipher.update(text,'utf8','hex')
+//   crypted += cipher.final('hex');
+//   return crypted;
+// }
+
+// function decrypt(text,password){
+//   var decipher = crypto.createDecipher(algorithm,password)
+//   var dec = decipher.update(text,'hex','utf8')
+//   dec += decipher.final('utf8');
+//   return dec;
+// }
+
 export async function GET(request: Request) {
   await sessionMiddleware(request);
 
@@ -23,18 +37,18 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { candidate } = await request.json()
-  const session = await sessionMiddleware(request);
-  const { did } = session;
+  const { candidate, ineId } = await request.json()
 
-  const _doc = await getDoc(doc(firestore, 'votation', did))
+  await sessionMiddleware(request);
+
+  const _doc = await getDoc(doc(firestore, 'votation', ineId))
 
   if (_doc.exists()) {
     return NextResponse.json({ success: true })
   }
 
   await setDoc(
-    doc(firestore, 'votation', did),
+    doc(firestore, 'votation', ineId),
     {
       candidate
     },
