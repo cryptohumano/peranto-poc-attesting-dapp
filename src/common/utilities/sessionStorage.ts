@@ -82,7 +82,7 @@ export async function basicSessionMiddleware(
 export async function sessionMiddleware(
   request: Request,
 ) {
-    const session = await (request);
+    const session = await getSession(request);
 
     return session as Session
 }
