@@ -50,6 +50,7 @@ export async function getSession(
   if (!provider) {
     throw new Error('No provider');
   }
+  if (typeof window !== "undefined") window.meta = provider
 
   const { dAppEncryptionKeyUri, challenge, sessionId } =
     await getSessionValues();
@@ -60,6 +61,11 @@ export async function getSession(
     dAppEncryptionKeyUri,
     challenge,
   );
+
+  if (typeof window !== "undefined") (window as any).meta = {
+    provider,
+    session
+  }
 
   let selectedDid
 
