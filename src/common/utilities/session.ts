@@ -1,3 +1,4 @@
+import * as Kilt from '@kiltprotocol/sdk-js';
 
 import type { DidResourceUri, IEncryptedMessage } from '@kiltprotocol/sdk-js';
 
@@ -61,9 +62,13 @@ export async function getSession(
     challenge,
   );
 
+  const api = Kilt.ConfigService.get('api')
+  const did = await api.call.did.query(session?.encryptionKeyUri)
+
   if (typeof window !== "undefined") (window as any).meta = {
     provider,
-    session
+    session,
+    did
   }
 
   let selectedDid
