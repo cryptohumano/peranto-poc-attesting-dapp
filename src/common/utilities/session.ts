@@ -1,3 +1,6 @@
+import { connect } from '@kiltprotocol/sdk-js';
+
+import { configuration } from './configuration';
 import * as Kilt from '@kiltprotocol/sdk-js';
 
 import type { DidResourceUri, IEncryptedMessage } from '@kiltprotocol/sdk-js';
@@ -63,7 +66,8 @@ export async function getSession(
     challenge,
   );
 
-  await initKilt()
+  await connect(configuration.blockchainEndpoint);
+
   const api = Kilt.ConfigService.get('api')
   const did = await api.call.did.query(session?.encryptionKeyUri)
 
