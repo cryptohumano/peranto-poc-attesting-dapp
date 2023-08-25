@@ -88,7 +88,7 @@ const Verify = () => {
                     Date of Birth
                   </Heading>
                   <Text pt="2" fontSize="sm">
-                    {credentialData?.dayofbirth}
+                    {credentialData?.dateofbirth}
                   </Text>
                 </Box>
                 <Box>
