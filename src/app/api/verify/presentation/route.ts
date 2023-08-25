@@ -143,6 +143,6 @@ export async function POST(req: Request) {
   return NextResponse.json({
     attester,
     ineId,
-    credentia: credential.claim.contents,
+    credential: credential.claim.contents,
   })
 }
