@@ -9,7 +9,6 @@ import {
   checkSession,
   getSessionValues,
 } from './sessionApi';
-import { initKilt } from './initKilt';
 
 interface PubSubSession {
   listen: (
