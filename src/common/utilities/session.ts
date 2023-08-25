@@ -6,6 +6,7 @@ import {
   checkSession,
   getSessionValues,
 } from './sessionApi';
+import { initKilt } from './initKilt';
 
 interface PubSubSession {
   listen: (
@@ -62,6 +63,7 @@ export async function getSession(
     challenge,
   );
 
+  await initKilt()
   const api = Kilt.ConfigService.get('api')
   const did = await api.call.did.query(session?.encryptionKeyUri)
 
