@@ -1,7 +1,7 @@
 
 import { StatusCodes } from 'http-status-codes';
 
-import { Did, DidResourceUri, Utils } from '@kiltprotocol/sdk-js';
+import { Did, DidResourceUri, Utils, connect, ConfigService } from '@kiltprotocol/sdk-js';
 import { randomAsHex } from '@polkadot/util-crypto';
 
 import { didDocumentPromise } from '@/common/utilities/didDocument';
@@ -15,6 +15,7 @@ import { logger } from '@/common/utilities/logger';
 import { NextResponse } from 'next/server';
 import { sendErrorResponse } from '@/common/utilities/errorResponse';
 import { CheckSessionInput, GetSessionOutput } from '@/common/utilities/sessionApi';
+import { configuration } from '@/common/utilities/configuration';
 
 const adminWhitelist = [
   "did:kilt:4qYEfZgassjFcD7WpbnXy8zA9Bupn4EPnpRf1RJSge2KAyF4",
@@ -36,6 +37,12 @@ export async function POST(request: Request) {
     const payload = await request.json() as CheckSessionInput;
 
     const { encryptionKeyUri, encryptedChallenge, nonce, selectedDid } = payload;
+
+    await connect(configuration.blockchainEndpoint);
+
+  const api = ConfigService.get('api')
+  const _did = await api.call.did.query(encryptionKeyUri)
+  console.log("AAAAADDDD", _did)
 
     if (selectedDid) {
       await Did.resolve(selectedDid)
