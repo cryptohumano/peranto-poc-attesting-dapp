@@ -28,7 +28,7 @@ const Dashboard = () => {
   const params = useParams();
 
   return (
-    <TabsNav defaultIndex={2}>
+    <TabsNav defaultIndex={3}>
       <Tabs
         orientation="vertical"
         defaultIndex={tabs[params.ctype as keyof typeof tabs]}

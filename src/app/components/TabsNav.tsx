@@ -5,10 +5,10 @@ import { useEffect } from 'react';
 export const mainNavMapping = [
   { title: 'Perfil', path: '/profile' },
   { title: 'Votacion', path: '/vote' },
+  { title: 'Verificacion', path: '/verify' },
   { title: 'Credenciales', path: '/claim/ine' },
   { title: 'Contratos', path: '/contracts', disabled: true },
   { title: 'Chat', path: '/chat', disabled: true },
-  { title: 'Métodos de Pago', path: '/payments', disabled: true },
   { title: 'Historial', path: '/history', disabled: true },
 ];
 

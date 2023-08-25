@@ -76,16 +76,11 @@ const INECtypeForm = ({ properties }: any) => {
         if (!doc.exists) return;
 
         if (data?.validation_status === 'success') {
-          const {
-            name,
-            first_last_name,
-            last_name,
-            date_of_birth,
-            machine_readable,
-          } = data.details.document_details;
+          const { name, last_name, date_of_birth, machine_readable } =
+            data.details.document_details;
 
           setPayload({
-            fullname: `${name} ${first_last_name} ${last_name}`,
+            fullname: `${name} ${last_name}`,
             dateofbirth: date_of_birth,
             ineid: machine_readable,
           });
