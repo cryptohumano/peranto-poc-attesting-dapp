@@ -78,6 +78,7 @@ export async function decrypt({
     peerPublicKey,
     keyAgreement.secretKey,
   );
+
   if (!data) {
     throw new Error('Failed to decrypt with given key');
   }

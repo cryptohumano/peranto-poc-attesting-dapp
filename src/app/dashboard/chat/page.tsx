@@ -27,14 +27,17 @@ const Profile = () => {
   const session = state.get({ noproxy: true });
   const [chat, setChat] = useState<Message>([]);
 
-  const sendMessage = useCallback(async () => {
-    if (!session) return;
+  const sendMessage = useCallback(
+    async (message: string) => {
+      if (!session) return;
 
-    const { sessionId } = session || { sessionId: null };
-    const headers = { [sessionHeader]: sessionId };
+      const { sessionId } = session || { sessionId: null };
+      const headers = { [sessionHeader]: sessionId };
 
-    await axios('/api/chat', { headers });
-  }, [session]);
+      await axios.post('/api/chat', { message }, { headers });
+    },
+    [session],
+  );
 
   const onSend = async (message: string) => {
     const newChat = [
@@ -47,6 +50,8 @@ const Profile = () => {
     ];
 
     setChat(newChat);
+
+    sendMessage(message);
   };
 
   return (
@@ -88,7 +93,6 @@ const Profile = () => {
             </ChatContainer>
           </MainContainer>
         </Flex>
-        {session && <button onClick={sendMessage}>LLLLLLL</button>}
       </Flex>
     </TabsNav>
   );

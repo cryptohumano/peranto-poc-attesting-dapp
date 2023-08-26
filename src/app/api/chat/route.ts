@@ -6,17 +6,19 @@ import { sessionMiddleware } from '@/common/utilities/sessionStorage';
 import { NextResponse } from 'next/server'
 
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   try {
     await initKilt()
 
+    const { message } = await request.json();
+
     const session = await sessionMiddleware(request);
-    const { encryptionKeyUri } = session;
+    const { encryptionKeyUri, did } = session;
 
     const output = await encryptMessageBody(encryptionKeyUri, {
       content: {
-        name: 'Msg 1',
-        message: 'Message one for demo purposes'
+        name: did,
+        message
       },
       type: 'error',
     });
