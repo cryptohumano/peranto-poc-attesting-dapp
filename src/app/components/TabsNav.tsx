@@ -7,8 +7,8 @@ export const mainNavMapping = [
   { title: 'Votacion', path: '/vote' },
   { title: 'Verificacion', path: '/verify' },
   { title: 'Credenciales', path: '/claim/ine' },
+  { title: 'Chat', path: '/chat' },
   { title: 'Contratos', path: '/contracts', disabled: true },
-  { title: 'Chat', path: '/chat', disabled: true },
   { title: 'Historial', path: '/history', disabled: true },
 ];
 

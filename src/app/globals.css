@@ -1,10 +1,12 @@
-
 @tailwind components;
 @tailwind utilities;
+
+@import url('@chatscope/chat-ui-kit-styles/dist/default/styles.min.css');
 
 * {
   box-sizing: border-box;
 }
+
 @-webkit-keyframes move-dot1 {
   0% {
     transform: translateX(-50%) translateY(-50%);
