@@ -17,7 +17,7 @@ import { useCallback, useState } from 'react';
 import { sessionHeader } from '@/common/constants';
 import { encryptMessageBody } from '@/common/utilities/encryptMessage';
 
-export const ATTESTER_DID = process.env.NEXT_PUBLIC_DID;
+const ATTESTER_DID = process.env.NEXT_PUBLIC_DID;
 
 type Message = {
   message: string;
