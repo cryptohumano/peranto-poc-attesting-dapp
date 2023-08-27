@@ -22,16 +22,14 @@ export async function POST(request: Request) {
       },
       type: 'error',
     });
-    const parsedOutput = JSON.parse(JSON.stringify(output))
 
-    logger.debug(parsedOutput)
+    let decrypted
 
-    const decrypted = await decryptMessageBody(parsedOutput)
-    const parsedDecrypted = JSON.parse(JSON.stringify(decrypted))
+    try {
+      decrypted = await decryptMessageBody(output)
+    } catch {}
 
-    logger.debug(parsedDecrypted)
-
-    return NextResponse.json(parsedDecrypted)
+    return NextResponse.json({ message: `Decrypted::: ${message}` })
   } catch (error) {
     logger.error(error);
 

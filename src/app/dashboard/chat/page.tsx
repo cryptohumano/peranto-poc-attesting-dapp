@@ -6,6 +6,7 @@ import {
   MessageList,
   Message,
   MessageInput,
+  ConversationHeader,
 } from '@chatscope/chat-ui-kit-react';
 import TabsNav from '@/app/components/TabsNav';
 import { Flex } from '@chakra-ui/react';
@@ -15,6 +16,8 @@ import axios from 'axios';
 import { useCallback, useState } from 'react';
 import { sessionHeader } from '@/common/constants';
 import { encryptMessageBody } from '@/common/utilities/encryptMessage';
+
+export const ATTESTER_DID = process.env.NEXT_PUBLIC_DID;
 
 type Message = {
   message: string;
@@ -27,32 +30,39 @@ const Profile = () => {
   const session = state.get({ noproxy: true });
   const [chat, setChat] = useState<Message>([]);
 
-  const sendMessage = useCallback(
+  const onSend = useCallback(
     async (message: string) => {
       if (!session) return;
+
+      const newChat = [
+        ...chat,
+        {
+          message,
+          sender: session?.encryptionKeyUri as string,
+          direction: 'outgoing',
+        },
+      ];
+
+      setChat(newChat);
 
       const { sessionId } = session || { sessionId: null };
       const headers = { [sessionHeader]: sessionId };
 
-      await axios.post('/api/chat', { message }, { headers });
+      const { data } = await axios.post('/api/chat', { message }, { headers });
+
+      const _newChat = [
+        ...newChat,
+        {
+          message: data.message,
+          sender: session?.encryptionKeyUri as string,
+          direction: 'incoming',
+        },
+      ];
+
+      setChat(_newChat);
     },
-    [session],
+    [chat, session],
   );
-
-  const onSend = async (message: string) => {
-    const newChat = [
-      ...chat,
-      {
-        message,
-        sender: session?.encryptionKeyUri as string,
-        direction: 'outgoing',
-      },
-    ];
-
-    setChat(newChat);
-
-    sendMessage(message);
-  };
 
   return (
     <TabsNav defaultIndex={4}>
@@ -60,6 +70,15 @@ const Profile = () => {
         <Flex style={{ position: 'relative', height: '500px' }}>
           <MainContainer style={{ minWidth: 400 }}>
             <ChatContainer>
+              <ConversationHeader>
+                <ConversationHeader.Back />
+                <ConversationHeader.Content
+                  userName={`Peranto Attester (${
+                    ATTESTER_DID?.slice(0, 20) + '...'
+                  })`}
+                  info="Active 10 mins ago"
+                />
+              </ConversationHeader>
               <MessageList>
                 <Message
                   model={{
@@ -79,15 +98,16 @@ const Profile = () => {
                         sentTime: 'just now',
                         sender,
                         direction,
-                        position: 'first',
+                        position: 'single',
                       }}
                     />
                   );
                 })}
               </MessageList>
               <MessageInput
+                disabled={!session}
                 onSend={onSend}
-                placeholder="Type message here"
+                placeholder={!session ? 'Connect Sporran' : 'Type message here'}
                 attachButton={false}
               />
             </ChatContainer>
