@@ -15,7 +15,6 @@ import { sporranState } from '@/app/layout';
 import axios from 'axios';
 import { useCallback, useState } from 'react';
 import { sessionHeader } from '@/common/constants';
-import { encryptMessageBody } from '@/common/utilities/encryptMessage';
 
 const ATTESTER_DID = process.env.NEXT_PUBLIC_DID;
 

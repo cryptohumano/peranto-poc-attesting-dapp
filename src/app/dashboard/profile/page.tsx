@@ -1,6 +1,9 @@
 'use client';
 
 import TabsNav from '@/app/components/TabsNav';
+import { sporranState } from '@/app/layout';
+import { sessionHeader } from '@/common/constants';
+import { apiWindow, dAppName, getSession } from '@/common/utilities/session';
 import {
   Avatar,
   Flex,
@@ -21,8 +24,38 @@ import {
   Tr,
   WrapItem,
 } from '@chakra-ui/react';
+import { useHookstate } from '@hookstate/core';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const Profile = () => {
+  const [balance, setBalance] = useState();
+  const state = useHookstate(sporranState);
+  const session = state.get({ noproxy: true });
+
+  useEffect(() => {
+    if (!session) return;
+
+    const headers = { [sessionHeader]: session?.sessionId };
+
+    const getDid = async () => {
+      const enabled = await (window as any).injectedWeb3.Sporran.enable(
+        dAppName,
+      );
+      const accounts = await enabled.accounts.get();
+      const currentAccount = accounts[0];
+
+      const { data } = await axios.get(
+        '/api/did?q=' + encodeURIComponent(currentAccount.address),
+        { headers },
+      );
+
+      setBalance(data.balance);
+    };
+
+    getDid();
+  }, [session]);
+
   return (
     <TabsNav defaultIndex={0}>
       <Flex justifyContent="center" mt="14" gap="8">
@@ -46,7 +79,7 @@ const Profile = () => {
           <StatGroup alignSelf="end" gap="16" mr="16">
             <Stat>
               <StatLabel>Kilt Coins</StatLabel>
-              <StatNumber>198</StatNumber>
+              <StatNumber>{balance}</StatNumber>
             </Stat>
 
             <Stat minW="44">

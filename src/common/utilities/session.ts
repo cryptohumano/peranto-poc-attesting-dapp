@@ -6,6 +6,8 @@ import {
   getSessionValues,
 } from './sessionApi';
 
+export const dAppName = 'Peranto Attest App';
+
 interface PubSubSession {
   listen: (
     callback: (message: IEncryptedMessage) => Promise<void>,
@@ -53,7 +55,6 @@ export async function getSession(
 
   const { dAppEncryptionKeyUri, challenge, sessionId } =
     await getSessionValues();
-  const dAppName = 'Peranto Attest App';
 
   const session = await provider.startSession(
     dAppName,
