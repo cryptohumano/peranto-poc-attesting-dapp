@@ -4,19 +4,6 @@ import { sessionMiddleware } from '@/common/utilities/sessionStorage'
 import { collection, doc, getDoc, getDocs, setDoc, where } from 'firebase/firestore';
 import { NextResponse } from 'next/server';
 
-// function encrypt(text,password){
-//   var cipher = crypto.createCipher(algorithm,password)
-//   var crypted = cipher.update(text,'utf8','hex')
-//   crypted += cipher.final('hex');
-//   return crypted;
-// }
-
-// function decrypt(text,password){
-//   var decipher = crypto.createDecipher(algorithm,password)
-//   var dec = decipher.update(text,'hex','utf8')
-//   dec += decipher.final('utf8');
-//   return dec;
-// }
 
 export async function GET(request: Request) {
   await sessionMiddleware(request);
