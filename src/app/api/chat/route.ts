@@ -31,11 +31,13 @@ export async function POST(request: Request) {
   try {
     await initKilt()
 
-    const { message } = await request.json();
+    const { message, senderDid, recipientDid } = await request.json();
 
     await sessionMiddleware(request);
 
     const encryptedMessage = encrypt(message)
+    const [, , encryptedSenderDid] = senderDid.split(":")
+    const [, , encryptedRecipientDid] = recipientDid.split(":")
 
     // const output = await encryptMessageBody(encryptionKeyUri, {
     //   content: {
@@ -51,7 +53,7 @@ export async function POST(request: Request) {
     //   decrypted = await decryptMessageBody(output)
     // } catch {}
 
-    return NextResponse.json({ encryptedMessage })
+    return NextResponse.json({ encryptedMessage, encryptedSenderDid, encryptedRecipientDid })
   } catch (error) {
     logger.error(error);
 
