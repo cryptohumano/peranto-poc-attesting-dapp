@@ -108,13 +108,13 @@ const Profile = () => {
             />{' '}
           </WrapItem>
 
-          {!!role && (
+          {
             <Flex>
               <RadioGroup
                 onChange={(value: any) =>
                   setRole(parseInt(value as any) as any)
                 }
-                value={(role as any).toString()}
+                value={((role || null) as any).toString()}
               >
                 <Stack>
                   <Radio size="md" name="role" value="0" colorScheme="telegram">
@@ -129,7 +129,7 @@ const Profile = () => {
                 </Stack>
               </RadioGroup>
             </Flex>
-          )}
+          }
         </Flex>
         <Flex
           backgroundColor="gray.100"
