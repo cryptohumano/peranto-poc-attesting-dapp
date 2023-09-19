@@ -111,19 +111,32 @@ const Profile = () => {
           {
             <Flex>
               <RadioGroup
-                onChange={(value: any) =>
-                  setRole(parseInt(value as any) as any)
-                }
-                value={((role || '') as any).toString()}
+                onChange={(value: any) => setRole(value)}
+                value={role}
               >
                 <Stack>
-                  <Radio size="md" name="role" value="0" colorScheme="telegram">
+                  <Radio
+                    size="md"
+                    name="role"
+                    value="attester"
+                    colorScheme="telegram"
+                  >
                     Attester
                   </Radio>
-                  <Radio size="md" name="role" value="1" colorScheme="telegram">
+                  <Radio
+                    size="md"
+                    name="role"
+                    value="verifier"
+                    colorScheme="telegram"
+                  >
                     Verifier
                   </Radio>
-                  <Radio size="md" name="role" value="2" colorScheme="telegram">
+                  <Radio
+                    size="md"
+                    name="role"
+                    value="claimer"
+                    colorScheme="telegram"
+                  >
                     Claimer
                   </Radio>
                 </Stack>
