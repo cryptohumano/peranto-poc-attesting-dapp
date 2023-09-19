@@ -108,7 +108,7 @@ const Profile = () => {
             />{' '}
           </WrapItem>
 
-          {role && (
+          {!!role && (
             <Flex>
               <RadioGroup
                 onChange={(value: any) =>
