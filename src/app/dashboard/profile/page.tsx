@@ -114,7 +114,7 @@ const Profile = () => {
                 onChange={(value: any) =>
                   setRole(parseInt(value as any) as any)
                 }
-                value={((role || null) as any).toString()}
+                value={((role || '') as any).toString()}
               >
                 <Stack>
                   <Radio size="md" name="role" value="0" colorScheme="telegram">
