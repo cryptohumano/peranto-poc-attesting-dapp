@@ -10,7 +10,7 @@ const ENC= 'bf3c199c2470cb477d907b1e0917c17b';
 const IV = "5183666c72eec9e4";
 const ALGO = "aes-256-cbc"
 
-const encrypt = ((text: string) =>
+const _encrypt = ((text: string) =>
 {
    const cipher = crypto.createCipheriv(ALGO, ENC, IV);
    let encrypted = cipher.update(text, 'utf8', 'base64');
@@ -20,7 +20,7 @@ const encrypt = ((text: string) =>
    return encrypted;
 });
 
-const decrypt = ((text: string) =>
+const _decrypt = ((text: string) =>
 {
    const decipher = crypto.createDecipheriv(ALGO, ENC, IV);
    const decrypted = decipher.update(text, 'base64', 'utf8');
@@ -31,13 +31,31 @@ export async function POST(request: Request) {
   try {
     await initKilt()
 
-    const { message, senderDid, recipientDid } = await request.json();
+    const { message, messages, senderDid, recipientDid, decrypt } = await request.json();
 
     await sessionMiddleware(request);
 
-    const encryptedMessage = encrypt(message)
-    const [, , encryptedSenderDid] = senderDid.split(":")
-    const [, , encryptedRecipientDid] = recipientDid.split(":")
+    if (decrypt === true) {
+      if (message) {
+        const decryptedMessage = _decrypt(message)
+
+        return NextResponse.json({ decryptedMessage })
+      }
+
+      if (messages) {
+        const encryptedMessages = messages.map((msg: string) => _decrypt(msg))
+
+        return NextResponse.json({ encryptedMessages })
+      }
+    }
+
+    if (message) {
+      const encryptedMessage = _encrypt(message)
+      const [, , encryptedSenderDid] = senderDid.split(":")
+      const [, , encryptedRecipientDid] = recipientDid.split(":")
+
+      return NextResponse.json({ encryptedMessage, encryptedSenderDid, encryptedRecipientDid })
+    }
 
     // const output = await encryptMessageBody(encryptionKeyUri, {
     //   content: {
@@ -52,41 +70,6 @@ export async function POST(request: Request) {
     // try {
     //   decrypted = await decryptMessageBody(output)
     // } catch {}
-
-    return NextResponse.json({ encryptedMessage, encryptedSenderDid, encryptedRecipientDid })
-  } catch (error) {
-    logger.error(error);
-
-    return sendErrorResponse(error)
-  }
-}
-
-
-export async function GET(request: Request) {
-  try {
-    await initKilt()
-
-    const { message } = await request.json();
-
-    await sessionMiddleware(request);
-
-    const decryptedMessage = decrypt(message)
-
-    // const output = await encryptMessageBody(encryptionKeyUri, {
-    //   content: {
-    //     name: did,
-    //     message
-    //   },
-    //   type: 'error',
-    // });
-
-    // let decrypted
-
-    // try {
-    //   decrypted = await decryptMessageBody(output)
-    // } catch {}
-
-    return NextResponse.json({ decryptedMessage })
   } catch (error) {
     logger.error(error);
 

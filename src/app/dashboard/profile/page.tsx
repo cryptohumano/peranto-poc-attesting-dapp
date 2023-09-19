@@ -6,6 +6,7 @@ import { sessionHeader } from '@/common/constants';
 import { apiWindow, dAppName, getSession } from '@/common/utilities/session';
 import {
   Avatar,
+  Button,
   Flex,
   Stat,
   StatArrow,
@@ -67,6 +68,10 @@ const Profile = () => {
               src="https://bit.ly/sage-adebayo"
             />{' '}
           </WrapItem>
+
+          <Flex>
+            <Button>HA</Button>
+          </Flex>
         </Flex>
         <Flex
           backgroundColor="gray.100"

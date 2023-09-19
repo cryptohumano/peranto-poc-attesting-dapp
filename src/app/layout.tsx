@@ -1,10 +1,16 @@
 /* eslint-disable @next/next/no-sync-scripts */
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { CacheProvider, Link } from '@chakra-ui/next-js';
-import { Flex, Text, Box, ChakraProvider } from '@chakra-ui/react';
+import {
+  Flex,
+  Text,
+  Box,
+  ChakraProvider,
+  useColorMode,
+} from '@chakra-ui/react';
 import { hookstate } from '@hookstate/core';
 
 import { Session } from '@/common/utilities/session';
@@ -119,6 +125,12 @@ const Header = (props: any) => {
 };
 
 function Layout(props: any) {
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  useEffect(() => {
+    if (colorMode === 'dark') toggleColorMode();
+  }, [colorMode, toggleColorMode]);
+
   return (
     <Flex
       direction="column"
