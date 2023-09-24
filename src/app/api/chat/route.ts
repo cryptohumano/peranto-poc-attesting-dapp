@@ -43,7 +43,7 @@ export async function POST(request: Request) {
       }
 
       if (messages) {
-        const encryptedMessages = messages.map((msg: string) => _decrypt(msg))
+        const encryptedMessages = messages.map((msg: { message: string }) => ({ ...msg, message: _decrypt(msg.message) }))
 
         return NextResponse.json({ encryptedMessages })
       }

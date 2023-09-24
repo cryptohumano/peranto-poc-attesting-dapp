@@ -27,7 +27,8 @@ type Message = {
   direction: any;
 }[];
 
-let flag = false;
+const sortMsg = (list: any) =>
+  list.sort((a: any, b: any) => (a.timestamp > b.timestamp ? 1 : -1));
 
 const Profile = () => {
   const state = useHookstate(sporranState);
@@ -36,6 +37,8 @@ const Profile = () => {
   const [senderDid, setSenderDid] = useState();
   const [receiverDidInput, setReceiverDidInput] = useState<any>();
   const [recipientDid, setRecipienDid] = useState<any>();
+  const [senderKey, setSenderKey] = useState<any>();
+  const [receiverKey, setReceiverKey] = useState<any>();
 
   useEffect(() => {
     if (!recipientDid) return;
@@ -50,13 +53,30 @@ const Profile = () => {
         { headers },
       );
 
-      const _docReceived = await getDoc(
-        doc(
-          firestore,
-          'chat',
-          `${received?.encryptedRecipientDid}-${received?.encryptedSenderDid}`,
-        ),
+      setSenderKey(
+        `${received?.encryptedRecipientDid}-${received?.encryptedSenderDid}`,
       );
+
+      const { data: sent } = await axios.post(
+        '/api/chat',
+        { message: 'init', senderDid: recipientDid, recipientDid: senderDid },
+        { headers },
+      );
+
+      setReceiverKey(
+        `${sent?.encryptedSenderDid}-${sent?.encryptedRecipientDid}`,
+      );
+    };
+
+    getChat();
+  }, [chat, recipientDid, senderDid, session]);
+
+  useEffect(() => {
+    const { sessionId } = session || { sessionId: null };
+    const headers = { [sessionHeader]: sessionId };
+
+    const init = async () => {
+      const _docReceived = await getDoc(doc(firestore, 'chat', senderKey));
 
       const { data: receivedMessages } = await axios.post(
         '/api/chat',
@@ -67,19 +87,7 @@ const Profile = () => {
         { headers },
       );
 
-      const { data: sent } = await axios.post(
-        '/api/chat',
-        { message: 'init', senderDid: recipientDid, recipientDid: senderDid },
-        { headers },
-      );
-
-      const _docSent = await getDoc(
-        doc(
-          firestore,
-          'chat',
-          `${sent?.encryptedSenderDid}-${sent?.encryptedRecipientDid}`,
-        ),
-      );
+      const _docSent = await getDoc(doc(firestore, 'chat', receiverKey));
 
       const { data: sentMessages } = await axios.post(
         '/api/chat',
@@ -91,34 +99,27 @@ const Profile = () => {
       );
 
       const _newChat = [
-        ...sentMessages.encryptedMessages.map((msg: string) => {
+        ...sentMessages.encryptedMessages.map((msg: any) => {
           return {
-            message: msg,
+            message: msg.message,
             sender: senderDid,
             direction: 'outgoing',
           };
         }),
-        ...receivedMessages.encryptedMessages.map((msg: string) => {
+        ...receivedMessages.encryptedMessages.map((msg: any) => {
           return {
-            message: msg,
+            message: msg.message,
             sender: recipientDid as string,
             direction: 'incoming',
           };
         }),
       ];
 
-      setChat(_newChat);
-
-      flag = true;
+      setChat(sortMsg(_newChat));
     };
 
-    if (flag === false) getChat();
-
-    if (flag === true)
-      setInterval(() => {
-        getChat();
-      }, 1000 * 15);
-  }, [chat, recipientDid, senderDid, session]);
+    if (senderDid && senderKey) init();
+  }, [receiverKey, recipientDid, senderDid, senderKey, session]);
 
   const onSend = useCallback(
     async (message: string) => {
@@ -133,31 +134,21 @@ const Profile = () => {
         { headers },
       );
 
-      const _doc = await getDoc(
-        doc(
-          firestore,
-          'chat',
-          `${data?.encryptedSenderDid}-${data?.encryptedRecipientDid}`,
-        ),
-      );
+      const _doc = await getDoc(doc(firestore, 'chat', senderKey));
 
-      await setDoc(
-        doc(
-          firestore,
-          'chat',
-          `${data?.encryptedSenderDid}-${data?.encryptedRecipientDid}`,
-        ),
-        {
-          chat: _doc.exists()
-            ? [...(_doc.data().chat || []), data?.encryptedMessage]
-            : [data?.encryptedMessage],
-        },
-      );
+      const msg = {
+        message: data?.encryptedMessage,
+        timestamp: Date.now(),
+      };
+
+      await setDoc(doc(firestore, 'chat', senderKey), {
+        chat: _doc.exists() ? [...(_doc.data().chat || []), msg] : [msg],
+      });
 
       const _newChat = [
         ...chat,
         {
-          message,
+          message: message,
           sender: senderDid as string,
           direction: 'outgoing',
         },
@@ -165,7 +156,7 @@ const Profile = () => {
 
       setChat(_newChat);
     },
-    [chat, session, senderDid, recipientDid],
+    [session, senderDid, recipientDid, senderKey, chat],
   );
 
   const onConnectDid = async () => {
