@@ -18,6 +18,7 @@ import { Session } from '@/common/utilities/session';
 import kilt_logo from './kilt_logo.svg';
 import './globals.css';
 import { SporranConnect } from './components/Buttons';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 // export const metadata = {
 //   title: 'Create Next App',
@@ -167,7 +168,9 @@ export default function RootLayout({
         />
         <CacheProvider>
           <ChakraProvider>
-            <Layout>{children}</Layout>
+            <QueryClientProvider client={new QueryClient()}>
+              <Layout>{children}</Layout>
+            </QueryClientProvider>
           </ChakraProvider>
         </CacheProvider>
       </body>

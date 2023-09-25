@@ -7,6 +7,7 @@ import {
   Message,
   MessageInput,
   ConversationHeader,
+  MessageModel,
 } from '@chatscope/chat-ui-kit-react';
 import TabsNav from '@/app/components/TabsNav';
 import { Button, Flex, Input } from '@chakra-ui/react';
@@ -15,8 +16,9 @@ import { sporranState } from '@/app/layout';
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { sessionHeader } from '@/common/constants';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { firestore } from '@/common/utilities/firebase';
+import { useQuery } from 'react-query';
 
 const RECIPIENT_DID =
   'did:kilt:4qYEfZgassjFcD7WpbnXy8zA9Bupn4EPnpRf1RJSge2KAyF4';
@@ -28,12 +30,12 @@ type Message = {
 }[];
 
 const sortMsg = (list: any) =>
-  list.sort((a: any, b: any) => (a.timestamp > b.timestamp ? 1 : -1));
+  list.sort((a: any, b: any) => (a.timestamp < b.timestamp ? -1 : 1));
 
 const Profile = () => {
   const state = useHookstate(sporranState);
   const session = state.get({ noproxy: true });
-  const [chat, setChat] = useState<Message>([]);
+  const [chat, setChat] = useState<MessageModel[]>([]);
   const [senderDid, setSenderDid] = useState();
   const [receiverDidInput, setReceiverDidInput] = useState<any>();
   const [recipientDid, setRecipienDid] = useState<any>();
@@ -71,11 +73,12 @@ const Profile = () => {
     getChat();
   }, [chat, recipientDid, senderDid, session]);
 
-  useEffect(() => {
-    const { sessionId } = session || { sessionId: null };
-    const headers = { [sessionHeader]: sessionId };
+  const { data: historycal, refetch } = useQuery<MessageModel[]>(
+    [],
+    async () => {
+      const { sessionId } = session || { sessionId: null };
+      const headers = { [sessionHeader]: sessionId };
 
-    const init = async () => {
       const _docReceived = await getDoc(doc(firestore, 'chat', senderKey));
 
       const { data: receivedMessages } = await axios.post(
@@ -104,6 +107,7 @@ const Profile = () => {
             message: msg.message,
             sender: senderDid,
             direction: 'outgoing',
+            timestamp: msg.timestamp,
           };
         }),
         ...receivedMessages.encryptedMessages.map((msg: any) => {
@@ -111,15 +115,28 @@ const Profile = () => {
             message: msg.message,
             sender: recipientDid as string,
             direction: 'incoming',
+            timestamp: msg.timestamp,
           };
         }),
       ];
 
-      setChat(sortMsg(_newChat));
-    };
+      return sortMsg(_newChat);
+    },
+    {
+      enabled: Boolean(senderKey && receiverKey && session),
+      refetchOnWindowFocus: false,
+    },
+  );
 
-    if (senderDid && senderKey) init();
-  }, [receiverKey, recipientDid, senderDid, senderKey, session]);
+  useEffect(() => {
+    if (!receiverKey) return;
+
+    onSnapshot(doc(firestore, 'chat', receiverKey), async (doc) => {
+      if ((doc.data() as any).chat.length === 1) return;
+
+      refetch();
+    });
+  }, [receiverKey, refetch]);
 
   const onSend = useCallback(
     async (message: string) => {
@@ -146,15 +163,15 @@ const Profile = () => {
       });
 
       const _newChat = [
-        ...chat,
+        ...(chat as any),
         {
-          message: message,
+          message,
           sender: senderDid as string,
           direction: 'outgoing',
         },
       ];
 
-      setChat(_newChat);
+      setChat(_newChat as any);
     },
     [session, senderDid, recipientDid, senderKey, chat],
   );
@@ -176,7 +193,7 @@ const Profile = () => {
               <Button onClick={onConnectDid}>Connect with DID</Button>
             )}
             {senderDid && !recipientDid && (
-              <>
+              <Flex direction="column" mt="2.5" gap={2}>
                 <Input
                   placeholder="Receiver DID"
                   defaultValue={receiverDidInput}
@@ -185,7 +202,7 @@ const Profile = () => {
                 <Button onClick={() => setRecipienDid(receiverDidInput)}>
                   Set Receiver DID
                 </Button>
-              </>
+              </Flex>
             )}
             {senderDid && recipientDid && (
               <ChatContainer>
@@ -197,7 +214,7 @@ const Profile = () => {
                   />
                 </ConversationHeader>
                 <MessageList>
-                  {chat.map(({ message, sender, direction }, id) => {
+                  {historycal?.map(({ message, sender, direction }, id) => {
                     return (
                       <Message
                         key={id}
