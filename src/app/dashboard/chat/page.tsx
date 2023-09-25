@@ -10,7 +10,7 @@ import {
   MessageModel,
 } from '@chatscope/chat-ui-kit-react';
 import TabsNav from '@/app/components/TabsNav';
-import { Button, Flex, Input } from '@chakra-ui/react';
+import { Button, Flex, Input, Link, Text } from '@chakra-ui/react';
 import { useHookstate } from '@hookstate/core';
 import { sporranState } from '@/app/layout';
 import axios from 'axios';
@@ -41,6 +41,13 @@ const Profile = () => {
   const [recipientDid, setRecipienDid] = useState<any>();
   const [senderKey, setSenderKey] = useState<any>();
   const [receiverKey, setReceiverKey] = useState<any>();
+  const [didsHistory, setDidsHistory] = useState<any>([]);
+
+  useEffect(() => {
+    const h = JSON.parse(localStorage.getItem('perantoDidsHistorical') || '[]');
+
+    setDidsHistory(h);
+  }, []);
 
   useEffect(() => {
     if (!recipientDid) return;
@@ -175,30 +182,76 @@ const Profile = () => {
 
   return (
     <TabsNav defaultIndex={4}>
-      <Flex justifyContent="center" mt="14" gap="8">
-        <Flex style={{ position: 'relative', height: '500px' }}>
+      <Flex alignItems="center" justifyContent="center" mt="14" gap="8">
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          style={{ position: 'relative', height: '500px' }}
+        >
           <MainContainer
-            style={{ minWidth: 400, display: 'flex', justifyContent: 'center' }}
+            style={{
+              minWidth: 400,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           >
             {!senderDid && (
               <Button onClick={onConnectDid}>Connect with DID</Button>
             )}
             {senderDid && !recipientDid && (
-              <Flex direction="column" mt="2.5" gap={2}>
-                <Input
-                  placeholder="Receiver DID"
-                  defaultValue={receiverDidInput}
-                  onChange={(e) => setReceiverDidInput(e.target.value)}
-                />
-                <Button onClick={() => setRecipienDid(receiverDidInput)}>
-                  Set Receiver DID
-                </Button>
+              <Flex direction="column" mt="2.5" gap={4}>
+                <Flex gap={2}>
+                  <Input
+                    fontSize="xs"
+                    placeholder="Receiver DID"
+                    defaultValue={receiverDidInput}
+                    onChange={(e) => setReceiverDidInput(e.target.value)}
+                  />
+                  <Button
+                    onClick={() => {
+                      const h = JSON.parse(
+                        localStorage.getItem('perantoDidsHistorical') || '[]',
+                      );
+
+                      localStorage.setItem(
+                        'perantoDidsHistorical',
+                        JSON.stringify([...h, receiverDidInput]),
+                      );
+
+                      setDidsHistory([...h, receiverDidInput]);
+
+                      setRecipienDid(receiverDidInput);
+                    }}
+                  >
+                    Continue
+                  </Button>
+                </Flex>
+
+                <Flex direction="column">
+                  <Text>History</Text>
+                  {didsHistory.map((reg: string) => {
+                    return (
+                      <Button
+                        my="2"
+                        fontSize="xs"
+                        variant="link"
+                        key={reg}
+                        onClick={() => setRecipienDid(reg)}
+                      >
+                        {reg}
+                      </Button>
+                    );
+                  })}
+                </Flex>
               </Flex>
             )}
             {senderDid && recipientDid && (
               <ChatContainer>
                 <ConversationHeader>
-                  <ConversationHeader.Back />
+                  <ConversationHeader.Back
+                    onClick={() => setRecipienDid(undefined)}
+                  />
                   <ConversationHeader.Content
                     userName={`${recipientDid?.slice(0, 20) + '...'}`}
                     info="Active 10 mins ago"
