@@ -121,7 +121,7 @@ const Profile = () => {
           return {
             message: msg.message,
             sender: recipientDid as string,
-            direction: 'outcoming',
+            direction: 'outgoing',
             timestamp: msg.timestamp,
           };
         }),
