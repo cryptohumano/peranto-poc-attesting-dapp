@@ -106,7 +106,7 @@ const Profile = () => {
           return {
             message: msg.message,
             sender: senderDid,
-            direction: 'outgoing',
+            direction: 'incoming',
             timestamp: msg.timestamp,
           };
         }),
@@ -114,7 +114,7 @@ const Profile = () => {
           return {
             message: msg.message,
             sender: recipientDid as string,
-            direction: 'incoming',
+            direction: 'outcoming',
             timestamp: msg.timestamp,
           };
         }),
@@ -162,18 +162,9 @@ const Profile = () => {
         chat: _doc.exists() ? [...(_doc.data().chat || []), msg] : [msg],
       });
 
-      const _newChat = [
-        ...(chat as any),
-        {
-          message,
-          sender: senderDid as string,
-          direction: 'outgoing',
-        },
-      ];
-
-      setChat(_newChat as any);
+      refetch();
     },
-    [session, senderDid, recipientDid, senderKey, chat],
+    [session, senderDid, recipientDid, senderKey, refetch],
   );
 
   const onConnectDid = async () => {
