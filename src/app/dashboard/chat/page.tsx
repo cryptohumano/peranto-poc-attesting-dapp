@@ -191,6 +191,7 @@ const Profile = () => {
           <MainContainer
             style={{
               minWidth: 400,
+              maxWidth: 400,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
