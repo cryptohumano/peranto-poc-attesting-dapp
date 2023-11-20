@@ -20,9 +20,6 @@ import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { firestore } from '@/common/utilities/firebase';
 import { useQuery } from 'react-query';
 
-const RECIPIENT_DID =
-  'did:kilt:4qYEfZgassjFcD7WpbnXy8zA9Bupn4EPnpRf1RJSge2KAyF4';
-
 type Message = {
   message: string;
   sender: string;
