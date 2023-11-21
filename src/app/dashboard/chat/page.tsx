@@ -34,9 +34,7 @@ import * as Kilt from '@kiltprotocol/sdk-js';
 
 let kiltInited = false;
 
-export async function queryDidDocument(
-  web3Name: string,
-): Promise<string | null> {
+async function queryDidDocument(web3Name: string): Promise<string | null> {
   if (!kiltInited) {
     await Kilt.connect('wss://peregrine.kilt.io');
 
