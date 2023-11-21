@@ -30,6 +30,32 @@ import {
 import { firestore } from '@/common/utilities/firebase';
 import { useQuery } from 'react-query';
 
+import * as Kilt from '@kiltprotocol/sdk-js';
+
+let kiltInited = false;
+
+export async function queryDidDocument(
+  web3Name: string,
+): Promise<string | null> {
+  if (!kiltInited) {
+    await Kilt.connect('wss://peregrine.kilt.io');
+
+    kiltInited = true;
+  }
+
+  const api = Kilt.ConfigService.get('api');
+
+  try {
+    const encodedWeb3NameOwner = await api.call.did.queryByWeb3Name(web3Name);
+
+    const { document } = Kilt.Did.linkedInfoFromChain(encodedWeb3NameOwner);
+
+    return document.uri;
+  } catch {
+    return null;
+  }
+}
+
 type Message = {
   message: string;
   sender: string;
@@ -40,7 +66,7 @@ const sortMsg = (list: any) =>
   list.sort((a: any, b: any) => (a.timestamp < b.timestamp ? -1 : 1));
 
 const ChatMessage = ({ msg, headers }: any) => {
-  const { data: decryptedMsg } = useQuery(
+  const { data: decryptedMsg, isLoading } = useQuery(
     ['/msg', msg.message],
     async () => {
       const {
@@ -64,8 +90,16 @@ const ChatMessage = ({ msg, headers }: any) => {
   );
 
   return (
-    <Text w="full" textAlign={msg.align}>
-      {decryptedMsg}
+    <Text textColor="gray.800" fontSize="sm" w="full" textAlign={msg.align}>
+      <Text
+        py={1}
+        px={2}
+        borderRadius="md"
+        as="span"
+        backgroundColor={msg.align === 'left' ? 'gray.200' : 'blue.100'}
+      >
+        {isLoading ? '...' : decryptedMsg}
+      </Text>
     </Text>
   );
 };
@@ -79,6 +113,7 @@ const Profile = () => {
   const [msgInput, setMsgInput] = useState('');
   const [loadSendMsg, setLoadSendMsg] = useState(false);
   const [pendingNotifications, setPendingNotifications] = useState(0);
+  const [w3nSuggestion, setW3nSuggestion] = useState<string | null>(null);
 
   const { sessionId } = session || { sessionId: null };
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,6 +172,12 @@ const Profile = () => {
       initialData: [],
     },
   );
+
+  useEffect(() => {
+    if (w3nSuggestion) {
+      onSetRecipientDid({ target: { value: w3nSuggestion } });
+    }
+  }, [w3nSuggestion]);
 
   useEffect(() => {
     const init = async () => {
@@ -246,10 +287,16 @@ const Profile = () => {
     setSenderDid(v.replace('did:kilt:', ''));
   };
 
-  const onSetRecipientDid = (e: any) => {
+  const onSetRecipientDid = async (e: any) => {
     const v = e.target.value || '';
 
     setRecipienDid(v.replace('did:kilt:', ''));
+
+    if (!v.includes('did:kilt:') && v.length > 5) {
+      const did = await queryDidDocument(v);
+
+      setW3nSuggestion(did);
+    }
   };
 
   return (
@@ -286,12 +333,44 @@ const Profile = () => {
                   placeholder="Recipient Did"
                   onChange={onSetRecipientDid}
                 />
+                {!!w3nSuggestion && (
+                  <Button
+                    variant="ghost"
+                    border="1px solid #ccc"
+                    p="2"
+                    fontSize="xs"
+                    fontWeight="semibold"
+                    display="flex"
+                    justifyContent="space-between"
+                  >
+                    {w3nSuggestion}
+                    <Button
+                      variant="ghost"
+                      fontWeight="bold"
+                      fontSize="xs"
+                      p={1}
+                      onClick={() => {
+                        setW3nSuggestion(null);
+                      }}
+                    >
+                      x
+                    </Button>
+                  </Button>
+                )}
               </Flex>
             )}
+            {chat.length > 0 && (
+              <Flex w="full" direction="column" gap={4}>
+                <Text fontWeight="bold">Chat:</Text>
+                {chat.map((msg: any, k: number) => (
+                  <ChatMessage key={k} msg={msg} headers={headers} />
+                ))}
+              </Flex>
+            )}
+
             {senderDid && (
               <>
                 <Flex direction="column" w="full" gap={2}>
-                  <Text>Message:</Text>
                   <Input
                     placeholder="Send Message"
                     onChange={(e) => setMsgInput(e.target.value)}
@@ -304,14 +383,6 @@ const Profile = () => {
                   </Button>
                 </Flex>
               </>
-            )}
-            {chat.length > 0 && (
-              <Flex w="full" direction="column" gap={4}>
-                <Text fontWeight="bold">Chat:</Text>
-                {chat.map((msg: any, k: number) => (
-                  <ChatMessage key={k} msg={msg} headers={headers} />
-                ))}
-              </Flex>
             )}
           </MainContainer>
         </Flex>
