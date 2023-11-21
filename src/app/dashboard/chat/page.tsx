@@ -79,39 +79,10 @@ const Profile = () => {
   const [msgInput, setMsgInput] = useState('');
   const [loadSendMsg, setLoadSendMsg] = useState(false);
   const [pendingNotifications, setPendingNotifications] = useState(0);
-  const senderKey = `${senderDid}`;
-  const recipientKey = `${recipientDid}`;
 
   const { sessionId } = session || { sessionId: null };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const headers = { [sessionHeader]: sessionId };
-
-  useEffect(() => {
-    const init = async () => {
-      const docRef = doc(firestore, 'chat', senderKey);
-
-      onSnapshot(docRef, async () => {
-        const _doc = await getDoc(docRef);
-
-        if (_doc.exists()) {
-          const _pendingNotifications = Object.keys(_doc.data()).reduce(
-            (prev, curr) => {
-              if (curr.includes('-Notifications')) {
-                return _doc.data()[curr];
-              }
-
-              return prev;
-            },
-            0,
-          );
-
-          setPendingNotifications(_pendingNotifications);
-        }
-      });
-    };
-
-    if (senderDid) init();
-  }, [senderDid, senderKey]);
 
   const { data: chat, refetch: refetchChat } = useQuery(
     ['/chat', senderDid, recipientDid],
@@ -119,7 +90,7 @@ const Profile = () => {
       let sentMsgs = [];
       let receivedMsgs: any = [];
 
-      const docRef = doc(firestore, 'chat', senderKey);
+      const docRef = doc(firestore, 'chat', senderDid);
 
       const _doc = await getDoc(docRef);
 
@@ -143,7 +114,7 @@ const Profile = () => {
 
       // console.log('DOQUIS:::', docs);
 
-      const _docRef = doc(firestore, 'chat', recipientKey);
+      const _docRef = doc(firestore, 'chat', recipientDid);
 
       const __doc = await getDoc(_docRef);
 
@@ -167,6 +138,45 @@ const Profile = () => {
     },
   );
 
+  useEffect(() => {
+    const init = async () => {
+      const docRef = doc(firestore, 'chat', senderDid);
+
+      onSnapshot(docRef, async () => {
+        const _doc = await getDoc(docRef);
+
+        if (_doc.exists()) {
+          const _pendingNotifications = Object.keys(_doc.data()).reduce(
+            (prev, curr) => {
+              if (curr.includes('-Notifications')) {
+                return _doc.data()[curr];
+              }
+
+              return prev;
+            },
+            0,
+          );
+
+          setPendingNotifications(_pendingNotifications);
+        }
+      });
+    };
+
+    if (senderDid) init();
+  }, [senderDid]);
+
+  useEffect(() => {
+    const init = async () => {
+      const docRef = doc(firestore, 'chat', recipientDid);
+
+      onSnapshot(docRef, async () => {
+        refetchChat();
+      });
+    };
+
+    if (recipientDid) init();
+  }, [recipientDid, refetchChat]);
+
   const onSend = useCallback(
     async (message: string) => {
       if (!session || !senderDid || !recipientDid) return;
@@ -185,7 +195,7 @@ const Profile = () => {
         read: false,
       };
 
-      const docRefSender = doc(firestore, 'chat', senderKey);
+      const docRefSender = doc(firestore, 'chat', senderDid);
       const docRefRecipient = doc(firestore, 'chat', recipientDid);
 
       const _docSender = await getDoc(docRefSender);
@@ -220,7 +230,7 @@ const Profile = () => {
       setLoadSendMsg(false);
       refetchChat();
     },
-    [session, senderDid, recipientDid, headers, senderKey, refetchChat],
+    [session, senderDid, recipientDid, headers, refetchChat],
   );
 
   const onSetSenderDid = async () => {
@@ -248,13 +258,13 @@ const Profile = () => {
         <Flex
           alignItems="center"
           justifyContent="center"
-          style={{ position: 'relative', height: '500px' }}
+          style={{ position: 'relative', height: '700px', overflowY: 'auto' }}
         >
           <MainContainer
             style={{
               border: 'none',
-              minWidth: 400,
-              maxWidth: 400,
+              minWidth: 500,
+              maxWidth: 500,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
