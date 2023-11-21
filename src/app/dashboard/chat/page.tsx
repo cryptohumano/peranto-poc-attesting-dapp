@@ -40,10 +40,9 @@ const sortMsg = (list: any) =>
   list.sort((a: any, b: any) => (a.timestamp < b.timestamp ? -1 : 1));
 
 const ChatMessage = ({ msg, headers }: any) => {
-  const [decryptedMsg, setDecryptedMsg] = useState('');
-
-  useEffect(() => {
-    const init = async () => {
+  const { data: decryptedMsg } = useQuery(
+    ['/msg', msg.message],
+    async () => {
       const {
         data: { decryptedMessage },
       } = await axios.post(
@@ -55,11 +54,14 @@ const ChatMessage = ({ msg, headers }: any) => {
         { headers },
       );
 
-      setDecryptedMsg(decryptedMessage);
-    };
-
-    if (msg.message) init();
-  }, [msg, headers]);
+      return decryptedMessage;
+    },
+    {
+      enabled: !!msg.message,
+      refetchOnWindowFocus: false,
+      initialData: '',
+    },
+  );
 
   return (
     <Text w="full" textAlign={msg.align}>
