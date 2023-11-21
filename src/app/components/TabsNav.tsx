@@ -18,6 +18,9 @@ const TabsNav = ({ defaultIndex, children }: any) => {
 
   useEffect(() => {
     const w = window as any;
+
+    if (!w.NProgress) return;
+
     w.NProgress.done();
 
     return () => w.NProgress.start();

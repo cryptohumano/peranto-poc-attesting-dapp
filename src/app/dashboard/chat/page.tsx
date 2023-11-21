@@ -16,7 +16,17 @@ import { sporranState } from '@/app/layout';
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { sessionHeader } from '@/common/constants';
-import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 import { firestore } from '@/common/utilities/firebase';
 import { useQuery } from 'react-query';
 
@@ -29,125 +39,139 @@ type Message = {
 const sortMsg = (list: any) =>
   list.sort((a: any, b: any) => (a.timestamp < b.timestamp ? -1 : 1));
 
+const thaWindow = window as any;
+
+const ChatMessage = ({ msg, headers }: any) => {
+  const [decryptedMsg, setDecryptedMsg] = useState('');
+
+  useEffect(() => {
+    const init = async () => {
+      const {
+        data: { decryptedMessage },
+      } = await axios.post(
+        '/api/chat',
+        {
+          message: msg.message,
+          decrypt: true,
+        },
+        { headers },
+      );
+
+      setDecryptedMsg(decryptedMessage);
+    };
+
+    if (msg.message) init();
+  }, [msg, headers]);
+
+  return (
+    <Text w="full" textAlign={msg.align}>
+      {decryptedMsg}
+    </Text>
+  );
+};
+
 const Profile = () => {
   const state = useHookstate(sporranState);
   const session = state.get({ noproxy: true });
-  const [chat, setChat] = useState<MessageModel[]>([]);
-  const [senderDid, setSenderDid] = useState();
-  const [receiverDidInput, setReceiverDidInput] = useState<any>();
-  const [recipientDid, setRecipienDid] = useState<any>();
-  const [senderKey, setSenderKey] = useState<any>();
-  const [receiverKey, setReceiverKey] = useState<any>();
-  const [didsHistory, setDidsHistory] = useState<any>([]);
+
+  const [senderDid, setSenderDid] = useState('');
+  const [recipientDid, setRecipienDid] = useState('');
+  const [msgInput, setMsgInput] = useState('');
+  const [loadSendMsg, setLoadSendMsg] = useState(false);
+  const [pendingNotifications, setPendingNotifications] = useState(0);
+  const senderKey = `${senderDid}`;
+  const recipientKey = `${recipientDid}`;
+
+  const { sessionId } = session || { sessionId: null };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const headers = { [sessionHeader]: sessionId };
 
   useEffect(() => {
-    const h = JSON.parse(localStorage.getItem('perantoDidsHistorical') || '[]');
+    const init = async () => {
+      const docRef = doc(firestore, 'chat', senderKey);
 
-    setDidsHistory(h);
-  }, []);
+      onSnapshot(docRef, async () => {
+        const _doc = await getDoc(docRef);
 
-  useEffect(() => {
-    if (!recipientDid) return;
+        if (_doc.exists()) {
+          const _pendingNotifications = Object.keys(_doc.data()).reduce(
+            (prev, curr) => {
+              if (curr.includes('-Notifications')) {
+                return _doc.data()[curr];
+              }
 
-    const getChat = async () => {
-      const { sessionId } = session || { sessionId: null };
-      const headers = { [sessionHeader]: sessionId };
+              return prev;
+            },
+            0,
+          );
 
-      const { data: received } = await axios.post(
-        '/api/chat',
-        { message: 'init', senderDid: recipientDid, recipientDid: senderDid },
-        { headers },
-      );
-
-      setSenderKey(
-        `${received?.encryptedRecipientDid}-${received?.encryptedSenderDid}`,
-      );
-
-      const { data: sent } = await axios.post(
-        '/api/chat',
-        { message: 'init', senderDid: recipientDid, recipientDid: senderDid },
-        { headers },
-      );
-
-      setReceiverKey(
-        `${sent?.encryptedSenderDid}-${sent?.encryptedRecipientDid}`,
-      );
+          setPendingNotifications(_pendingNotifications);
+        }
+      });
     };
 
-    getChat();
-  }, [chat, recipientDid, senderDid, session]);
+    if (senderDid) init();
+  }, [senderDid, senderKey]);
 
-  const { data: historycal, refetch } = useQuery<MessageModel[]>(
-    [],
+  const { data: chat, refetch: refetchChat } = useQuery(
+    ['/chat', senderDid, recipientDid],
     async () => {
-      const { sessionId } = session || { sessionId: null };
-      const headers = { [sessionHeader]: sessionId };
+      let sentMsgs = [];
+      let receivedMsgs: any = [];
 
-      const _docReceived = await getDoc(doc(firestore, 'chat', senderKey));
+      const docRef = doc(firestore, 'chat', senderKey);
 
-      const { data: receivedMessages } = await axios.post(
-        '/api/chat',
-        {
-          messages: _docReceived.data()?.chat || [],
-          decrypt: true,
-        },
-        { headers },
-      );
+      const _doc = await getDoc(docRef);
 
-      const _docSent = await getDoc(doc(firestore, 'chat', receiverKey));
+      if (_doc.exists()) {
+        const historical = _doc.data()[recipientDid] || [];
 
-      const { data: sentMessages } = await axios.post(
-        '/api/chat',
-        {
-          messages: _docSent.data()?.chat || [],
-          decrypt: true,
-        },
-        { headers },
-      );
+        sentMsgs = historical;
+      }
 
-      const _newChat = [
-        ...sentMessages.encryptedMessages.map((msg: any) => {
-          return {
-            message: msg.message,
-            sender: senderDid,
-            direction: 'incoming',
-            timestamp: msg.timestamp,
-          };
-        }),
-        ...receivedMessages.encryptedMessages.map((msg: any) => {
-          return {
-            message: msg.message,
-            sender: recipientDid as string,
-            direction: 'outgoing',
-            timestamp: msg.timestamp,
-          };
-        }),
+      // const q = query(
+      //   collection(firestore, 'chat'),
+      //   where(senderDid, '!=', null),
+      // );
+
+      // const querySnapshot = await getDocs(q);
+      // const docs: any = [];
+
+      // querySnapshot.forEach((__doc) => {
+      //   docs.push(__doc.data());
+      // });
+
+      // console.log('DOQUIS:::', docs);
+
+      const _docRef = doc(firestore, 'chat', recipientKey);
+
+      const __doc = await getDoc(_docRef);
+
+      if (__doc.exists()) {
+        const historical = __doc.data()[senderDid] || [];
+
+        receivedMsgs = historical;
+      }
+
+      const historical: any = [
+        ...sentMsgs.map((msg: any) => ({ ...msg, align: 'right' })),
+        ...receivedMsgs.map((msg: any) => ({ ...msg, align: 'left' })),
       ];
 
-      return sortMsg(_newChat);
+      return sortMsg(historical);
     },
     {
-      enabled: Boolean(senderKey && receiverKey && session),
+      enabled: Boolean(senderDid && recipientDid),
       refetchOnWindowFocus: false,
+      initialData: [],
     },
   );
 
-  useEffect(() => {
-    if (!receiverKey) return;
-
-    onSnapshot(doc(firestore, 'chat', receiverKey), async (doc) => {
-      if ((doc.data() as any).chat.length === 1) return;
-
-      refetch();
-    });
-  }, [receiverKey, refetch]);
-
   const onSend = useCallback(
     async (message: string) => {
-      if (!session || !senderDid) return;
+      if (!session || !senderDid || !recipientDid) return;
 
-      const { sessionId } = session || { sessionId: null };
-      const headers = { [sessionHeader]: sessionId };
+      setLoadSendMsg(true);
 
       const { data } = await axios.post(
         '/api/chat',
@@ -155,26 +179,65 @@ const Profile = () => {
         { headers },
       );
 
-      const _doc = await getDoc(doc(firestore, 'chat', senderKey));
-
       const msg = {
         message: data?.encryptedMessage,
         timestamp: Date.now(),
+        read: false,
       };
 
-      await setDoc(doc(firestore, 'chat', senderKey), {
-        chat: _doc.exists() ? [...(_doc.data().chat || []), msg] : [msg],
-      });
+      const docRefSender = doc(firestore, 'chat', senderKey);
+      const docRefRecipient = doc(firestore, 'chat', recipientDid);
 
-      refetch();
+      const _docSender = await getDoc(docRefSender);
+      const _docRecipient = await getDoc(docRefRecipient);
+
+      if (_docSender.exists()) {
+        const recipientChat = _docSender.data()[recipientDid] || [];
+
+        await updateDoc(docRefSender, {
+          [recipientDid]: [...recipientChat, msg],
+        });
+      } else {
+        await setDoc(docRefSender, {
+          [recipientDid]: [msg],
+        });
+      }
+
+      if (_docRecipient.exists()) {
+        const recipientNotifications =
+          _docRecipient.data()[`${senderDid}-Notifications`] || 0;
+
+        await updateDoc(docRefRecipient, {
+          [`${senderDid}-Notifications`]: recipientNotifications + 1,
+        });
+      } else {
+        await setDoc(docRefRecipient, {
+          [`${senderDid}-Notifications`]: 1,
+        });
+      }
+
+      setMsgInput('');
+      setLoadSendMsg(false);
+      refetchChat();
     },
-    [session, senderDid, recipientDid, senderKey, refetch],
+    [session, senderDid, recipientDid, headers, senderKey, refetchChat],
   );
 
-  const onConnectDid = async () => {
-    const [{ did }] = await (window as any).meta.provider.getDidList();
+  const onSetSenderDid = async () => {
+    const [{ did }] =
+      thaWindow.meta1 === true
+        ? [{ did: 'testDid' }]
+        : await thaWindow.meta.provider.getDidList();
 
-    setSenderDid(did);
+    const v = did || '';
+
+    setSenderDid(v.replace('did:kilt:', ''));
+  };
+
+  const onSetRecipientDid = (e: any) => {
+    const v = e.target.value || '';
+
+    setRecipienDid(v.replace('did:kilt:', ''));
   };
 
   return (
@@ -187,99 +250,56 @@ const Profile = () => {
         >
           <MainContainer
             style={{
+              border: 'none',
               minWidth: 400,
               maxWidth: 400,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              flexDirection: 'column',
+              gap: 30,
             }}
           >
+            <Text fontWeight="bold">
+              Pending Notifications: {pendingNotifications}
+            </Text>
+
             {!senderDid && (
-              <Button onClick={onConnectDid}>Connect with DID</Button>
+              <Button onClick={onSetSenderDid}>Connect with DID</Button>
             )}
-            {senderDid && !recipientDid && (
-              <Flex direction="column" mt="2.5" gap={4}>
-                <Flex gap={2}>
-                  <Input
-                    fontSize="xs"
-                    placeholder="Receiver DID"
-                    defaultValue={receiverDidInput}
-                    onChange={(e) => setReceiverDidInput(e.target.value)}
-                  />
-                  <Button
-                    onClick={() => {
-                      const h = JSON.parse(
-                        localStorage.getItem('perantoDidsHistorical') || '[]',
-                      );
-
-                      localStorage.setItem(
-                        'perantoDidsHistorical',
-                        JSON.stringify([...h, receiverDidInput]),
-                      );
-
-                      setDidsHistory([...h, receiverDidInput]);
-
-                      setRecipienDid(receiverDidInput);
-                    }}
-                  >
-                    Continue
-                  </Button>
-                </Flex>
-
-                <Flex direction="column">
-                  <Text>History</Text>
-                  {didsHistory.map((reg: string) => {
-                    return (
-                      <Button
-                        my="2"
-                        fontSize="xs"
-                        variant="link"
-                        key={reg}
-                        onClick={() => setRecipienDid(reg)}
-                      >
-                        {reg}
-                      </Button>
-                    );
-                  })}
-                </Flex>
+            {senderDid && (
+              <Flex direction="column" w="full" gap={2}>
+                <Text>Recipient Did:</Text>
+                <Input
+                  placeholder="Recipient Did"
+                  onChange={onSetRecipientDid}
+                />
               </Flex>
             )}
-            {senderDid && recipientDid && (
-              <ChatContainer>
-                <ConversationHeader>
-                  <ConversationHeader.Back
-                    onClick={() => setRecipienDid(undefined)}
+            {senderDid && (
+              <>
+                <Flex direction="column" w="full" gap={2}>
+                  <Text>Message:</Text>
+                  <Input
+                    placeholder="Send Message"
+                    onChange={(e) => setMsgInput(e.target.value)}
                   />
-                  <ConversationHeader.Content
-                    userName={`${recipientDid?.slice(0, 20) + '...'}`}
-                    info="Active 10 mins ago"
-                  />
-                </ConversationHeader>
-                <MessageList>
-                  {historycal?.map(({ message, sender, direction }, id) => {
-                    return (
-                      <Message
-                        key={id}
-                        model={{
-                          message,
-                          sentTime: 'just now',
-                          sender,
-                          direction,
-                          position: 'single',
-                        }}
-                      />
-                    );
-                  })}
-                </MessageList>
-                <MessageInput
-                  disabled={!session}
-                  onSend={onSend}
-                  placeholder={
-                    !session ? 'Connect Sporran' : 'Type message here'
-                  }
-                  attachButton={false}
-                />
-              </ChatContainer>
+                  <Button
+                    onClick={() => onSend(msgInput)}
+                    isLoading={loadSendMsg}
+                  >
+                    Send
+                  </Button>
+                </Flex>
+              </>
+            )}
+            {chat.length > 0 && (
+              <Flex w="full" direction="column" gap={4}>
+                <Text fontWeight="bold">Chat:</Text>
+                {chat.map((msg: any, k: number) => (
+                  <ChatMessage key={k} msg={msg} headers={headers} />
+                ))}
+              </Flex>
             )}
           </MainContainer>
         </Flex>
