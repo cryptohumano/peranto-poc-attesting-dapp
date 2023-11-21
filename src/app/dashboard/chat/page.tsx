@@ -39,8 +39,6 @@ type Message = {
 const sortMsg = (list: any) =>
   list.sort((a: any, b: any) => (a.timestamp < b.timestamp ? -1 : 1));
 
-const thaWindow = window as any;
-
 const ChatMessage = ({ msg, headers }: any) => {
   const [decryptedMsg, setDecryptedMsg] = useState('');
 
@@ -224,6 +222,8 @@ const Profile = () => {
   );
 
   const onSetSenderDid = async () => {
+    const thaWindow = window as any;
+
     const [{ did }] =
       thaWindow.meta1 === true
         ? [{ did: 'testDid' }]
