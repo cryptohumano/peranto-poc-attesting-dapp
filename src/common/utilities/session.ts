@@ -37,7 +37,7 @@ export const apiWindow = () => typeof window !== "undefined" && window as unknow
 
 export function getCompatibleExtensions(): Array<string> {
   return Object.entries((apiWindow() || { kilt: {} }).kilt)
-    .filter(([, provider]) => provider.specVersion.startsWith('3.'))
+    .filter(([walletKey, provider]) => provider.specVersion.startsWith('3.') && walletKey !== 'deloitte')
     .map(([name]) => name);
 }
 
