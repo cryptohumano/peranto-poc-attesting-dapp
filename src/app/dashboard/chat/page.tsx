@@ -16,18 +16,8 @@ import { sporranState } from '@/app/layout';
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { sessionHeader } from '@/common/constants';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  onSnapshot,
-  query,
-  setDoc,
-  updateDoc,
-  where,
-} from 'firebase/firestore';
-import { firestore } from '@/common/utilities/firebase';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { firestore, sendChatMsg } from '@/common/utilities/firebase';
 import { useQuery } from 'react-query';
 
 import * as Kilt from '@kiltprotocol/sdk-js';
@@ -222,48 +212,7 @@ const Profile = () => {
 
       setLoadSendMsg(true);
 
-      const { data } = await axios.post(
-        '/api/chat',
-        { message, senderDid, recipientDid },
-        { headers },
-      );
-
-      const msg = {
-        message: data?.encryptedMessage,
-        timestamp: Date.now(),
-        read: false,
-      };
-
-      const docRefSender = doc(firestore, 'chat', senderDid);
-      const docRefRecipient = doc(firestore, 'chat', recipientDid);
-
-      const _docSender = await getDoc(docRefSender);
-      const _docRecipient = await getDoc(docRefRecipient);
-
-      if (_docSender.exists()) {
-        const recipientChat = _docSender.data()[recipientDid] || [];
-
-        await updateDoc(docRefSender, {
-          [recipientDid]: [...recipientChat, msg],
-        });
-      } else {
-        await setDoc(docRefSender, {
-          [recipientDid]: [msg],
-        });
-      }
-
-      if (_docRecipient.exists()) {
-        const recipientNotifications =
-          _docRecipient.data()[`${senderDid}-Notifications`] || 0;
-
-        await updateDoc(docRefRecipient, {
-          [`${senderDid}-Notifications`]: recipientNotifications + 1,
-        });
-      } else {
-        await setDoc(docRefRecipient, {
-          [`${senderDid}-Notifications`]: 1,
-        });
-      }
+      await sendChatMsg(message, senderDid, recipientDid, headers);
 
       setMsgInput('');
       setLoadSendMsg(false);
