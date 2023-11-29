@@ -87,6 +87,10 @@ const ChatMessage = ({ msg, headers }: any) => {
         backgroundColor={msg.align === 'left' ? 'gray.200' : 'blue.100'}
       >
         {isLoading ? '...' : decryptedMsg}
+
+        <Text as="span" ml="2" fontSize="xx-small">
+          {msg.timestamp}
+        </Text>
       </Text>
     </Text>
   );
