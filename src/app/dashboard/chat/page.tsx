@@ -87,13 +87,23 @@ const ChatMessage = ({ msg, headers }: any) => {
         as="span"
         backgroundColor={msg.align === 'left' ? 'gray.200' : 'blue.100'}
       >
+        {msg.aling !== 'left' && (
+          <Text as="span" ml="2" fontSize="xx-small">
+            {DateTime.fromMillis(msg.timestamp).toLocaleString(
+              DateTime.DATETIME_MED,
+            )}
+          </Text>
+        )}
+
         {isLoading ? '...' : decryptedMsg}
 
-        <Text as="span" ml="2" fontSize="xx-small">
-          {DateTime.fromSeconds(msg.timestamp).toLocaleString(
-            DateTime.DATETIME_MED,
-          )}
-        </Text>
+        {msg.aling === 'left' && (
+          <Text as="span" ml="2" fontSize="xx-small">
+            {DateTime.fromMillis(msg.timestamp).toLocaleString(
+              DateTime.DATETIME_MED,
+            )}
+          </Text>
+        )}
       </Text>
     </Text>
   );
