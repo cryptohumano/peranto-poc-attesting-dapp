@@ -240,7 +240,7 @@ const Profile = () => {
     setRecipienDid(v.replace('did:kilt:', ''));
 
     if (v.includes('w3n:')) {
-      const did = await queryDidDocument(v);
+      const did = await queryDidDocument(v.replace('w3n:', ''));
 
       setW3nSuggestion(did);
     }
