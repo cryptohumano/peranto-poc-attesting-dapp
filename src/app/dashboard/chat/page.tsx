@@ -239,7 +239,7 @@ const Profile = () => {
 
     setRecipienDid(v.replace('did:kilt:', ''));
 
-    if (!v.includes('did:kilt:') && v.length > 5) {
+    if (v.includes('w3n:')) {
       const did = await queryDidDocument(v);
 
       setW3nSuggestion(did);

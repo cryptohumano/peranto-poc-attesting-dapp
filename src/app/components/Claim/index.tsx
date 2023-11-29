@@ -56,16 +56,47 @@ const INECtypeForm = ({ properties }: any) => {
     if (m.validation_status === 'success') {
       const {
         name,
-        first_last_name,
         last_name,
         date_of_birth,
         machine_readable,
+        country,
+        document_number,
+        document_type,
+        expiration_date,
+        gender,
+        issue_date,
+        mexico_document,
+        registration_date,
+        residence_address,
+        document_validations,
       } = m.details.document_details;
 
       setPayload({
-        fullname: `${name} ${first_last_name} ${last_name}`,
-        dateofbirth: date_of_birth,
-        ineid: machine_readable,
+        fullName: `${name} ${last_name}`,
+        dateOfBirth: date_of_birth,
+        country,
+        curp: document_number,
+        idType: document_type,
+        documentValidity: expiration_date,
+        gender,
+        documentIssueDate: issue_date,
+        mrz: machine_readable,
+        cic: mexico_document.cic,
+        citizenId: mexico_document.citizen_id,
+        electorKey: mexico_document.elector_key,
+        locality: mexico_document.locality,
+        municipality: mexico_document.municipality,
+        municipalityName: mexico_document.municipality_name,
+        ocr: mexico_document.ocr,
+        section: mexico_document.section,
+        state: mexico_document.state,
+        stateName: mexico_document.state_name,
+        registrationDate: registration_date,
+        residenceAddress: residence_address,
+        governmentDbValidationIne:
+          document_validations.government_database[0].validation_name,
+        governmentDbValidationRenapo:
+          document_validations.government_database[1].validation_name,
       });
     } else {
       setWaitResponse(true);
