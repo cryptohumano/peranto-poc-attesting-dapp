@@ -162,12 +162,6 @@ const Profile = () => {
   );
 
   useEffect(() => {
-    if (w3nSuggestion) {
-      onSetRecipientDid({ target: { value: w3nSuggestion } });
-    }
-  }, [w3nSuggestion]);
-
-  useEffect(() => {
     const init = async () => {
       const docRef = doc(firestore, 'chat', senderDid);
 
@@ -234,17 +228,26 @@ const Profile = () => {
     setSenderDid(v.replace('did:kilt:', ''));
   };
 
-  const onSetRecipientDid = async (e: any) => {
-    const v = e.target.value || '';
+  const onSetRecipientDid = useCallback(
+    async (e: any) => {
+      const v = e.target.value || '';
 
-    setRecipienDid(v.replace('did:kilt:', ''));
+      setRecipienDid(v.replace('did:kilt:', ''));
 
-    if (v.includes('w3n:')) {
-      const did = await queryDidDocument(v.replace('w3n:', ''));
+      if (v.includes('w3n:')) {
+        const did = await queryDidDocument(v.replace('w3n:', ''));
 
-      setW3nSuggestion(did);
+        setW3nSuggestion(did);
+      }
+    },
+    [setRecipienDid, setW3nSuggestion],
+  );
+
+  useEffect(() => {
+    if (w3nSuggestion) {
+      onSetRecipientDid({ target: { value: w3nSuggestion } });
     }
-  };
+  }, [onSetRecipientDid, w3nSuggestion]);
 
   return (
     <TabsNav defaultIndex={4}>
