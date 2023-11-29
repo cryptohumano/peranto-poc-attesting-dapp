@@ -19,6 +19,7 @@ import { sessionHeader } from '@/common/constants';
 import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { firestore, sendChatMsg } from '@/common/utilities/firebase';
 import { useQuery } from 'react-query';
+import { DateTime } from 'luxon';
 
 import * as Kilt from '@kiltprotocol/sdk-js';
 
@@ -89,7 +90,9 @@ const ChatMessage = ({ msg, headers }: any) => {
         {isLoading ? '...' : decryptedMsg}
 
         <Text as="span" ml="2" fontSize="xx-small">
-          {msg.timestamp}
+          {DateTime.fromSeconds(msg.timestamp).toLocaleString(
+            DateTime.DATETIME_MED,
+          )}
         </Text>
       </Text>
     </Text>
