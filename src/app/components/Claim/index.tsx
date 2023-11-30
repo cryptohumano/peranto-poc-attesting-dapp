@@ -134,6 +134,8 @@ const INECtypeForm = ({ properties }: any) => {
     location.reload();
   };
 
+  console.log('AAAAA::', payload);
+
   return (
     <>
       {!waitResponse && payload?.failure ? (
