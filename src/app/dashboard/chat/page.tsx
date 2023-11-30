@@ -14,9 +14,9 @@ import { Button, Flex, Input, Link, Text } from '@chakra-ui/react';
 import { useHookstate } from '@hookstate/core';
 import { sporranState } from '@/app/layout';
 import axios from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { sessionHeader } from '@/common/constants';
-import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { firestore, sendChatMsg } from '@/common/utilities/firebase';
 import { useQuery } from 'react-query';
 import { DateTime } from 'luxon';
@@ -110,6 +110,7 @@ const ChatMessage = ({ msg, headers }: any) => {
 };
 
 const Profile = () => {
+  const inputRef = useRef();
   const state = useHookstate(sporranState);
   const session = state.get({ noproxy: true });
 
@@ -207,15 +208,21 @@ const Profile = () => {
 
   useEffect(() => {
     const init = async () => {
-      const docRef = doc(firestore, 'chat', recipientDid);
+      const recipientRef = doc(firestore, 'chat', recipientDid);
 
-      onSnapshot(docRef, async () => {
+      onSnapshot(recipientRef, async () => {
         refetchChat();
+      });
+
+      const senderRef = doc(firestore, 'chat', senderDid);
+
+      await updateDoc(senderRef, {
+        [`${recipientDid}-Notifications`]: 0,
       });
     };
 
     if (recipientDid) init();
-  }, [recipientDid, refetchChat]);
+  }, [senderDid, recipientDid, refetchChat]);
 
   const onSend = useCallback(
     async (message: string) => {
@@ -226,6 +233,7 @@ const Profile = () => {
       await sendChatMsg(message, senderDid, recipientDid, headers);
 
       setMsgInput('');
+      (inputRef.current as any).value = '';
       setLoadSendMsg(false);
       refetchChat();
     },
@@ -339,6 +347,7 @@ const Profile = () => {
               <>
                 <Flex direction="column" w="full" gap={2}>
                   <Input
+                    ref={inputRef.current}
                     placeholder="Send Message"
                     onChange={(e) => setMsgInput(e.target.value)}
                   />
