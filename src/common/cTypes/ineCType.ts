@@ -80,5 +80,5 @@ export const ineCType: ICType = {
   },
   title: 'Peranto_ID_MX',
   type: 'object',
-  $id: 'kilt:ctype:0x651f425ded898bd7a9f3e6bd28966ac53f9a871de7b3a9918720cfb4a2996cde',
+  $id: 'kilt:ctype:0x9e91e0e0c1e9b28de7280ea728e4f249e8db6d033c5d96540b27b7151c7e551b',
 };
