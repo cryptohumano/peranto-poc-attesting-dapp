@@ -18,7 +18,9 @@ import { CheckSessionInput, GetSessionOutput } from '@/common/utilities/sessionA
 
 const adminWhitelist = [
   "did:kilt:4qYEfZgassjFcD7WpbnXy8zA9Bupn4EPnpRf1RJSge2KAyF4",
-  "did:kilt:4pCaJEa3oesmxtxff6sgiEgrY4ngqnE8FeTPkPesX7PnUzAv"
+  "did:kilt:4pCaJEa3oesmxtxff6sgiEgrY4ngqnE8FeTPkPesX7PnUzAv",
+  "did:kilt:4ohQ3UkcJARKYPzAG2HsCY176RSH7bRx3NpJtj3x3qtK9Ex6",
+  "did:kilt:4qpq9VE6UPrw78vv2t1YyJXGxcHKQeZnhuRinnqUNC8n6FEa"
 ]
 
 export async function POST(request: Request) {
