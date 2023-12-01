@@ -68,8 +68,9 @@ const INECtypeForm = ({ properties }: any) => {
         mexico_document,
         registration_date,
         residence_address,
-        document_validations,
       } = m.details.document_details;
+
+      const { government_database } = m.details.document_validations;
 
       setPayload({
         fullName: `${name} ${last_name}`,
@@ -93,10 +94,8 @@ const INECtypeForm = ({ properties }: any) => {
         stateName: mexico_document.state_name,
         registrationDate: registration_date,
         residenceAddress: residence_address,
-        governmentDbValidationIne:
-          document_validations.government_database[0].validation_name,
-        governmentDbValidationRenapo:
-          document_validations.government_database[1].validation_name,
+        governmentDbValidationIne: government_database[0].validation_name,
+        governmentDbValidationRenapo: government_database[1].validation_name,
       });
     } else {
       setWaitResponse(true);
@@ -122,8 +121,9 @@ const INECtypeForm = ({ properties }: any) => {
             mexico_document,
             registration_date,
             residence_address,
-            document_validations,
           } = data.details.document_details;
+
+          const { government_database } = data.details.document_validations;
 
           setPayload({
             fullName: `${name} ${last_name}`,
@@ -147,10 +147,9 @@ const INECtypeForm = ({ properties }: any) => {
             stateName: mexico_document.state_name,
             registrationDate: registration_date,
             residenceAddress: residence_address,
-            governmentDbValidationIne:
-              document_validations.government_database[0].validation_name,
+            governmentDbValidationIne: government_database[0].validation_name,
             governmentDbValidationRenapo:
-              document_validations.government_database[1].validation_name,
+              government_database[1].validation_name,
           });
         }
 
