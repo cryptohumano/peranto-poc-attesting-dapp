@@ -103,6 +103,7 @@ const INECtypeForm = ({ properties }: any) => {
 
       onSnapshot(doc(firestore, 'truora', m.id), (doc) => {
         const data = doc.data();
+        console.log('AAAAA::::::', data);
 
         if (!doc.exists) return;
 
