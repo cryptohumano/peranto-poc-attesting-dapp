@@ -21,11 +21,8 @@ import { Credential } from '@/common/utilities/credentialStorage';
 import { sporranState } from '../../layout';
 import { useHookstate } from '@hookstate/core';
 import { sessionHeader } from '@/common/constants';
-import { initKilt } from '@/common/utilities/initKilt';
 
 const getW3N = async (did: string) => {
-  await initKilt();
-
   const resolutionResult = await Did.resolve(did as any);
 
   console.log(resolutionResult);
