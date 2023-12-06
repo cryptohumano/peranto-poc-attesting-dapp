@@ -43,18 +43,15 @@ function Credentials({
           <TableCaption placement="top">{title}</TableCaption>
           <Thead>
             <Tr>
-              <Th>Id</Th>
               <Th>Owner</Th>
               <Th>#</Th>
             </Tr>
           </Thead>
           <Tbody>
             {credentials.map(([id, credential]) => (
-              <Tr key={id}>
-                <Td>{id}</Td>
+              <Tr key={id} fontSize="xs">
                 <Td>
-                  {credential.claim?.claim &&
-                    getW3N(credential.claim.claim?.owner)}
+                  {credential.claim?.claim && credential.claim.claim?.owner}
                 </Td>
                 <Td>
                   <Link
