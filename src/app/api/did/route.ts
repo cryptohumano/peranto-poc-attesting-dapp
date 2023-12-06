@@ -9,14 +9,24 @@ export async function GET(request: Request, aaa: any) {
   try {
     const url = new URL(request.url);
     const searchParams = new URLSearchParams(url.search);
-    const q: any = searchParams.get("q");
+    const address: any = searchParams.get("address");
+    const did: any = searchParams.get("did");
 
     await initKilt()
 
     await sessionMiddleware(request);
 
     const api = ConfigService.get('api');
-    const balances = await api.query.system.account(q)
+
+    if (did) {
+      const data = await Did.resolve(did)
+
+      return NextResponse.json({
+        data
+      })
+    }
+
+    const balances = await api.query.system.account(address)
     const free = balances.data.free;
     const balance = BalanceUtils.formatKiltBalance(free);
 

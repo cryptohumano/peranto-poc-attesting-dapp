@@ -21,13 +21,22 @@ import { Credential } from '@/common/utilities/credentialStorage';
 import { sporranState } from '../../layout';
 import { useHookstate } from '@hookstate/core';
 import { sessionHeader } from '@/common/constants';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
-const getW3N = async (did: string) => {
-  const resolutionResult = await Did.resolve(did as any);
+function W3N({ ownerDid }: any) {
+  const state = useHookstate(sporranState);
+  const session = state.get({ noproxy: true });
+  const headers = { [sessionHeader]: session?.sessionId };
 
-  console.log(resolutionResult);
-  return did;
-};
+  const { data } = useQuery(['/did', ownerDid, 1], async () => {
+    const { data } = await axios.get(`/api/did?did=${ownerDid}`, { headers });
+
+    return data.data;
+  });
+
+  return <>{data?.web3Name || ownerDid}</>;
+}
 
 function Credentials({
   credentials,
@@ -51,7 +60,11 @@ function Credentials({
             {credentials.map(([id, credential]) => (
               <Tr key={id} fontSize="xs">
                 <Td>
-                  {credential.claim?.claim && credential.claim.claim?.owner}
+                  <W3N
+                    ownerDid={
+                      credential.claim?.claim && credential.claim.claim?.owner
+                    }
+                  />
                 </Td>
                 <Td>
                   <Link

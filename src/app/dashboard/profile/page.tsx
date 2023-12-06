@@ -54,7 +54,7 @@ const Profile = () => {
       const currentAccount = accounts[0];
 
       const { data } = await axios.get(
-        '/api/did?q=' + encodeURIComponent(currentAccount.address),
+        '/api/did?address=' + encodeURIComponent(currentAccount.address),
         { headers },
       );
 
