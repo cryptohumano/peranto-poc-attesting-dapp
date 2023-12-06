@@ -15,11 +15,22 @@ import {
   TableCaption,
   TableContainer,
 } from '@chakra-ui/react';
+import { Did } from '@kiltprotocol/sdk-js';
 
 import { Credential } from '@/common/utilities/credentialStorage';
 import { sporranState } from '../../layout';
 import { useHookstate } from '@hookstate/core';
 import { sessionHeader } from '@/common/constants';
+import { initKilt } from '@/common/utilities/initKilt';
+
+const getW3N = async (did: string) => {
+  await initKilt();
+
+  const resolutionResult = await Did.resolve(did as any);
+
+  console.log(resolutionResult);
+  return did;
+};
 
 function Credentials({
   credentials,
@@ -36,7 +47,7 @@ function Credentials({
           <Thead>
             <Tr>
               <Th>Id</Th>
-              <Th>Claim Hash</Th>
+              <Th>Owner</Th>
               <Th>#</Th>
             </Tr>
           </Thead>
@@ -44,7 +55,10 @@ function Credentials({
             {credentials.map(([id, credential]) => (
               <Tr key={id}>
                 <Td>{id}</Td>
-                <Td>{credential.attestation?.claimHash}</Td>
+                <Td>
+                  {credential.claim?.claim &&
+                    getW3N(credential.claim.claim?.owner)}
+                </Td>
                 <Td>
                   <Link
                     color="purple"
