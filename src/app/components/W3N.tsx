@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import { useHookstate } from '@hookstate/core';
+import { Text } from '@chakra-ui/react';
 import { sporranState } from '../layout';
 import { sessionHeader } from '@/common/constants';
 
@@ -21,5 +22,9 @@ export const useW3N = ({ ownerDid }: any) => {
 export function W3N({ ownerDid }: any) {
   const { data } = useW3N({ ownerDid });
 
-  return <>{data?.web3Name || ownerDid}</>;
+  return (
+    <Text fontWeight="bold" color="blue.400">
+      {data?.web3Name || ownerDid}
+    </Text>
+  );
 }
