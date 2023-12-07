@@ -9,6 +9,8 @@ import { Box, Button } from '@chakra-ui/react';
 
 import { Credential } from '@/common/utilities/credentialStorage';
 import { useW3N } from '@/app/components/W3N';
+import { useHookstate } from '@hookstate/core';
+import { sporranState } from '@/app/layout';
 
 export default function Credential() {
   const { id } = useParams();
@@ -16,6 +18,9 @@ export default function Credential() {
 
   const [credential, setCredential] = useState<Credential>();
   const [error, setError] = useState(false);
+
+  const state = useHookstate(sporranState);
+  const session = state.get({ noproxy: true });
 
   useEffect(() => {
     if (credential) {
@@ -100,6 +105,8 @@ export default function Credential() {
       owner: data?.web3Name || _claim?.claim.owner,
     },
   };
+
+  if (!session) return null;
 
   if (!credential) {
     return error ? <p>Credential not found</p> : null;
