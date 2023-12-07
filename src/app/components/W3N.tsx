@@ -23,7 +23,14 @@ export function W3N({ ownerDid }: any) {
   const { data } = useW3N({ ownerDid });
 
   return (
-    <Text fontWeight="bold" color="blue.400">
+    <Text
+      fontWeight="bold"
+      color="blue.400"
+      width="300px"
+      whiteSpace="nowrap"
+      overflow="hidden"
+      textOverflow="ellipsis"
+    >
       {data?.web3Name || ownerDid}
     </Text>
   );
