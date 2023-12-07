@@ -8,6 +8,7 @@ import ReactJson from 'react-json-view';
 import { Box, Button } from '@chakra-ui/react';
 
 import { Credential } from '@/common/utilities/credentialStorage';
+import { useW3N } from '@/app/components/W3N';
 
 export default function Credential() {
   const { id } = useParams();
@@ -88,11 +89,21 @@ export default function Credential() {
     }
   }, [id]);
 
+  const { claim: _claim, attestation } = credential || {};
+
+  const { data } = useW3N({ ownerDid: _claim?.claim.owner });
+
+  const claim = {
+    ..._claim,
+    claim: {
+      ..._claim?.claim,
+      owner: data?.web3Name || _claim?.claim.owner,
+    },
+  };
+
   if (!credential) {
     return error ? <p>Credential not found</p> : null;
   }
-
-  const { claim, attestation } = credential;
 
   return (
     <>

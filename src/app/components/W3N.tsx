@@ -4,16 +4,22 @@ import { useHookstate } from '@hookstate/core';
 import { sporranState } from '../layout';
 import { sessionHeader } from '@/common/constants';
 
-export function W3N({ ownerDid }: any) {
+export const useW3N = ({ ownerDid }: any) => {
   const state = useHookstate(sporranState);
   const session = state.get({ noproxy: true });
   const headers = { [sessionHeader]: session?.sessionId };
 
-  const { data } = useQuery(['/did', ownerDid, 1], async () => {
+  const q = useQuery(['/did', ownerDid, 1], async () => {
     const { data } = await axios.get(`/api/did?did=${ownerDid}`, { headers });
 
     return data.data;
   });
+
+  return q;
+};
+
+export function W3N({ ownerDid }: any) {
+  const { data } = useW3N({ ownerDid });
 
   return <>{data?.web3Name || ownerDid}</>;
 }
