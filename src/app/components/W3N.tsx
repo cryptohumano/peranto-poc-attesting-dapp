@@ -25,7 +25,7 @@ export function W3N({ ownerDid }: any) {
   return (
     <Text
       fontWeight="bold"
-      color="blue.400"
+      color="purple.600"
       width="300px"
       whiteSpace="nowrap"
       overflow="hidden"
