@@ -15,28 +15,12 @@ import {
   TableCaption,
   TableContainer,
 } from '@chakra-ui/react';
-import { Did } from '@kiltprotocol/sdk-js';
 
 import { Credential } from '@/common/utilities/credentialStorage';
 import { sporranState } from '../../layout';
 import { useHookstate } from '@hookstate/core';
 import { sessionHeader } from '@/common/constants';
-import { useQuery } from 'react-query';
-import axios from 'axios';
-
-function W3N({ ownerDid }: any) {
-  const state = useHookstate(sporranState);
-  const session = state.get({ noproxy: true });
-  const headers = { [sessionHeader]: session?.sessionId };
-
-  const { data } = useQuery(['/did', ownerDid, 1], async () => {
-    const { data } = await axios.get(`/api/did?did=${ownerDid}`, { headers });
-
-    return data.data;
-  });
-
-  return <>{data?.web3Name || ownerDid}</>;
-}
+import { W3N } from '@/app/components/W3N';
 
 function Credentials({
   credentials,

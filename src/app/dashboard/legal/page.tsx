@@ -24,6 +24,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { listAll, ref } from 'firebase/storage';
 import { useEffect, useState } from 'react';
 import { sessionHeader } from '@/common/constants';
+import { W3N } from '@/app/components/W3N';
 
 type Multisign = {
   id: string;
@@ -100,7 +101,9 @@ const ListMultiSign = ({
       rounded="md"
     >
       <Text>Contract: {contractName}</Text>
-      <Text>Creator: {creatorDid}</Text>
+      <Text>
+        Creator: <W3N ownerDid={creatorDid} />
+      </Text>
       <Text>Id: {id}</Text>
       <Divider my="4" />
       <Text>Signers: </Text>
@@ -113,7 +116,10 @@ const ListMultiSign = ({
 
             return (
               <ListItem key={_id} display="flex" gap={4}>
-                <Text fontSize="sm">{signer.did}</Text> -{' '}
+                <Text fontSize="sm">
+                  <W3N ownerDid={signer.did} />
+                </Text>{' '}
+                -{' '}
                 <Text fontSize="sm">{isSigned ? 'Signed' : 'Not signed'}</Text>{' '}
                 {!isSigned && (
                   <Button
