@@ -23,11 +23,13 @@ export interface Credential {
 // Maps are used for example purposes. A real database should be used in production.
 // const credentials: Map<string, Credential> = new Map();
 
-export function addClaim(claim: ICredential) {
+export async function addClaim(claim: ICredential) {
   const id = randomUUID();
   // credentials.set(id, { claim });
 
-  setDoc(doc(firestore, 'credentials', id), { claim });
+  await setDoc(doc(firestore, 'credentials', id), { claim });
+
+  return id
 }
 
 export async function listCredentials() {

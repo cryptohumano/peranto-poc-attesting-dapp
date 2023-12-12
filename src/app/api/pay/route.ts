@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import axios from 'axios';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc } from 'firebase/firestore';
 
 import { firestore } from "@/common/utilities/firebase"
 import { logger } from '@/common/utilities/logger'
@@ -22,9 +22,17 @@ export async function POST(request: Request) {
       throw new Error('Session credential not found');
     }
 
-    addClaim(credential);
+    const id = await addClaim(credential);
 
     logger.debug('Payment received, sent credential to attester');
+
+    await setDoc(doc(collection(firestore, 'mail')), {
+      to: "services@peranto.xyz",
+      message: {
+        subject: 'New Attestation request',
+        html: `<div><h2>New attestation request with id: ${id}</h2><br /><p><a href="https://app.peranto.xyz/admin/attestation/credential/${id}">https://app.peranto.xyz/admin/attestation/credential/${id}</a></p></div>`,
+      },
+    });
 
     return new NextResponse(null, { status: StatusCodes.NO_CONTENT })
   } catch (error) {
