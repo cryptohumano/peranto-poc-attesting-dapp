@@ -342,8 +342,15 @@ export default function Claim({ type }: any) {
           })
           .json();
 
-        await session.send(message);
         setStatus('paid');
+
+        const r = await (window as any).kilt.sporran.signExtrinsicWithDid(
+          message,
+        );
+
+        console.log('EXTRINSINC:::', r);
+
+        // await session.send(message);
       } catch (error) {
         console.error(error);
 
