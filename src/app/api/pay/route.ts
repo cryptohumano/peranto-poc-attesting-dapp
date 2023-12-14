@@ -10,7 +10,7 @@ import { addClaim } from '@/common/utilities/credentialStorage';
 import { StatusCodes } from 'http-status-codes';
 import { sessionMiddleware } from '@/common/utilities/sessionStorage';
 import { encryptMessageBody } from '@/common/utilities/encryptMessage';
-import { ConfigService } from '@kiltprotocol/sdk-js';
+import { Blockchain, ChainHelpers, ConfigService } from '@kiltprotocol/sdk-js';
 
 export async function POST(request: Request) {
   // implement your payment logic here
@@ -47,7 +47,10 @@ export async function POST(request: Request) {
 
     const txTransfer = api.tx.balances.transfer("4qTRExDVsdgu6UexcZfhb8ZfgjhaotLLe8H12KyE4wKU3URY", 2)
 
-    console.log("AAAAAA", txTransfer)
+    // const finalizedTx = await ChainHelpers.Blockchain.signAndSubmitTx(txTransfer, bobAccount, {
+    //   resolveOn: Blockchain.IS_FINALIZED,
+    // })
+
 
     // return new NextResponse(null, { status: StatusCodes.NO_CONTENT })
     return new NextResponse(JSON.stringify(output))
