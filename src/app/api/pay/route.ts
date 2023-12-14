@@ -9,6 +9,7 @@ import { sendErrorResponse } from '@/common/utilities/errorResponse';
 import { addClaim } from '@/common/utilities/credentialStorage';
 import { StatusCodes } from 'http-status-codes';
 import { sessionMiddleware } from '@/common/utilities/sessionStorage';
+import { encryptMessageBody } from '@/common/utilities/encryptMessage';
 
 export async function POST(request: Request) {
   // implement your payment logic here
@@ -16,11 +17,18 @@ export async function POST(request: Request) {
   try {
     logger.debug('Mock processing payment');
 
-    const { credential } = await sessionMiddleware(request);
+    const { credential, encryptionKeyUri } = await sessionMiddleware(request);
 
     if (!credential) {
       throw new Error('Session credential not found');
     }
+
+    const output = await encryptMessageBody(encryptionKeyUri, {
+      content: {
+        claimHash: credential.rootHash
+      },
+      type: "request-payment"
+    } as any)
 
     const id = await addClaim(credential);
 
@@ -34,7 +42,8 @@ export async function POST(request: Request) {
       },
     });
 
-    return new NextResponse(null, { status: StatusCodes.NO_CONTENT })
+    // return new NextResponse(null, { status: StatusCodes.NO_CONTENT })
+    return new NextResponse(JSON.stringify(output))
   } catch (error) {
     logger.error(error);
 

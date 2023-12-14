@@ -336,8 +336,13 @@ export default function Claim({ type }: any) {
         const { sessionId } = session;
         const headers = { [sessionHeader]: sessionId };
 
-        await ky.post('/api/pay', { headers });
+        const message: IEncryptedMessage = await ky
+          .post('/api/pay', {
+            headers,
+          })
+          .json();
 
+        await session.send(message);
         setStatus('paid');
       } catch (error) {
         console.error(error);
