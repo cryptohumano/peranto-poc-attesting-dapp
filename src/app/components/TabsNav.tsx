@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 export const mainNavMapping = [
   { title: 'Perfil', path: '/profile' },
-  // { title: 'Votacion', path: '/vote' },
+  { title: 'Votacion', path: '/vote' },
   { title: 'Hub Legal', path: '/legal' },
   { title: 'Verificacion', path: '/verify' },
   { title: 'Credenciales', path: '/claim/ine' },
